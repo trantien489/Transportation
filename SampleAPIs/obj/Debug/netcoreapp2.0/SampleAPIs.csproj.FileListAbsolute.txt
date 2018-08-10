@@ -1,0 +1,14 @@
+D:\TienTran\Research\SampleAPIs\SampleAPIs\obj\Debug\netcoreapp2.0\SampleAPIs.csproj.CoreCompileInputs.cache
+D:\TienTran\Research\SampleAPIs\SampleAPIs\obj\Debug\netcoreapp2.0\SampleAPIs.AssemblyInfoInputs.cache
+D:\TienTran\Research\SampleAPIs\SampleAPIs\obj\Debug\netcoreapp2.0\SampleAPIs.AssemblyInfo.cs
+D:\TienTran\Research\SampleAPIs\SampleAPIs\obj\Debug\netcoreapp2.0\SampleAPIs.csprojAssemblyReference.cache
+D:\TienTran\Research\SampleAPIs\SampleAPIs\bin\Debug\netcoreapp2.0\SampleAPIs.deps.json
+D:\TienTran\Research\SampleAPIs\SampleAPIs\bin\Debug\netcoreapp2.0\SampleAPIs.runtimeconfig.json
+D:\TienTran\Research\SampleAPIs\SampleAPIs\bin\Debug\netcoreapp2.0\SampleAPIs.runtimeconfig.dev.json
+D:\TienTran\Research\SampleAPIs\SampleAPIs\bin\Debug\netcoreapp2.0\SampleAPIs.dll
+D:\TienTran\Research\SampleAPIs\SampleAPIs\bin\Debug\netcoreapp2.0\SampleAPIs.pdb
+D:\TienTran\Research\SampleAPIs\SampleAPIs\bin\Debug\netcoreapp2.0\Model.dll
+D:\TienTran\Research\SampleAPIs\SampleAPIs\bin\Debug\netcoreapp2.0\Model.pdb
+D:\TienTran\Research\SampleAPIs\SampleAPIs\obj\Debug\netcoreapp2.0\SampleAPIs.csproj.CopyComplete
+D:\TienTran\Research\SampleAPIs\SampleAPIs\obj\Debug\netcoreapp2.0\SampleAPIs.dll
+D:\TienTran\Research\SampleAPIs\SampleAPIs\obj\Debug\netcoreapp2.0\SampleAPIs.pdb
