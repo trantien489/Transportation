@@ -1,0 +1,73 @@
+import React, { Component } from "react";
+import { connect } from 'react-redux';
+import { translate } from 'react-i18next';
+import key from '../../../i18n/key';
+import { Col, Row } from "reactstrap";
+import LoadingOverlay from 'react-loading-overlay';
+import { ErrorAlert } from '../../../components/alerts/errorAlert';
+import { hasRecordsActionReducer, applyCheckAuthorized } from '../../../utilities/validate';
+import { getAllLanguageAction, changeStatusLanguageAction, deleteLanguageAction, changeIsDefaultLanguageAction } from '../../../actions/language';
+import { GridView } from '../../../components/gridView/gridView';
+class Language extends Component {
+    constructor(props) {
+        super(props);
+        applyCheckAuthorized();
+    }
+    componentDidMount() {
+        //Sau khi render hàm này sẽ chạy
+        this.props.getAllAction();
+    }
+    requestAction = (nextProps) => {
+        //Khi có action phát đi thì hàm này sẽ handle
+    }
+    responseAction = (nextProps) => {
+        //Khi api trả dữ liệu về thì hàm này sẽ handle
+    }
+    componentWillReceiveProps(nextProps) {
+        //request action
+        if (this.requestAction(nextProps)) return;
+        //response action
+        this.responseAction(nextProps);
+    }
+    render() {
+        const { t, changeStatusModel, deleteModel, getAllModel, changeIsDefaultModel } = this.props;
+        let disableColumns = [];//['Id','Status'];
+        if (!getAllModel || !changeStatusModel || !deleteModel || !changeIsDefaultModel) return;
+        const isLoadingOver = changeStatusModel.isLoading || deleteModel.isLoading || changeIsDefaultModel.isLoading;
+        if (getAllModel.isLoading) {
+            return <LoadingOverlay active spinner text={t(key.common.loadingSpinner)} />
+        } else if (getAllModel.isError) {
+            return <ErrorAlert responseData={getAllModel.responseData}
+                msgErrorGetAPI={t(key.common.errorGetAllAPI)} t={this.props.t}
+                msgRedirectToLogin={t(key.common.redirectToLogin)} />
+        } else {
+            if (hasRecordsActionReducer(getAllModel)) {
+                return <GridView
+                    isLoadingOver={isLoadingOver}
+                    records={getAllModel.responseData.Data.Records}
+                    keyFields={key.language}
+                    tableName="LANGUAGE"
+                    disableColumns={disableColumns}
+                    {...this.props}
+                />
+            } else {
+                return <div className="animated fadeIn"><Row><Col xs="12" lg="12">{t(key.common.noDataFound)}</Col></Row></div>;
+            }
+        }
+    }
+}
+//Nhận dữ liệu trả về từ reducer (reducer thì lấy data từ api)
+const mapStateToProps = state => ({
+    getAllModel: state.getAllLanguageReducer,
+    changeStatusModel: state.changeStatusLanguageReducer,
+    deleteModel: state.deleteLanguageReducer,
+    changeIsDefaultModel : state.changeIsDefaultLanguageReducer
+});
+//Phát đi tính hiệu thông qua action (để lấy data từ api)
+const mapDispatchToProps = {
+    getAllAction: getAllLanguageAction,
+    changeStatusAction: changeStatusLanguageAction,
+    deleteAction: deleteLanguageAction,
+    changeIsDefaultAction: changeIsDefaultLanguageAction,
+};
+export default translate()(connect(mapStateToProps, mapDispatchToProps)(Language));

@@ -230,6 +230,7 @@ namespace WebApi
             services.AddScoped<IAuthMessageSender, AuthMessageSender>();
             //
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAuthService, AuthService>();
         }
         private static void AddRepositories(IServiceCollection services)
         {

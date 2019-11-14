@@ -1,0 +1,11 @@
+import { createAction } from "redux-actions";
+import { IMAGE } from "../actionTypes/image";
+export const getByIdImage = createAction(IMAGE.IMAGE_GETBYID);
+export const getByIdImageSuccess = createAction(IMAGE.IMAGE_GETBYID_SUCCESS);
+export const getByIdImageFailure = createAction(IMAGE.IMAGE_GETBYID_FAILURE);
+export const deleteImage = createAction(IMAGE.IMAGE_DELETE);
+export const deleteImageSuccess = createAction(IMAGE.IMAGE_DELETE_SUCCESS);
+export const deleteImageFailure = createAction(IMAGE.IMAGE_DELETE_FAILURE);
+export const addImage = createAction(IMAGE.IMAGE_ADD);
+export const addImageSuccess = createAction(IMAGE.IMAGE_ADD_SUCCESS);
+export const addImageFailure = createAction(IMAGE.IMAGE_ADD_FAILURE);

@@ -1,0 +1,39 @@
+export const commonConstant = {
+    system: {
+        TRANSLATION_KEY: 'translation-language',
+    },
+    ADD: 'ADD',
+    EDIT: 'EDIT',
+    EDIT_ROLE: 'EDIT_ROLE',
+    DELETE: 'DELETE',
+    CHANGE_STATUS: 'CHANGE_STATUS',
+    CHANGE_ISDEFAULT: 'CHANGE_ISDEFAULT',
+    GET_BY_ID: 'GET_BY_ID',
+    GET_ALL: 'GET_ALL',
+    LOADING_FORM: 'LOADING_FORM',
+    CHECK_DUPLICATE: 'CHECK_DUPLICATE',
+    CHECK_DUPLICATE_USERNAME: 'CHECK_DUPLICATE_USERNAME',
+    CHECK_DUPLICATE_EMAIL: 'CHECK_DUPLICATE_EMAIL',
+    // AUTHORIZE
+    AUTH_ID: 'AUTH_ID',
+    AUTH_TOKEN: 'AUTH_TOKEN',
+    AUTH_EXPIRES_IN: 'AUTH_EXPIRES_IN',
+    // ROLE
+    FILTER_ROLE: 'FILTER_ROLE',
+    ROLE_ERROR_MSG_EXISTED: 'RoleIsExisted',
+    ROLE_KEY_EDIT: 'ROLE_KEY_EDIT',
+    // USER
+    FILTER_USER: 'FILTER_USER',
+    USER_ERROR_MSG_EXISTED: 'UserIsExisted',
+    USER_KEY_EDIT: 'USER_KEY_EDIT',
+    USER_ACCOUNT_INACTIVE_MSG: 'Account is inactive!',
+    REGEX_PHONE_NUMBER: /(09|0[2|3|4|5|6|7|8|9])+([0-9]{8})\b/,
+    
+    //FILTER
+    FILTER: 'FILTER_',
+    
+    //PAGINATION
+    PAGE_SIZE : 20,
+    //Parameter
+    ParamAdd: 'add',
+};
