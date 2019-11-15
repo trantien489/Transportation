@@ -4,7 +4,7 @@ using Infrastructure.EF.Entities;
 
 namespace Infrastructure.EF.Context
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser,ApplicationRole,string>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

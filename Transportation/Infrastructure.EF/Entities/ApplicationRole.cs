@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Infrastructure.EF.Entities
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationRole : IdentityRole
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-
+        public ApplicationRole() : base()
+        { }
+        public ApplicationRole(string roleName) : base(roleName)
+        {
+        }
         public DateTime? CreatedDate { get; set; }
         public DateTime? UpdatedDate { get; set; }
         public string CreatedBy { get; set; }
