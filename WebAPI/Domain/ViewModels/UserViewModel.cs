@@ -22,4 +22,17 @@ namespace Domain.ViewModels
         [Required]
         public string Password { get; set; }
     }
+    public class UserUpdateViewModel : UserViewModel
+    {
+        public string Id { get; set; }
+        public int? Status { get; set; }
+    }
+    public class UserGetByIdViewModel : UserUpdateViewModel
+    {
+        public List<string> Roles { get; set; }
+        public DateTime? CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
+        public string CreatedBy { get; set; }
+        public string UpdatedBy { get; set; }
+    }
 }

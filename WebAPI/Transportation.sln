@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29230.47
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.902
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Transportation", "Transportation\Transportation.csproj", "{706556A5-2332-4997-A50A-614155DB188C}"
 EndProject
@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure.EF", "Infras
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{C2866EB3-C408-4458-B502-6389095F9DFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service", "Service\Service.csproj", "{9A2E9C7F-BDC8-4C76-9215-8E713E87280A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{9A2E9C7F-BDC8-4C76-9215-8E713E87280A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "Repository\Repository.csproj", "{23279F43-07B9-40CD-83EA-FFF70A4483AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +44,12 @@ Global
 		{9A2E9C7F-BDC8-4C76-9215-8E713E87280A}.Development|Any CPU.Build.0 = Debug|Any CPU
 		{9A2E9C7F-BDC8-4C76-9215-8E713E87280A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A2E9C7F-BDC8-4C76-9215-8E713E87280A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23279F43-07B9-40CD-83EA-FFF70A4483AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23279F43-07B9-40CD-83EA-FFF70A4483AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23279F43-07B9-40CD-83EA-FFF70A4483AF}.Development|Any CPU.ActiveCfg = Debug|Any CPU
+		{23279F43-07B9-40CD-83EA-FFF70A4483AF}.Development|Any CPU.Build.0 = Debug|Any CPU
+		{23279F43-07B9-40CD-83EA-FFF70A4483AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23279F43-07B9-40CD-83EA-FFF70A4483AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

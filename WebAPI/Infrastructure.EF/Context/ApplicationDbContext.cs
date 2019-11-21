@@ -11,7 +11,7 @@ namespace Infrastructure.EF.Context
         {
         }
         #region --DBSET--
-        //public virtual DbSet<TemplatePosition> TemplatePosition { get; set; }
+        public virtual DbSet<Company> Company { get; set; }
         #endregion --DBSET--
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

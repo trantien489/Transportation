@@ -7,6 +7,6 @@ namespace Domain.Services
     public interface IUserService
     {
         Task<ResponseResult> Create(UserCreateViewModel model);
-
+        Task<ResponseResult> GetById(string id);
     }
 }

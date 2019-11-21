@@ -6,8 +6,10 @@ using Domain.Services;
 using Domain.ViewModels;
 using Infrastructure.EF.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -121,6 +123,30 @@ namespace Service
             await _userManager.AddToRolesAsync(user, assignRoles);
             identityResult = await _userManager.UpdateAsync(user);
             return identityResult;
+        }
+
+        public async Task<ResponseResult> GetById(string id)
+        {
+            var result = new ResponseResult();
+
+            var entity = await _userManager.Users
+                         .Where(x => x.Status != CommonConstants.Status.Deleted && x.Id == id)
+                         .FirstOrDefaultAsync();
+            if (entity != null)
+            {
+                result.Data = _mapper.Map<ApplicationUser, UserGetByIdViewModel>(entity);
+                result.Success = true;
+                var roles = await _userManager.GetRolesAsync(entity);
+                if (roles.Any())
+                {
+                    result.Data.Roles = new List<string>();
+                    foreach (var item in roles)
+                    {
+                        result.Data.Roles.Add(item);
+                    }
+                }
+            }
+            return result;
         }
     }
 }
