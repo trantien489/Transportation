@@ -179,6 +179,12 @@ namespace Transportation
             services.AddSingleton<IJwtFactory, JwtFactory>();
 
             services.AddTransient<ICompanyService, CompanyService>();
+            services.AddTransient<ICapacityService, CapacityService>();
+            services.AddTransient<ICarService, CarService>();
+            services.AddTransient<IDistanceService, DistanceService>();
+            services.AddTransient<IDriverService, DriverService>();
+            services.AddTransient<IPriceService, PriceService>();
+
 
         }
         private static void RegisterMapper(IServiceCollection services)
@@ -187,6 +193,13 @@ namespace Transportation
             {
                 cfg.AddProfile(new UserMappingProfile());
                 cfg.AddProfile(new CompanyMappingProfile());
+                cfg.AddProfile(new CapacityMappingProfile());
+                cfg.AddProfile(new CarMappingProfile());
+                cfg.AddProfile(new DistanceMappingProfile());
+                cfg.AddProfile(new DriverMappingProfile());
+                cfg.AddProfile(new PriceMappingProfile());
+
+
             });
             var mapper = config.CreateMapper();
             services.AddSingleton(mapper);
