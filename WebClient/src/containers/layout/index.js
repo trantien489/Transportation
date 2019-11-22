@@ -36,24 +36,13 @@ class DefaultLayout extends Component {
           badge: { variant: 'info', text: 'NEW', },
         },
         { title: true, name: t(key.common.systemAside), wrapper: { element: '', attributes: {} }, class: '' },
-        { name: t(key.role.GridTitle), url: '/role', icon: 'icon-lock', },
-        { name: t(key.user.GridTitle), url: '/user', icon: 'icon-people', },
-        { name: t(key.permission.GridTitle), url: '/permission', icon: 'icon-tag', },
-        { name: 'Permission Roles', url: '/permission-roles', icon: 'icon-tag', },
+       
         { title: true, name: t(key.common.reportsAside), },
         { title: true, name: t(key.common.applicationsAside), wrapper: { element: '', attributes: {}, }, },
         { title: true, name: 'Settings', wrapper: { element: '', attributes: {} }, class: '' },
-        { name: t(key.configType.GridTitle), url: '/configtype', icon: 'icon-notebook', },
+       
         { name: t(key.config.GridTitle), url: '/config', icon: 'icon-settings', },
-        { name: t(key.imageType.GridTitle), url: '/imagetype', icon: 'icon-picture', },
-        { name: t(key.advertise.GridTitle), url: '/advertise', icon: 'icon-tag', },
-        { name: t(key.templatePosition.GridTitle), url: '/templateposition', icon: 'icon-pin', },
-        { name: t(key.category.category), url: '/category', icon: 'icon-tag', },
-        { name: t(key.language.GridTitle), url: '/language', icon: 'icon-picture', },
-        { name: t(key.support.GridTitle), url: '/support', icon: 'icon-tag', },        
-        { name: t(key.contact.GridTitle), url: '/contact', icon: 'icon-people', },
-        { name: t(key.promotion.GridTitle), url: '/promotion', icon: 'icon-tag', },
-        { name: t(key.company.GridTitle), url: '/company', icon: 'icon-tag', },
+       
       ],
     }
   };

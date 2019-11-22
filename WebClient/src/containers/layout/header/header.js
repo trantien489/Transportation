@@ -53,12 +53,7 @@ class DefaultHeader extends Component {
           <NavItem className="px-3">
             <NavLink href="/">{t(key.common.dashBoard)}</NavLink>
           </NavItem>
-          <NavItem className="px-3">
-            <NavLink href="/role">{t(key.role.role)}</NavLink>
-          </NavItem>
-          <NavItem className="px-3">
-            <NavLink href="/user">{t(key.user.user)}</NavLink>
-          </NavItem>          
+            
         </Nav>
         <Nav className="ml-auto" navbar>
           <NavItem className="d-md-down-none">
@@ -83,19 +78,8 @@ class DefaultHeader extends Component {
               <img id='ava' src={'/assets/images/avatars/noava.jpg'}  onError={e=>e.target.src='/assets/images/avatars/not-available.jpg'} className="img-avatar" alt="user-avatar" />
             </DropdownToggle>
             <DropdownMenu right style={{ right: 'auto' }}>
-              <DropdownItem header tag="div" className="text-center"><strong>Account</strong></DropdownItem>
-              <DropdownItem><i className="fa fa-bell-o"></i> Updates<Badge color="info">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-envelope-o"></i> Messages<Badge color="success">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-tasks"></i> Tasks<Badge color="danger">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-comments"></i> Comments<Badge color="warning">42</Badge></DropdownItem>
-              <DropdownItem header tag="div" className="text-center"><strong>Settings</strong></DropdownItem>
-              <DropdownItem><i className="fa fa-user"></i> Profile</DropdownItem>
-              <DropdownItem><i className="fa fa-wrench"></i> Settings</DropdownItem>
-              <DropdownItem><i className="fa fa-usd"></i> Payments<Badge color="secondary">42</Badge></DropdownItem>
-              <DropdownItem><i className="fa fa-file"></i> Projects<Badge color="primary">42</Badge></DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem><i className="fa fa-shield"></i> Lock Account</DropdownItem>
-              <DropdownItem onClick={this.handleLogout}><i className="fa fa-lock"></i> Logout</DropdownItem>
+   
+              <DropdownItem onClick={this.handleLogout}><i className="fa fa-lock"></i> Đăng xuất</DropdownItem>
             </DropdownMenu>
           </AppHeaderDropdown>
         </Nav>

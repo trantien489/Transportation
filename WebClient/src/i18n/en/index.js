@@ -1,18 +1,6 @@
-import role from './role';
-import user from './user';
+
 import login from './login';
-import permission from './permission';
-import configType from './configType';
 import config from './config';
-import imageType from './imageType';
-import advertise from "./advertise";
-import templatePosition from "./templatePosition";
-import category from "./category";
-import support from './support';
-import contact from './contact';
-import promotion from './promotion';
-import language from './language';
-import company from './company';
 let common = {
         languageName: 'English(en)',
         filterTitle: 'Filter',
@@ -96,19 +84,7 @@ let common = {
 }
 export default { 
         common, 
-        role, 
-        user, 
         login, 
-        configType, 
-        permission, 
         config, 
-        imageType, 
-        advertise, 
-        templatePosition, 
-        category, 
-        support, 
-        contact, 
-        promotion, 
-        language,
-        company
+ 
 };

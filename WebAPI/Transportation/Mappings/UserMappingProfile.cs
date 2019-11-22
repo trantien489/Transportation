@@ -14,6 +14,7 @@ namespace Transportation.Mappings
         {
             //Insert
             CreateMap<UserCreateViewModel, ApplicationUser>();
+            CreateMap<ApplicationUser, UserGetByIdViewModel>();
         }
     }
 }

@@ -121,18 +121,18 @@ class Login extends Component {
         <Container>
           <LoadingOverlay active={login.isLoading} spinner text={t(key.common.processingSpinner)} className="overlayFullScreen" />
           <Row className="justify-content-center">
-            <Col md="8">
+            <Col md="6">
               <CardGroup>
                 <Card className="p-4">
                   <CardBody>
                     <LoginForm {...this.props} />
                   </CardBody>
                 </Card>
-                <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: 44 + '%' }}>
+                {/* <Card className="text-white bg-primary py-5 d-md-down-none" style={{ width: 44 + '%' }}>
                   <CardBody className="text-center">
                     <RegisterForm  {...this.props} />
                   </CardBody>
-                </Card>
+                </Card> */}
               </CardGroup>
             </Col>
           </Row>

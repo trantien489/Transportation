@@ -7,7 +7,6 @@ import { getByIdConfigAction, addConfigAction, editConfigAction } from '../../..
 import { applyCheckAuthorized } from '../../../utilities/validate';
 import { AddOrEdit } from '../../../components/addOrEdit/addOrEdit';
 import { ControlType, InputField } from '../../../contants/ControlType';
-import { getAllConfigTypeAction } from '../../../actions/configType';
 class ConfigUpdate extends Component {
     constructor(props) {
         super(props);
@@ -32,7 +31,7 @@ class ConfigUpdate extends Component {
         applyCheckAuthorized();
     }
     componentDidMount() {
-        this.props.getAllConfigTypeAction();
+
     }
     requestAction = (nextProps) => {
        
@@ -87,12 +86,11 @@ const mapStateToProps = state => ({
     getByIdModel: state.getByIdConfigReducer,
     addModel: state.addConfigReducer,
     editModel: state.editConfigReducer,
-    configTypeGetAllModel: state.getAllConfigTypeReducer,
+
 });
 const mapDispatchToProps = {
     getByIdAction: getByIdConfigAction,
     addAction: addConfigAction,
     editAction: editConfigAction,
-    getAllConfigTypeAction,
 };
 export default translate()(connect(mapStateToProps, mapDispatchToProps)(ConfigUpdate));

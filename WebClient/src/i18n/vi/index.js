@@ -1,18 +1,7 @@
-import role from './role';
-import user from './user';
-import login from './login';
-import permission from './permission';
-import configType from './configType';
+
 import config from './config';
-import imageType from './imageType';
-import advertise from "./advertise";
-import templatePosition from "./templatePosition";
-import category from "./category";
-import support from "./support";
-import contact from "./contact";
-import promotion from './promotion';
-import language from './language';
-import company from './company';
+import login from './login';
+
 const common = {
         languageName: 'Vietnames(vi)',
         filterTitle: 'Bộ lọc',
@@ -94,4 +83,8 @@ const common = {
         Yes: 'Có',
         No: 'Không',
 }
-export default { common, role, user, login, configType, permission, config, imageType, advertise, templatePosition, category, support, contact, promotion, language, company };
+export default { 
+        common, 
+        login, 
+        config, 
+        };
