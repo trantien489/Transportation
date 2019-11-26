@@ -1,6 +1,7 @@
 export const ControlType = {
    Text: "text",
    Number: "number",
+   Money: "money",
    Password: "password",
    Select: "select",
    CheckBox: "checkbox",

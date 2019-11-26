@@ -35,20 +35,17 @@ class DefaultLayout extends Component {
           name: t(key.common.dashBoard), url: '/dashboard', icon: 'icon-speedometer',
           badge: { variant: 'info', text: 'NEW', },
         },
-        { title: true, name: t(key.common.systemAside), wrapper: { element: '', attributes: {} }, class: '' },
        
-        { title: true, name: t(key.common.reportsAside), },
-        { title: true, name: t(key.common.applicationsAside), wrapper: { element: '', attributes: {}, }, },
-        { title: true, name: 'Settings', wrapper: { element: '', attributes: {} }, class: '' },
-       
-        { name: t(key.config.GridTitle), url: '/config', icon: 'icon-settings', },
-       
+        { name: t(key.capacity.GridTitle), url: '/capacity', icon: 'icon-settings', },
+
+        { name: t(key.transportation.GridTitle), url: '/transportation', icon: 'icon-settings', },
+
       ],
     }
   };
   componentWillReceiveProps() {
     const { t } = this.props;
-    this.setState({ nav: this.GetArraySidebar(t) });
+    //this.setState({ nav: this.GetArraySidebar(t) });
   }
   render() {
     return (
@@ -67,7 +64,7 @@ class DefaultLayout extends Component {
           <main className="main">
             <AppBreadcrumb appRoutes={routes} />
             <Container fluid>
-              <Switch>
+              <Switch> 
                 {routes.map((route, idx) => {
                   return route.component ? (<Route key={idx} path={route.path} exact={route.exact} name={route.name} render={props => (
                     <route.component {...props} />

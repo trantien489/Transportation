@@ -64,15 +64,7 @@ class DefaultHeader extends Component {
               <option value="en">English</option>
             </Input>
           </NavItem>
-          <NavItem className="d-md-down-none">
-            <NavLink href="#"><i className="icon-bell"></i><Badge pill color="danger">5</Badge></NavLink>
-          </NavItem>
-          <NavItem className="d-md-down-none">
-            <NavLink href="#"><i className="icon-list"></i></NavLink>
-          </NavItem>
-          <NavItem className="d-md-down-none">
-            <NavLink href="#"><i className="icon-location-pin"></i></NavLink>
-          </NavItem>
+
           <AppHeaderDropdown direction="down">
             <DropdownToggle nav>
               <img id='ava' src={'/assets/images/avatars/noava.jpg'}  onError={e=>e.target.src='/assets/images/avatars/not-available.jpg'} className="img-avatar" alt="user-avatar" />
@@ -83,7 +75,7 @@ class DefaultHeader extends Component {
             </DropdownMenu>
           </AppHeaderDropdown>
         </Nav>
-        <AppAsideToggler className="d-md-down-none" />
+        {/* <AppAsideToggler className="d-md-down-none" /> */}
         {/*<AppAsideToggler className="d-lg-none" mobile />*/}
       </React.Fragment>
     );

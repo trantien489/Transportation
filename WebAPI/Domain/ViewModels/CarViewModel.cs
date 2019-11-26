@@ -30,6 +30,9 @@ namespace Domain.ViewModels
     }
     public class CarGetAllViewModel : CarUpdateViewModel
     {
+        public int Status { get; set; }
+        public string CapacityType { get; set; }
+
     }
     public class CarGetByIdViewModel : CarUpdateViewModel
     {
@@ -37,5 +40,6 @@ namespace Domain.ViewModels
         public DateTime? UpdatedDate { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
+        public int Status { get; set; }
     }
 }

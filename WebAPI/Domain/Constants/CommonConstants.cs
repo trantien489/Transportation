@@ -83,7 +83,7 @@ namespace Domain.Constants
         {
             public const int limitRecord = 100;
             public const int limitRating = 5;
-            public const int pageSizeDefault = 100;
+            public const int pageSizeDefault = 100000;
         }
         public struct BonusNumber
         {

@@ -29,9 +29,9 @@ namespace Transportation.Controllers
             return input.Substring(0, input.Length - 10).ToLower();
         }
         [HttpGet]
-        public async Task<IActionResult> GetAll(int? pageSize = CommonConstants.ConfigNumber.pageSizeDefault, int? pageNumber = 1)
+        public async Task<IActionResult> GetAll(int? pageSize = CommonConstants.ConfigNumber.pageSizeDefault, int? pageNumber = 1, int? Status = null)
         {
-            var response = await _service.GetAll(pageSize.Value, pageNumber.Value);
+            var response = await _service.GetAll(pageSize.Value, pageNumber.Value, Status);
             return new ObjectResult(response);
         }
         [HttpGet]

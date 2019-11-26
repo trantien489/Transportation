@@ -13,7 +13,8 @@ namespace Transportation.Mappings
             // Update
             CreateMap<CarUpdateViewModel, Car>();
             //GetAll
-            CreateMap<Car, CarGetAllViewModel>();
+            CreateMap<Car, CarGetAllViewModel>()
+                .ForMember(des => des.CapacityType, map => map.MapFrom(src => src.Capacity.Type));
             //GetById
             CreateMap<Car, CarGetByIdViewModel>();
         }

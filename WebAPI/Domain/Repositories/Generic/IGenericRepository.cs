@@ -19,8 +19,9 @@ namespace Domain.Repositories.Generic
         Task<ResponseResult> RemoveAll(IEnumerable<T> entities);
         Task<bool> SaveChanges(ResponseResult result);
         IQueryable<T> AsQueryable();
-        Task<IEnumerable<T>> Where(Expression<Func<T, bool>> where);
+        Task<IQueryable<T>> Where(Expression<Func<T, bool>> where);
         void EntryReference(T entity, Expression<Func<T, dynamic>> entityReference);
         void EntryCollection(T entity, Expression<Func<T, IEnumerable<dynamic>>> entityCollection);
+        Task<T> FirstOrDefault(Expression<Func<T, bool>> where);
     }
 }

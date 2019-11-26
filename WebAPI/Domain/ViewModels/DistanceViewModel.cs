@@ -17,6 +17,7 @@ namespace Domain.ViewModels
     }
     public class DistanceGetAllViewModel : DistanceUpdateViewModel
     {
+        public int Status { get; set; }
     }
     public class DistanceGetByIdViewModel : DistanceUpdateViewModel
     {
@@ -24,5 +25,6 @@ namespace Domain.ViewModels
         public DateTime? UpdatedDate { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
+        public int Status { get; set; }
     }
 }

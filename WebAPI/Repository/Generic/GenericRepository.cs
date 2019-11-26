@@ -151,9 +151,9 @@ namespace Repository.Generic
         /// </summary>
         /// <param name="where"></param>
         /// <returns>IEnumerable of entity</returns>
-        public async Task<IEnumerable<T>> Where(Expression<Func<T, bool>> where)
+        public async Task<IQueryable<T>> Where(Expression<Func<T, bool>> where)
         {
-            return await Task.FromResult(_entities.Where(where).AsAsyncEnumerable().ToEnumerable());
+            return await Task.FromResult(_entities.Where(where));
         }
         /// <summary>
         /// Reference data from its parent entities
@@ -193,6 +193,11 @@ namespace Repository.Generic
                 result.Success = false;
             }
             return result.Success;
+        }
+
+        public async Task<T> FirstOrDefault(Expression<Func<T, bool>> where)
+        {
+            return await _entities.FirstOrDefaultAsync(where);
         }
     }
 }

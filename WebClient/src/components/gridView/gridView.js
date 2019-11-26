@@ -140,11 +140,28 @@ export class GridView extends Component {
     //RENDER CONTENT
     render() {
         let { records, t, isLoadingOver, keyFields, disableColumns, tableName } = this.props;
-        if (!records || records.length === 0) return;
+        const directLink = tableName ? tableName.toLowerCase() : '';
+        if (!records || records.length === 0) {
+            return (
+                <div className="animated fadeIn">
+                    <Card>
+                        <Row>
+                            <Col xs="6">
+                                <Link to={'/' + directLink + '/add'}>
+                                    <Button size="sm" className="btn-dropbox btn-brand icon mr-1 mb-1">
+                                        <i className="fa fa-plus"></i>
+                                    </Button>
+                                </Link>
+                                <strong>{t(keyFields.GridTitleList)}</strong>
+                            </Col>
+                        </Row>
+                    </Card>
+                </div>
+            )
+        }
         let defaultPageSize = commonConstant.PAGE_SIZE;
         let pageSize = (records.length > defaultPageSize) ? defaultPageSize : records.length;
         let showPagination = (records.length > defaultPageSize) ? true : false;
-        const directLink = tableName ? tableName.toLowerCase() : '';
         if (disableColumns && disableColumns.length > 0) {
             records = records.map(item => {
                 disableColumns.forEach(function (column) {
@@ -183,7 +200,7 @@ export class GridView extends Component {
                     className: 'text-left',
                     minResizeWidth: 50
                 };
-                if (typeof records[0][keyName] === "boolean"){ 
+                if (typeof records[0][keyName] === "boolean") {
                     column.Cell = row => (
                         <input type="checkbox" checked={row.original[keyName] ? true : false} disabled />
                     );

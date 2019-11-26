@@ -20,6 +20,7 @@ namespace Domain.ViewModels
     }
     public class PriceGetAllViewModel : PriceUpdateViewModel
     {
+        public int Status { get; set; }
     }
     public class PriceGetByIdViewModel : PriceUpdateViewModel
     {
@@ -27,5 +28,6 @@ namespace Domain.ViewModels
         public DateTime? UpdatedDate { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
+        public int Status { get; set; }
     }
 }

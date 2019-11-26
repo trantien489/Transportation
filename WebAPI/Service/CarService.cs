@@ -19,6 +19,7 @@ namespace Service
         #region Override Methods
         public override void GetAllEntry(Car entity)
         {
+            _repo.EntryReference(entity, e => e.Capacity);
         }
         public override void GetByIdEntry(Car entity)
         {

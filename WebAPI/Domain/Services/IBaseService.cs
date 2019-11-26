@@ -9,7 +9,7 @@ namespace Domain.Services
 {
     public interface IBaseService<TEntity, TCreateViewModel, TUpdateViewModel, TGetByIdViewModel, TGetAllViewModel> where TEntity : BaseEntity
     {
-        Task<ResponseResult> GetAll(int pageSize, int pageNumber);
+        Task<ResponseResult> GetAll(int pageSize, int pageNumber, int? Status);
         Task<ResponseResult> GetById(long id);
         Task<ResponseResult> Create(TCreateViewModel model);
         Task<ResponseResult> Update(TUpdateViewModel model);

@@ -1,6 +1,10 @@
 
 import login from './login';
 import config from './config';
+import capacity from './capacity';
+import transportation from './transportation';
+
+
 let common = {
         languageName: 'English(en)',
         filterTitle: 'Filter',
@@ -86,5 +90,6 @@ export default {
         common, 
         login, 
         config, 
- 
+        capacity,
+        transportation
 };

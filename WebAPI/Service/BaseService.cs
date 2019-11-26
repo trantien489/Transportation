@@ -20,10 +20,19 @@ namespace Service
             _repository = repository;
             _mapper = mapper;
         }
-        public virtual async Task<ResponseResult> GetAll(int pageSize, int pageNumber)
+        public virtual async Task<ResponseResult> GetAll(int pageSize, int pageNumber, int? Status)
         {
             var result = new ResponseResult();
-            var data = await _repository.GetAllPagination(pageNumber, pageSize, x => x.Status != CommonConstants.Status.Deleted, x => x.Id);
+            var data = new Pagination();
+            if (Status.HasValue)
+            {
+                data = await _repository.GetAllPagination(pageNumber, pageSize, x => x.Status == Status.Value, x => x.Id);
+            }
+            else
+            {
+                data = await _repository.GetAllPagination(pageNumber, pageSize, x => x.Status != CommonConstants.Status.Deleted, x => x.Id);
+            }
+
             foreach (var entity in data.Records)
             {
                 GetAllEntry(entity);

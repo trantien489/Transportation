@@ -1,6 +1,9 @@
 
 import config from './config';
 import login from './login';
+import capacity from './capacity';
+import transportation from './transportation';
+
 
 
 const common = {
@@ -88,5 +91,6 @@ export default {
         common,
         login,
         config,
-   
+        capacity,
+        transportation
 };

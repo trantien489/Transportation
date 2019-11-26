@@ -20,6 +20,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json.Serialization;
 using Repository.Generic;
 using Service;
 using Swashbuckle.AspNetCore.Swagger;
@@ -47,8 +48,6 @@ namespace Transportation
                                         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                                         b => b.MigrationsAssembly("Infrastructure.EF")));
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
             #region Swagger
             services.AddSwaggerGen(c =>
             {
@@ -67,9 +66,6 @@ namespace Transportation
                 c.AddSecurityRequirement(security);
             });
             #endregion
-
-            AddServices(services);
-            RegisterMapper(services);
 
             #region Identity
             var builder = services.AddIdentityCore<ApplicationUser>(o =>
@@ -135,7 +131,26 @@ namespace Transportation
             });
             #endregion
 
+            #region CORS
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyOrigin",
+                    build => build
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+            #endregion
 
+            AddServices(services);
+            RegisterMapper(services);
+            services.AddMvc()
+                //Chinh format json reponse
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -164,6 +179,11 @@ namespace Transportation
             app.UseAuthentication();
             #endregion
 
+            #region CORS
+            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
+            app.UseCors(x => x.WithOrigins(jwtAppSettingOptions[nameof(JwtIssuerOptions.UrlClientAdmin)]).AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            #endregion
+
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
@@ -184,8 +204,7 @@ namespace Transportation
             services.AddTransient<IDistanceService, DistanceService>();
             services.AddTransient<IDriverService, DriverService>();
             services.AddTransient<IPriceService, PriceService>();
-
-
+            services.AddTransient<ITransportationService, TransportationService>();
         }
         private static void RegisterMapper(IServiceCollection services)
         {
@@ -198,7 +217,7 @@ namespace Transportation
                 cfg.AddProfile(new DistanceMappingProfile());
                 cfg.AddProfile(new DriverMappingProfile());
                 cfg.AddProfile(new PriceMappingProfile());
-
+                cfg.AddProfile(new TransportationMappingProfile());
 
             });
             var mapper = config.CreateMapper();

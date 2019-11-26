@@ -87,9 +87,7 @@ class LoginForm extends Component {
               {t(key.common.btnLogin)}
             </Button>
           </Col>
-          <Col xs="6" className="text-right">
-            <Button type="button" color="link" className="px-0">{t(key.login.forgotPwLink)}</Button>
-          </Col>
+          
           <Col xs="12 mt-2">
             <div className={`text-center text-danger ${classErrorMsg}`}>{t(key.login.loginErrorMessage)}</div>
             <div className={`text-center text-danger ${classAccountInActiveMsg}`}>{t(key.login.loginAccountInActiveMsg)}</div>

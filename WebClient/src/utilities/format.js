@@ -39,3 +39,15 @@ export function convertUTCDateToLocalDate(stringDate){
     let localTime= moment.utc(utcDate).local();
     return localTime;
 }
+
+export function toCurrency(numberString) {
+    numberString = numberString.toString().replace(/,/g,'');
+    let result =  numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return result;
+}
+
+export function currencyToNumber(numberString) {
+    numberString = numberString.toString().replace(/,/g,'');
+    let result =  isNaN(parseInt(numberString)) ? 0 : parseInt(numberString);
+    return result;
+}

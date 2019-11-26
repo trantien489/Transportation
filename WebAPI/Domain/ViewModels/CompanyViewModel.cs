@@ -28,6 +28,7 @@ namespace Domain.ViewModels
     }
     public class CompanyGetAllViewModel : CompanyUpdateViewModel
     {
+        public int Status { get; set; }
     }
     public class CompanyGetByIdViewModel : CompanyUpdateViewModel
     {
@@ -35,5 +36,6 @@ namespace Domain.ViewModels
         public DateTime? UpdatedDate { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
+        public int Status { get; set; }
     }
 }

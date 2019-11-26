@@ -1,6 +1,9 @@
 
 import config from './config';
 import login from './login';
+import capacity from './capacity';
+import transportation from './transportation';
+
 
 const common = {
         languageName: 'Vietnames(vi)',
@@ -13,7 +16,7 @@ const common = {
         btnCancel: 'Hủy bỏ',
         btnLogin: 'Đăng nhập',
         btnRegister: 'Đăng ký ngay!',
-        btnSubmit: 'Gửi đi',
+        btnSubmit: 'Lưu',
         btnBackList: 'Bỏ qua',
         // API
         errorGetAllAPI: 'Có lỗi xảy ra trong khi tải danh sách từ máy chủ.',
@@ -87,4 +90,6 @@ export default {
         common, 
         login, 
         config, 
+        capacity,
+        transportation,
         };

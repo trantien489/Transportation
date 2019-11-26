@@ -25,6 +25,7 @@ namespace Domain.ViewModels
     }
     public class DriverGetAllViewModel : DriverUpdateViewModel
     {
+        public int Status { get; set; }
     }
     public class DriverGetByIdViewModel : DriverUpdateViewModel
     {
@@ -32,5 +33,6 @@ namespace Domain.ViewModels
         public DateTime? UpdatedDate { get; set; }
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
+        public int Status { get; set; }
     }
 }

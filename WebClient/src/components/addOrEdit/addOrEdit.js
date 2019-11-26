@@ -3,7 +3,7 @@ import key from '../../i18n/key';
 import { Button, Label, Card, CardBody, CardFooter, CardHeader, Form, FormGroup, FormFeedback, Input, Row, Col } from "reactstrap";
 import DateTimePicker from 'react-datetime-picker';
 import Parser from 'html-react-parser';
-import { formatString, formatDateTimeToString, convertUTCDateToLocalDate, cloneObject } from '../../utilities/format';
+import { formatString, formatDateTimeToString, convertUTCDateToLocalDate, cloneObject, toCurrency,currencyToNumber } from '../../utilities/format';
 import { isEmptyOrSpace, validateEmail } from '../../utilities/validate';
 import { ControlType } from '../../contants/ControlType';
 import { handleParameter, handleErrorBasic } from '../../utilities/handler';
@@ -14,7 +14,8 @@ import { AppSwitch } from '@coreui/react';
 import Select from 'react-select';
 var _inputs = [];
 
-var _currentAction = null;export class AddOrEdit extends Component {
+var _currentAction = null;
+export class AddOrEdit extends Component {
     constructor(props) {
         super(props);
         let modelFromFields = props.fields.reduce((arr, item) => ({ ...arr, [item.Name]: item.Value }), {});
@@ -47,6 +48,12 @@ var _currentAction = null;export class AddOrEdit extends Component {
         dateTimeFields.forEach(item => {
             model[item.Name] = (new Date(model[item.Name])).toISOString();
         });
+
+        let moneyFields = fields.filter(item => { return item.Type === ControlType.Money });
+        moneyFields.forEach(item => {
+            model[item.Name] = currencyToNumber(model[item.Name]);
+        });
+
         this.addOrEditAction(model);
     }
     handleBackList = () => {
@@ -64,7 +71,7 @@ var _currentAction = null;export class AddOrEdit extends Component {
         fields.map((field, index) => {
             if (field.Required) {
                 if (
-                    (field.Type === ControlType.ReactSelect && model[field.Name] === '')
+                    (field.Type === ControlType.ReactSelect && model[field.Name] === 0)
                     ||
                     (field.Type === ControlType.ReactSelectMultiple && model[field.Name].length === 0)
                     ||
@@ -81,43 +88,41 @@ var _currentAction = null;export class AddOrEdit extends Component {
         return isValidForm;
     }
     handleChangeFields(event, field) {
-        const { t, fields } = this.props;
+        const { t, fields, handleChangeFieldsCallBack } = this.props;
         const { model, errors } = this.state;
+        let previousModel = cloneObject(model);
+
         let fieldInfo = fields.find(item => item.Name === field);
-        if (!event) { return }
-        else if (fieldInfo && (fieldInfo.Type === ControlType.ReactSelect || fieldInfo.Type === ControlType.ReactSelectAsync) && event.value >= 0) {
+        if (!event && !fieldInfo) { return }
+        else if ((fieldInfo.Type === ControlType.ReactSelect || fieldInfo.Type === ControlType.ReactSelectAsync) && event.value >= 0) {
             model[field] = event.value;
         }
-        else if (fieldInfo && fieldInfo.Type === ControlType.ReactSelectMultiple) {
+        else if (fieldInfo.Type === ControlType.ReactSelectMultiple) {
             model[field] = event.map(item => item.value);
         }
-        else if (fieldInfo && fieldInfo.Type === ControlType.DateTime) {
+        else if (fieldInfo.Type === ControlType.DateTime) {
             model[field] = formatDateTimeToString(event);
         }
-        else if (event.target && fieldInfo && fieldInfo.Type === ControlType.CheckBox) {
+        else if (event.target &&  fieldInfo.Type === ControlType.CheckBox) {
             model[field] = event.target.checked;
         }
-        else if (event.target && fieldInfo && fieldInfo.Type === ControlType.Number) {
+        else if (event.target && fieldInfo.Type === ControlType.Number) {
             model[field] = isNaN(parseInt(event.target.value)) ? 0 : parseInt(event.target.value);
+        }
+        else if (event.target && fieldInfo.Type === ControlType.Money) {
+            let value = event.target ? event.target.value : '';
+            let tempValue = value.replace(/,/g,'');
+            //Check is all number or not
+            var isAllNumber = /^\d+$/.test(tempValue);
+            if( value !=='' &&  !isAllNumber){
+                return;
+            }
+            model[field] = value;
+
         }
         else { // Any thing else is case input type=text
             model[field] = event.target ? event.target.value : '';
-            if (fieldInfo.DuplicateConfig.QueryString) {
-                if (model[field] !== fieldInfo.Value) {
-                    if (this.checkDuplicate[field]) clearTimeout(this.checkDuplicate[field]);
-                    this.checkDuplicate[field] = setTimeout(function () {
-                        if (model[field] !== '' && model[field].length > 1) {
-                            const strQuery = fieldInfo.DuplicateConfig.QueryString + model[field];
-                            this.props.callbackCheckDuplicateAction(field, strQuery);
-                        }
-                    }.bind(this), 300);
-                } else {
-                    if (errors[field]) {
-                        delete errors[field];
-                    }
-                }
-
-            }
+            
             // Check Email Validate
             if (fieldInfo.Name === ControlType.Email) {
                 if (!validateEmail(model[field])) {
@@ -131,6 +136,11 @@ var _currentAction = null;export class AddOrEdit extends Component {
                     }
                 }
             }
+        }
+
+        let nextModel = cloneObject(model);
+        if(handleChangeFieldsCallBack){
+            handleChangeFieldsCallBack(previousModel, nextModel );
         }
 
         this.setState({
@@ -160,20 +170,21 @@ var _currentAction = null;export class AddOrEdit extends Component {
         let { getByIdModel, addModel, editModel, checkDuplicateModel } = nextProps;
         if (getByIdModel && getByIdModel.isLoading) {
             _currentAction = commonConstant.GET_BY_ID;
-            return false;
+            return true;
         }
         if (addModel && addModel.isLoading) {
             _currentAction = commonConstant.ADD;
-            return false;
+            return true;
         }
         if (editModel && editModel.isLoading) {
             _currentAction = commonConstant.EDIT;
-            return false;
+            return true;
         }
         if (checkDuplicateModel && checkDuplicateModel.isLoading) {
             _currentAction = commonConstant.CHECK_DUPLICATE;
-            return false;
+            return true;
         }
+        return false;
     }
     responseAction = (nextProps) => {
         const { t, keyFields, addModel, editModel, getByIdModel, fields } = nextProps;
@@ -188,10 +199,10 @@ var _currentAction = null;export class AddOrEdit extends Component {
                     toastr.success(t(keyFields.AddTitle), t(key.common.addDataSuccess));
                     this.setState({
                         ...this.state,
-                        model: this.state.initModel,
+                        model: cloneObject(this.state.initModel),
                     });
-                } else if (result.Data && result.Data.Code === commonConstant.ERROR_MSG_EXISTED) {
-                    toastr.error(t(keyFields.AddTitle), t(keyFields.AddExistErrorMsg));
+                } else if ( !isEmptyOrSpace(result.Message)) {
+                    toastr.error(t(keyFields.AddTitle), result.Message);
                 } else {
                     toastr.error(t(keyFields.AddTitle), t(key.common.addDataFail));
                 }
@@ -201,13 +212,11 @@ var _currentAction = null;export class AddOrEdit extends Component {
                 if (!editModel || !editModel.responseData ||
                     handleErrorBasic(editModel.responseData.status, t(keyFields.EditTitle), t)) return;
                 if (editModel.responseData.Success) {
-                    fields.forEach(item => {
-                        if (item.Type === ControlType.DuplicateText) {
-                            item.Value = model[item.Name];
-                        }
-                    });
+                   
                     toastr.success(t(keyFields.EditTitle), t(key.common.editDataSuccess));
-                }
+                } else if ( !isEmptyOrSpace(result.Message)) {
+                toastr.error(t(keyFields.AddTitle), result.Message);
+                } 
                 else {
                     toastr.error(t(keyFields.EditTitle), t(key.common.editDataFail));
                 }
@@ -225,11 +234,7 @@ var _currentAction = null;export class AddOrEdit extends Component {
                                 Data[item.Name] = formatDateTimeToString(convertUTCDateToLocalDate(Data[item.Name]));
                             }
                         });
-                        fields.forEach(item => {
-                            if (item.Type === ControlType.DuplicateText) {
-                                item.Value = Data[item.Name];
-                            }
-                        });
+                      
                         this.setState({
                             ...this.state,
                             model: cloneObject(Data),
@@ -251,12 +256,27 @@ var _currentAction = null;export class AddOrEdit extends Component {
         //response action
         this.responseAction(nextProps);
     }
+    moneyOnBlur = (event, fieldName) => {
+        const { model } = this.state; 
+        let value = event.target ? event.target.value : '';
+
+        model[fieldName] = toCurrency(value);
+
+        this.setState({
+            ...this.state,
+            model: model,
+        });
+    }
     render() {
-        const { t, keyFields, fields, match } = this.props;
-        const { model, errors } = this.state;
+        const { t, keyFields, fields, match, renderCallback } = this.props;
+        const { model, errors } = this.state; 
+        if(renderCallback){
+            renderCallback(model);
+        }
+        console.log('tien', model)
         const isCaseAdd = handleParameter(match) === commonConstant.ParamAdd;
         const title = handleParameter(match) === commonConstant.ParamAdd ? t(keyFields.AddTitle) : t(keyFields.EditTitle);
-        _inputs = [];
+       
         return (
             <Form onSubmit={this.handleSubmitForm}>
                 <Card>
@@ -273,19 +293,9 @@ var _currentAction = null;export class AddOrEdit extends Component {
                                     if (item.Type === ControlType.DateTime && valueField) {
                                         valueField = new Date(valueField);
                                     }
-                                    //Handle error more for duplicate
-                                    if (item.Type === 'DuplicateText' && valueField !== '' && valueField !== item.Value) {
-                                        if (item.Name === ControlType.Email) {
-                                            let errorDuplicate = formatString(t(key.common.fieldCanNotDuplicateMsg), t(key.user.Email));
-                                            if (!errors[item.Name] || errors[item.Name] === errorDuplicate) {
-                                                errors[item.Name] = item.DuplicateConfig.ErrorMessage ? item.DuplicateConfig.ErrorMessage : null;
-                                            }
-                                        } else {
-                                            errors[item.Name] = item.DuplicateConfig.ErrorMessage ? item.DuplicateConfig.ErrorMessage : null;
-                                        }
-                                    }
+                               
                                     let invalidField = errors[item.Name] ? true : null;
-                                    let validField = !errors[item.Name] && valueField !== '' && valueField !== item.Value? true : null;
+                                    let validField = !errors[item.Name] && valueField !== '' ? true : null;
                                     const isHideField = !(item.IsDefaultField && isCaseAdd);
                                     return (<React.Fragment key={index}>{
                                         isHideField && item.Type &&
@@ -300,12 +310,14 @@ var _currentAction = null;export class AddOrEdit extends Component {
                                                         readOnly={item.IsReadOnly}
                                                     />
                                                 }
-                                                {item.Type === ControlType.DuplicateText &&
-                                                    <Input id={item.Name} name={item.Name} type="text"
-                                                        value={valueField} invalid={invalidField} valid={validField}
+                                                {
+                                                    (item.Type === ControlType.Money) &&
+                                                    <Input id={item.Name} name={item.Name} type='text'
+                                                        value={valueField} invalid={invalidField}
                                                         innerRef={(self) => { if (self) _inputs.push(self); }}
                                                         onChange={(event) => this.handleChangeFields(event, item.Name)}
                                                         readOnly={item.IsReadOnly}
+                                                        onBlur = {(event) => this.moneyOnBlur(event, item.Name)}
                                                     />
                                                 }
                                                 {item.Type === ControlType.Select && item.SelectConfig &&
@@ -323,6 +335,7 @@ var _currentAction = null;export class AddOrEdit extends Component {
                                                         onChange={(event) => this.handleChangeFields(event, item.Name)}
                                                         className={(item.IsReadOnly ? 'is-readonly' : (errors[item.Name] ? 'is-invalid' : '')) + ' form-control'}
                                                         readOnly={item.IsReadOnly}
+                                                        format="dd/MM/y h:mm a"
                                                     />
                                                 }
                                                 {
@@ -386,7 +399,7 @@ var _currentAction = null;export class AddOrEdit extends Component {
                     </CardBody>
                     <CardFooter>
                         <Button type="submit" size="sm" color="primary">
-                            <i className="fa fa-dot-circle-o"></i> {t(key.common.btnSubmit)}
+                            <i className="fa fa-save"></i> {t(key.common.btnSubmit)}
                         </Button>{' '}
                         <Button type="reset" size="sm" color="danger" onClick={this.handleBackList}>
                             <i className="fa fa-ban"></i> {t(key.common.btnBackList)}
