@@ -51,7 +51,7 @@ namespace Service
                     var car = await _carRepo.GetById(carId);
                     if (distance != null && car != null)
                     {
-                        var price = await _priceRepo.FirstOrDefault(pri => pri.DistanceId == distance.Id && pri.CapacityId == car.CapacityId);
+                        var price = await _priceRepo.FirstOrDefault(pri => pri.DistanceId == distance.Id && pri.CapacityId == car.CapacityId && pri.Status == CommonConstants.Status.Active);
                         if (price != null)
                         {
                             result.Data = price.Money;
@@ -71,6 +71,10 @@ namespace Service
         #region Override Methods
         public override void GetAllEntry(Transportation entity)
         {
+            _repo.EntryReference(entity, e => e.Company);
+            _repo.EntryReference(entity, e => e.Car);
+            _repo.EntryReference(entity, e => e.DriverPrimary);
+            _repo.EntryReference(entity, e => e.DriverSecondary);
         }
         public override void GetByIdEntry(Transportation entity)
         {
@@ -83,7 +87,7 @@ namespace Service
             var min = Convert.ToInt32(arr[0]);
             var max = Convert.ToInt32(arr[1]);
 
-            return min <= distance && distance <= max;
+            return min <= distance && distance <= max && entity.Status == CommonConstants.Status.Active;
         }
         #endregion
     }

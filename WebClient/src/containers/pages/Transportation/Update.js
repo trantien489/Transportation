@@ -26,7 +26,7 @@ class TransportationUpdate extends Component {
         super(props);
         let fields = [
             //Detail fields
-            new InputField("TransportDate", ControlType.DateTime, formatDateTimeToString(new Date()), true),
+            new InputField("TransportDate", ControlType.DateTime, formatDateTimeToString(new Date().setHours(0,0,0,0)), true),
             new InputField("CarId", ControlType.ReactSelect, 0, true),
             new InputField("CompanyId", ControlType.ReactSelect, 0, true),
             new InputField("DocumentNumber", ControlType.Text, '', true),
@@ -163,8 +163,9 @@ class TransportationUpdate extends Component {
     renderCallback = (model) => {
         const { generateMoneyTransportationReducer } = this.props;
 
-        if(generateMoneyTransportationReducer.responseData && generateMoneyTransportationReducer.responseData.Data){
-            model.Money = toCurrency(generateMoneyTransportationReducer.responseData.Data);
+        if(generateMoneyTransportationReducer.responseData && generateMoneyTransportationReducer.responseData.Data >= 0){
+            let money = generateMoneyTransportationReducer.responseData.Data;
+            model.Money = money == 0 ? 0 : toCurrency(money);
             delete generateMoneyTransportationReducer.responseData;
         }
     }
@@ -174,7 +175,7 @@ class TransportationUpdate extends Component {
         const { t, addModel, editModel, getByIdModel, carGetAllSelectReducer, driverGetAllSelectReducer, companyGetAllSelectReducer, generateMoneyTransportationReducer } = this.props;
         const { currentAction } = this.state;
 
-        let loading = currentAction.length > 0;
+        let loading = currentAction.length > 0 || addModel.isLoading || editModel.isLoading;
 
         // loadingDataWhenFirstIn is true, khi muon dang tai data
         let loadingDataWhenFirstIn = getByIdModel.isLoading || carGetAllSelectReducer.isLoading || driverGetAllSelectReducer.isLoading || companyGetAllSelectReducer.isLoading || generateMoneyTransportationReducer.isLoading;

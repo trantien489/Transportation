@@ -19,6 +19,8 @@ import changeStatusCapacityReducer from './capacity/changeStatusReducer';
 import deleteCapacityReducer from './capacity/deleteReducer';
 import addCapacityReducer from './capacity/addReducer';
 import editCapacityReducer from './capacity/editReducer';
+import capacityGetAllSelectReducer from './capacity/getAllSelectReducer';
+
 
 //TRANSPORTATION
 import getAllTransportationReducer from './transportation/getAllReducer';
@@ -79,6 +81,7 @@ export default combineReducers({
     deleteCapacityReducer: deleteCapacityReducer,
     addCapacityReducer: addCapacityReducer,
     editCapacityReducer: editCapacityReducer,
+    capacityGetAllSelectReducer: capacityGetAllSelectReducer,
 
     //TRANSPORTATION
     getAllTransportationReducer: getAllTransportationReducer,

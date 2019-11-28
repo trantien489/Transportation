@@ -24,3 +24,7 @@ export const addCapacityFailureAction = createAction(CAPACITY.ADD_FAILURE);
 export const editCapacityAction = createAction(CAPACITY.EDIT);
 export const editCapacitySuccessAction = createAction(CAPACITY.EDIT_SUCCESS);
 export const editCapacityFailureAction = createAction(CAPACITY.EDIT_FAILURE);
+//GETALL_SELECT
+export const capacityGetAllSelectAction = createAction(CAPACITY.GETALL_SELECT);
+export const capacityGetAllSelectSuccessAction = createAction(CAPACITY.GETALL_SELECT_SUCCESS);
+export const capacityGetAllSelectFailureAction = createAction(CAPACITY.GETALL_SELECT_FAILURE);

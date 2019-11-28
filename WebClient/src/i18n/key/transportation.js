@@ -13,6 +13,11 @@ const transportation = {
     Money : 'transportation:Money',
     TransportDate : 'transportation:TransportDate',
     Report: 'transportation:Report',
-    Note : 'transportation:Note'
+    Note : 'transportation:Note',
+    DriverPrimaryName : 'transportation:DriverPrimaryName',
+    CarNumber : 'transportation:CarNumber',
+    DriverSecondaryName : 'transportation:DriverSecondaryName',
+    CompanyCode: 'transportation:CompanyCode',
+    CompanyName : 'transportation:CompanyName',
 }
 export default transportation;

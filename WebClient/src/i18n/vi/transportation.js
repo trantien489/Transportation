@@ -13,7 +13,12 @@ const transportation = {
     Money : 'Thành tiền',
     TransportDate : 'Ngày vận chuyển',
     Report: 'Biên bản',
-    Note : 'Ghi chú'
+    Note : 'Ghi chú',
+    DriverPrimaryName : 'Tài xế',
+    CarNumber : 'Xe',
+    DriverSecondaryName : 'Phụ xe',
+    CompanyCode: 'Mã KH',
+    CompanyName : 'CTY Khách Hàng',
     
 }
 export default transportation;

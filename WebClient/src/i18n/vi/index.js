@@ -3,7 +3,8 @@ import config from './config';
 import login from './login';
 import capacity from './capacity';
 import transportation from './transportation';
-
+import car from './car';
+import company from './company';
 
 const common = {
         languageName: 'Vietnames(vi)',
@@ -92,4 +93,6 @@ export default {
         config, 
         capacity,
         transportation,
+        car,
+        company,
         };

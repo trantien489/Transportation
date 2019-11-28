@@ -3,7 +3,7 @@ import key from '../../i18n/key';
 import { Button, Label, Card, CardBody, CardFooter, CardHeader, Form, FormGroup, FormFeedback, Input, Row, Col } from "reactstrap";
 import DateTimePicker from 'react-datetime-picker';
 import Parser from 'html-react-parser';
-import { formatString, formatDateTimeToString, convertUTCDateToLocalDate, cloneObject, toCurrency,currencyToNumber } from '../../utilities/format';
+import { formatString, formatDateTimeToString, convertUTCDateToLocalDate, cloneObject, toCurrency, currencyToNumber } from '../../utilities/format';
 import { isEmptyOrSpace, validateEmail } from '../../utilities/validate';
 import { ControlType } from '../../contants/ControlType';
 import { handleParameter, handleErrorBasic } from '../../utilities/handler';
@@ -44,8 +44,8 @@ export class AddOrEdit extends Component {
         const { model } = this.state;
         // Xử lý input, convert from local time to UTC time to save db
         let fields = this.props.fields;
-        let dateTimeFields = fields.filter(item => { return item.Type === ControlType.DateTime && !item.IsDefaultField; });
-        dateTimeFields.forEach(item => {
+        let dateTimeUTCFields = fields.filter(item => { return item.Type === ControlType.DateTimeUTC && !item.IsDefaultField; });
+        dateTimeUTCFields.forEach(item => {
             model[item.Name] = (new Date(model[item.Name])).toISOString();
         });
 
@@ -93,17 +93,17 @@ export class AddOrEdit extends Component {
         let previousModel = cloneObject(model);
 
         let fieldInfo = fields.find(item => item.Name === field);
-        if (!event && !fieldInfo) { return }
+        if (!event || !fieldInfo) { return }
         else if ((fieldInfo.Type === ControlType.ReactSelect || fieldInfo.Type === ControlType.ReactSelectAsync) && event.value >= 0) {
             model[field] = event.value;
         }
         else if (fieldInfo.Type === ControlType.ReactSelectMultiple) {
             model[field] = event.map(item => item.value);
         }
-        else if (fieldInfo.Type === ControlType.DateTime) {
+        else if (  fieldInfo.Type === ControlType.DateTime || fieldInfo.Type === ControlType.DateTimeUTC ) {
             model[field] = formatDateTimeToString(event);
         }
-        else if (event.target &&  fieldInfo.Type === ControlType.CheckBox) {
+        else if (event.target && fieldInfo.Type === ControlType.CheckBox) {
             model[field] = event.target.checked;
         }
         else if (event.target && fieldInfo.Type === ControlType.Number) {
@@ -111,10 +111,10 @@ export class AddOrEdit extends Component {
         }
         else if (event.target && fieldInfo.Type === ControlType.Money) {
             let value = event.target ? event.target.value : '';
-            let tempValue = value.replace(/,/g,'');
+            let tempValue = value.replace(/,/g, '');
             //Check is all number or not
             var isAllNumber = /^\d+$/.test(tempValue);
-            if( value !=='' &&  !isAllNumber){
+            if (value !== '' && !isAllNumber) {
                 return;
             }
             model[field] = value;
@@ -122,7 +122,7 @@ export class AddOrEdit extends Component {
         }
         else { // Any thing else is case input type=text
             model[field] = event.target ? event.target.value : '';
-            
+
             // Check Email Validate
             if (fieldInfo.Name === ControlType.Email) {
                 if (!validateEmail(model[field])) {
@@ -139,8 +139,8 @@ export class AddOrEdit extends Component {
         }
 
         let nextModel = cloneObject(model);
-        if(handleChangeFieldsCallBack){
-            handleChangeFieldsCallBack(previousModel, nextModel );
+        if (handleChangeFieldsCallBack) {
+            handleChangeFieldsCallBack(previousModel, nextModel);
         }
 
         this.setState({
@@ -201,7 +201,7 @@ export class AddOrEdit extends Component {
                         ...this.state,
                         model: cloneObject(this.state.initModel),
                     });
-                } else if ( !isEmptyOrSpace(result.Message)) {
+                } else if (!isEmptyOrSpace(result.Message)) {
                     toastr.error(t(keyFields.AddTitle), result.Message);
                 } else {
                     toastr.error(t(keyFields.AddTitle), t(key.common.addDataFail));
@@ -212,11 +212,11 @@ export class AddOrEdit extends Component {
                 if (!editModel || !editModel.responseData ||
                     handleErrorBasic(editModel.responseData.status, t(keyFields.EditTitle), t)) return;
                 if (editModel.responseData.Success) {
-                   
+
                     toastr.success(t(keyFields.EditTitle), t(key.common.editDataSuccess));
-                } else if ( !isEmptyOrSpace(result.Message)) {
-                toastr.error(t(keyFields.AddTitle), result.Message);
-                } 
+                } else if (!isEmptyOrSpace(result.Message)) {
+                    toastr.error(t(keyFields.AddTitle), result.Message);
+                }
                 else {
                     toastr.error(t(keyFields.EditTitle), t(key.common.editDataFail));
                 }
@@ -228,13 +228,13 @@ export class AddOrEdit extends Component {
                 if (getByIdModel.responseData.Success) {
                     const { Data } = getByIdModel.responseData;
                     if (Data) {
-                        let dateTimeFields = fields.filter(item => { return item.Type === ControlType.DateTime });
-                        dateTimeFields.forEach(item => {
+                        let dateTimeUTCFields = fields.filter(item => { return item.Type === ControlType.DateTimeUTC });
+                        dateTimeUTCFields.forEach(item => {
                             if (Data[item.Name]) {
                                 Data[item.Name] = formatDateTimeToString(convertUTCDateToLocalDate(Data[item.Name]));
                             }
                         });
-                      
+
                         this.setState({
                             ...this.state,
                             model: cloneObject(Data),
@@ -257,7 +257,7 @@ export class AddOrEdit extends Component {
         this.responseAction(nextProps);
     }
     moneyOnBlur = (event, fieldName) => {
-        const { model } = this.state; 
+        const { model } = this.state;
         let value = event.target ? event.target.value : '';
 
         model[fieldName] = toCurrency(value);
@@ -269,14 +269,13 @@ export class AddOrEdit extends Component {
     }
     render() {
         const { t, keyFields, fields, match, renderCallback } = this.props;
-        const { model, errors } = this.state; 
-        if(renderCallback){
+        const { model, errors } = this.state;
+        if (renderCallback) {
             renderCallback(model);
-        }
-        console.log('tien', model)
+        } console.log('model', model);
         const isCaseAdd = handleParameter(match) === commonConstant.ParamAdd;
         const title = handleParameter(match) === commonConstant.ParamAdd ? t(keyFields.AddTitle) : t(keyFields.EditTitle);
-       
+
         return (
             <Form onSubmit={this.handleSubmitForm}>
                 <Card>
@@ -289,13 +288,8 @@ export class AddOrEdit extends Component {
                                 fields.map((item, index) => {
                                     let fieldLabel = t(keyFields[item.Name]) ? t(keyFields[item.Name]) : t(key.common[item.Name]);
                                     fieldLabel += item.Required ? ' <sup>*</sup>' : '';
-                                    let valueField = (!model || !model[item.Name]) ? '' : model[item.Name];
-                                    if (item.Type === ControlType.DateTime && valueField) {
-                                        valueField = new Date(valueField);
-                                    }
-                               
+                                    let valueField = model[item.Name];
                                     let invalidField = errors[item.Name] ? true : null;
-                                    let validField = !errors[item.Name] && valueField !== '' ? true : null;
                                     const isHideField = !(item.IsDefaultField && isCaseAdd);
                                     return (<React.Fragment key={index}>{
                                         isHideField && item.Type &&
@@ -317,7 +311,7 @@ export class AddOrEdit extends Component {
                                                         innerRef={(self) => { if (self) _inputs.push(self); }}
                                                         onChange={(event) => this.handleChangeFields(event, item.Name)}
                                                         readOnly={item.IsReadOnly}
-                                                        onBlur = {(event) => this.moneyOnBlur(event, item.Name)}
+                                                        onBlur={(event) => this.moneyOnBlur(event, item.Name)}
                                                     />
                                                 }
                                                 {item.Type === ControlType.Select && item.SelectConfig &&
@@ -331,7 +325,18 @@ export class AddOrEdit extends Component {
                                                 {item.Type === ControlType.DateTime &&
                                                     <DateTimePicker id={item.Name} name={item.Name}
                                                         innerRef={(self) => { if (self) _inputs.push(self); }}
-                                                        value={valueField}
+                                                        value={new Date(valueField)}
+                                                        onChange={(event) => this.handleChangeFields(event, item.Name)}
+                                                        className={(item.IsReadOnly ? 'is-readonly' : (errors[item.Name] ? 'is-invalid' : '')) + ' form-control'}
+                                                        readOnly={item.IsReadOnly}
+                                                        format="d/M/y"
+                                                    />
+                                                }
+
+                                                {item.Type === ControlType.DateTimeUTC &&
+                                                    <DateTimePicker id={item.Name} name={item.Name}
+                                                        innerRef={(self) => { if (self) _inputs.push(self); }}
+                                                        value={new Date(valueField)}
                                                         onChange={(event) => this.handleChangeFields(event, item.Name)}
                                                         className={(item.IsReadOnly ? 'is-readonly' : (errors[item.Name] ? 'is-invalid' : '')) + ' form-control'}
                                                         readOnly={item.IsReadOnly}

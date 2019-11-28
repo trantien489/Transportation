@@ -8,10 +8,10 @@ namespace Domain.ViewModels
     public class CompanyCreateViewModel
     {
         [Required]
-        public string Name { get; set; }
+        public string Code { get; set; }
 
         [Required]
-        public string Code { get; set; }
+        public string Name { get; set; }
 
         [Required]
         public string Address { get; set; }

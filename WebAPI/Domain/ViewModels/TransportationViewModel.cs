@@ -28,8 +28,19 @@ namespace Domain.ViewModels
     {
         public long Id { get; set; }
     }
-    public class TransportationGetAllViewModel : TransportationUpdateViewModel
+    public class TransportationGetAllViewModel 
     {
+        public long Id { get; set; }
+        public DateTime TransportDate { get; set; }
+        public string CarNumber { get; set; }
+        public string DocumentNumber { get; set; }
+        public string CompanyCode { get; set; }
+        public string CompanyName { get; set; }
+        public string Report { get; set; }
+        public decimal Money { get; set; }
+        public string Note { get; set; }
+        public string DriverPrimaryName { get; set; }
+        public string DriverSecondaryName { get; set; }
         public int Status { get; set; }
     }
     public class TransportationGetByIdViewModel : TransportationUpdateViewModel

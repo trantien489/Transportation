@@ -1,7 +1,7 @@
 import { combineEpics } from 'redux-observable';
 import { loginEpic } from '../epics/loginEpic';
 import { getAllConfigEpic, changeStatusConfigEpic, deleteConfigEpic, addConfigEpic, editConfigEpic, getByIdConfigEpic } from '../epics/configEpic';
-import { getAllCapacityEpic, changeStatusCapacityEpic, deleteCapacityEpic, addCapacityEpic, editCapacityEpic, getByIdCapacityEpic } from '../epics/capacityEpic';
+import { getAllCapacityEpic, changeStatusCapacityEpic, deleteCapacityEpic, addCapacityEpic, editCapacityEpic, getByIdCapacityEpic,capacityGetAllSelectEpic } from '../epics/capacityEpic';
 import { getAllTransportationEpic, changeStatusTransportationEpic, deleteTransportationEpic, addTransportationEpic, editTransportationEpic, getByIdTransportationEpic, generateMoneyTransportationEpic } from '../epics/transportationEpic';
 import { getAllCarEpic, changeStatusCarEpic, deleteCarEpic, addCarEpic, editCarEpic, getByIdCarEpic, carGetAllSelectEpic  } from '../epics/carEpic';
 import { getAllDriverEpic, changeStatusDriverEpic, deleteDriverEpic, addDriverEpic, editDriverEpic, getByIdDriverEpic, driverGetAllSelectEpic  } from '../epics/driverEpic';
@@ -12,7 +12,7 @@ const rootEpic = combineEpics(
     
     getAllConfigEpic, changeStatusConfigEpic, deleteConfigEpic, addConfigEpic, editConfigEpic, getByIdConfigEpic,
 
-    getAllCapacityEpic, changeStatusCapacityEpic, deleteCapacityEpic, addCapacityEpic, editCapacityEpic, getByIdCapacityEpic,
+    getAllCapacityEpic, changeStatusCapacityEpic, deleteCapacityEpic, addCapacityEpic, editCapacityEpic, getByIdCapacityEpic, capacityGetAllSelectEpic,
 
     getAllTransportationEpic, changeStatusTransportationEpic, deleteTransportationEpic, addTransportationEpic, editTransportationEpic, getByIdTransportationEpic, generateMoneyTransportationEpic,
 

@@ -12,6 +12,13 @@ export function formatDateTimeToString(valueDateTime, formatString) {
     if (formatString != null) stringDateTime = moment(valueDateTime).format(formatString);
     return stringDateTime;
 }
+
+export function gridViewFormatDateTimeToString(valueDateTime, formatString) {
+    if (!valueDateTime) return null;
+    var stringDateTime = moment(valueDateTime).format('D/M/YYYY');
+    if (formatString != null) stringDateTime = moment(valueDateTime).format(formatString);
+    return stringDateTime;
+}
 export function formatString(stringOrigin, stringReplace) {
     if (stringOrigin == null || stringOrigin === '') return '';
     let result = '';

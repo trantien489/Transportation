@@ -15,15 +15,21 @@ import {
     addCapacitySuccessAction,
     addCapacityFailureAction,
     editCapacitySuccessAction,
-    editCapacityFailureAction
+    editCapacityFailureAction,
+    capacityGetAllSelectSuccessAction,
+    capacityGetAllSelectFailureAction,
 } from '../actions/capacity';
 import API_SERVICES from '../services';
+import {status} from '../contants/staticData';
+
 const API_GETALL = API_SERVICES.HOST + API_SERVICES.VERSION + '/Capacity/GetAll';
 const API_GETBYID = API_SERVICES.HOST + API_SERVICES.VERSION + '/Capacity/GetById';
 const API_CHANGE_STATUS = API_SERVICES.HOST + API_SERVICES.VERSION + '/Capacity/ChangeStatus/';
 const API_DELETE = API_SERVICES.HOST + API_SERVICES.VERSION + '/Capacity/Delete/';
 const API_ADD = API_SERVICES.HOST + API_SERVICES.VERSION + '/Capacity/Create/';
 const API_EDIT = API_SERVICES.HOST + API_SERVICES.VERSION + '/Capacity/Update';
+const API_GETALL_SELECT = API_SERVICES.HOST + API_SERVICES.VERSION + '/Capacity/GetAll?Status' + status.Active;
+
 // GETALL
 const getAllCapacityEpic = action$ => action$.pipe(
     ofType(CAPACITY.GETALL),
@@ -96,4 +102,17 @@ const editCapacityEpic = action$ => action$.pipe(
         )
     })
 );
-export { getAllCapacityEpic, getByIdCapacityEpic, changeStatusCapacityEpic, deleteCapacityEpic, addCapacityEpic, editCapacityEpic };
+
+// GETALL_SELECT
+const capacityGetAllSelectEpic = action$ => action$.pipe(
+    ofType(CAPACITY.GETALL_SELECT),
+    mergeMap(() => {
+        return ajax.getJSON(API_GETALL_SELECT, API_SERVICES.HEADERS()).pipe(
+            map(response => capacityGetAllSelectSuccessAction(response)),
+            catchError(error => of(capacityGetAllSelectFailureAction({
+                message: error.xhr.response, status: error.xhr.status
+            })))
+        )
+    })
+);
+export { getAllCapacityEpic, getByIdCapacityEpic, changeStatusCapacityEpic, deleteCapacityEpic, addCapacityEpic, editCapacityEpic, capacityGetAllSelectEpic };

@@ -6,19 +6,11 @@ import { Col, Row } from "reactstrap";
 import LoadingOverlay from 'react-loading-overlay';
 import { ErrorAlert } from '../../../components/alerts/errorAlert';
 import { hasRecordsActionReducer, applyCheckAuthorized } from '../../../utilities/validate';
-import { getAllTransportationAction, changeStatusTransportationAction, deleteTransportationAction } from '../../../actions/transportation';
+import { getAllCompanyAction, changeStatusCompanyAction, deleteCompanyAction } from '../../../actions/company';
 import { GridView } from '../../../components/gridView/gridView';
-import { addAction, isExistAction, removeAction } from '../../../utilities/currrentActionHelper';
-import { TRANSPORTATION } from "../../../actionTypes/transportation";
-import { toCurrency } from "../../../utilities/format";
-import { handleErrorBasic } from '../../../utilities/handler';
-
-class Transportation extends Component {
+class Company extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            currentAction: []
-        };
         applyCheckAuthorized();
     }
     componentDidMount() {
@@ -27,33 +19,9 @@ class Transportation extends Component {
     }
     requestAction = (nextProps) => {
         //Khi có action phát đi thì hàm này sẽ handle
-        let { getAllModel } = nextProps;
-        const { currentAction } = this.state;
-        let result = false;
-        if (getAllModel.isLoading && !isExistAction(currentAction, TRANSPORTATION.GETALL)) {
-            addAction(currentAction, TRANSPORTATION.GETALL)
-            result = true;
-        }
-
-        return result;
     }
     responseAction = (nextProps) => {
         //Khi api trả dữ liệu về thì hàm này sẽ handle
-        let { getAllModel, t } = nextProps;
-        const { currentAction } = this.state;
-
-        //Get All Transportation
-        if (!getAllModel.isLoading && isExistAction(currentAction, TRANSPORTATION.GETALL)) {
-            if (!getAllModel.responseData ||
-                handleErrorBasic(getAllModel.responseData.status, 'Tải danh sách Vận chuyển', t)) return;
-            
-            let records = getAllModel.responseData.Data.Records;
-            records.forEach(item => {
-                item.Money = toCurrency(item.Money)
-            });
-           
-            this.setState({ currentAction: removeAction(currentAction, TRANSPORTATION.GETALL) });
-        }
     }
     componentWillReceiveProps(nextProps) {
         //request action
@@ -63,7 +31,7 @@ class Transportation extends Component {
     }
     render() {
         const { t, changeStatusModel, deleteModel, getAllModel } = this.props;
-        let disableColumns = ['DriverSecondaryName', ];//['Id','Status'];
+        let disableColumns = [];//['Id','Status'];
         if (!getAllModel || !changeStatusModel || !deleteModel) return;
         const isLoadingOver = changeStatusModel.isLoading || deleteModel.isLoading;
         if (getAllModel.isLoading) {
@@ -77,8 +45,8 @@ class Transportation extends Component {
                 return <GridView
                     isLoadingOver={isLoadingOver}
                     records={getAllModel.responseData.Data.Records}
-                    keyFields={key.transportation}
-                    tableName="TRANSPORTATION"
+                    keyFields={key.company}
+                    tableName="COMPANY"
                     disableColumns={disableColumns}
                     {...this.props}
                 />
@@ -90,14 +58,14 @@ class Transportation extends Component {
 }
 //Nhận dữ liệu trả về từ reducer (reducer thì lấy data từ api)
 const mapStateToProps = state => ({
-    getAllModel: state.getAllTransportationReducer,
-    changeStatusModel: state.changeStatusTransportationReducer,
-    deleteModel: state.deleteTransportationReducer,
+    getAllModel: state.getAllCompanyReducer,
+    changeStatusModel: state.changeStatusCompanyReducer,
+    deleteModel: state.deleteCompanyReducer,
 });
 //Phát đi tính hiệu thông qua action (để lấy data từ api)
 const mapDispatchToProps = {
-    getAllAction: getAllTransportationAction,
-    changeStatusAction: changeStatusTransportationAction,
-    deleteAction: deleteTransportationAction,
+    getAllAction: getAllCompanyAction,
+    changeStatusAction: changeStatusCompanyAction,
+    deleteAction: deleteCompanyAction,
 };
-export default translate()(connect(mapStateToProps, mapDispatchToProps)(Transportation));
+export default translate()(connect(mapStateToProps, mapDispatchToProps)(Company));

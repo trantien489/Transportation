@@ -8,6 +8,7 @@ export const ControlType = {
    Radio: "radio",
    AutoComplete: "autocomplete",
    DateTime: "date",
+   DateTimeUTC: "dateUTC",
    ReactSelect: "react-select",
    ReactSelectMultiple: "react-select-multiple",
    ReactSelectAsync: "react-select-async",

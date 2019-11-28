@@ -40,6 +40,26 @@ const TransportationUpdate = Loadable({
   loading: Loading,
 });
 
+//CAR
+const Car = Loadable({
+  loader: () => import('./pages/Car/Index'),
+  loading: Loading,
+});
+const CarUpdate = Loadable({
+  loader: () => import('./pages/Car/Update'),
+  loading: Loading,
+});
+
+//COMPANY
+const Company = Loadable({
+  loader: () => import('./pages/Company/Index'),
+  loading: Loading,
+});
+const CompanyUpdate = Loadable({
+  loader: () => import('./pages/Company/Update'),
+  loading: Loading,
+});
+
 
 const routes = [
   { path: '/dashboard', exact: true, name: 'Home', component: DefaultLayout },
@@ -53,6 +73,12 @@ const routes = [
 
   { path: '/transportation/:id', name: 'Update', component: TransportationUpdate },
   { path: '/transportation', name: 'Transportation', component: Transportation },
+
+  { path: '/car/:id', name: 'Update', component: CarUpdate },
+  { path: '/car', name: 'Car', component: Car },  
+
+  { path: '/company/:id', name: 'Update', component: CompanyUpdate },
+  { path: '/company', name: 'Company', component: Company },  
  
 ];
 export default routes;

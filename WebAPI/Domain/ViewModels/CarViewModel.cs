@@ -28,11 +28,19 @@ namespace Domain.ViewModels
     {
         public long Id { get; set; }
     }
-    public class CarGetAllViewModel : CarUpdateViewModel
+    public class CarGetAllViewModel 
     {
-        public int Status { get; set; }
+        public long Id { get; set; }
+        public string CarNumber { get; set; }
         public string CapacityType { get; set; }
 
+        public double Length { get; set; }
+
+        public double Width { get; set; }
+
+        public double Height { get; set; }
+        public string Note { get; set; }
+        public int Status { get; set; }
     }
     public class CarGetByIdViewModel : CarUpdateViewModel
     {

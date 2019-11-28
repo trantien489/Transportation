@@ -10,6 +10,8 @@ import { commonConstant } from '../../contants/common';
 import { getSessionStorage, setSessionStorage } from '../../utilities/storage';
 import { hasRecordsActionReducer, isNullActionReducer, removeItemFromItems, changeStatusItemFromItems, changeIsDefaultItemFromItems } from '../../utilities/validate';
 import { toastr } from 'react-redux-toastr';
+import { convertUTCDateToLocalDate, gridViewFormatDateTimeToString } from '../../utilities/format';
+
 var _handleItem = null;
 var _currentAction = null;
 export class GridView extends Component {
@@ -162,6 +164,8 @@ export class GridView extends Component {
         let defaultPageSize = commonConstant.PAGE_SIZE;
         let pageSize = (records.length > defaultPageSize) ? defaultPageSize : records.length;
         let showPagination = (records.length > defaultPageSize) ? true : false;
+
+        // Handle Disable Columns    
         if (disableColumns && disableColumns.length > 0) {
             records = records.map(item => {
                 disableColumns.forEach(function (column) {
@@ -170,6 +174,26 @@ export class GridView extends Component {
                 return item;
             })
         }
+
+        //Handel Datetime
+        if(records.length > 0){
+            let tempModel = records[0];
+            let datePropertyName = [];
+            for(var propertyName in tempModel) {
+                if(propertyName.toLowerCase().includes('date')){
+                    datePropertyName.push(propertyName);
+                }
+            }
+
+            if(datePropertyName.length > 0){
+                records.forEach((item)=>{
+                    datePropertyName.forEach((propertyName)=>{
+                        item[propertyName] = gridViewFormatDateTimeToString(item[propertyName])
+                    });
+                });
+            }
+        }
+
         const propsOfTable = {
             data: records,
             columns: [],

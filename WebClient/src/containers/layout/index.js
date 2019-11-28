@@ -37,7 +37,8 @@ class DefaultLayout extends Component {
         },
        
         { name: t(key.capacity.GridTitle), url: '/capacity', icon: 'icon-settings', },
-
+        { name: t(key.car.GridTitle), url: '/car', icon: 'icon-settings', },
+        { name: t(key.company.GridTitle), url: '/company', icon: 'icon-settings', },
         { name: t(key.transportation.GridTitle), url: '/transportation', icon: 'icon-settings', },
 
       ],
