@@ -10,7 +10,7 @@ import { commonConstant } from '../../contants/common';
 import { getSessionStorage, setSessionStorage } from '../../utilities/storage';
 import { hasRecordsActionReducer, isNullActionReducer, removeItemFromItems, changeStatusItemFromItems, changeIsDefaultItemFromItems } from '../../utilities/validate';
 import { toastr } from 'react-redux-toastr';
-import { convertUTCDateToLocalDate, gridViewFormatDateTimeToString } from '../../utilities/format';
+import { gridViewFormatDateTimeToString } from '../../utilities/format';
 
 var _handleItem = null;
 var _currentAction = null;

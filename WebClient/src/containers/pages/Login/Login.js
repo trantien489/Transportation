@@ -97,6 +97,7 @@ class LoginForm extends Component {
     );
   }
 }
+/*
 class RegisterForm extends Component {
   render() {
     const { t } = this.props;
@@ -111,6 +112,7 @@ class RegisterForm extends Component {
     );
   }
 }
+*/
 class Login extends Component {
   render() {
     const { t, login } = this.props;

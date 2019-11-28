@@ -19,6 +19,7 @@ namespace Service
         #region Override Methods
         public override void GetAllEntry(Driver entity)
         {
+            _repo.EntryReference(entity, e=>e.DriverType);
         }
         public override void GetByIdEntry(Driver entity)
         {

@@ -5,6 +5,9 @@ import capacity from './capacity';
 import transportation from './transportation';
 import car from './car';
 import company from './company';
+import distance from './distance';
+import driver from './driver';
+
 
 const common = {
         languageName: 'Vietnames(vi)',
@@ -95,4 +98,6 @@ export default {
         transportation,
         car,
         company,
+        distance,
+        driver,
         };

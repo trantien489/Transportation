@@ -54,6 +54,11 @@ export class AddOrEdit extends Component {
             model[item.Name] = currencyToNumber(model[item.Name]);
         });
 
+        let textFields = fields.filter(item => { return item.Type === ControlType.Text });
+        textFields.forEach(item => {
+            model[item.Name] = model[item.Name].trim();
+        });
+
         this.addOrEditAction(model);
     }
     handleBackList = () => {
@@ -188,7 +193,6 @@ export class AddOrEdit extends Component {
     }
     responseAction = (nextProps) => {
         const { t, keyFields, addModel, editModel, getByIdModel, fields } = nextProps;
-        const { model } = this.state;
         switch (_currentAction) {
             //ADD
             case (commonConstant.ADD):
@@ -211,11 +215,13 @@ export class AddOrEdit extends Component {
             case (commonConstant.EDIT):
                 if (!editModel || !editModel.responseData ||
                     handleErrorBasic(editModel.responseData.status, t(keyFields.EditTitle), t)) return;
+                
+                const resultEdit = editModel.responseData;
                 if (editModel.responseData.Success) {
 
                     toastr.success(t(keyFields.EditTitle), t(key.common.editDataSuccess));
-                } else if (!isEmptyOrSpace(result.Message)) {
-                    toastr.error(t(keyFields.AddTitle), result.Message);
+                } else if (!isEmptyOrSpace(resultEdit.Message)) {
+                    toastr.error(t(keyFields.AddTitle), resultEdit.Message);
                 }
                 else {
                     toastr.error(t(keyFields.EditTitle), t(key.common.editDataFail));
@@ -272,7 +278,7 @@ export class AddOrEdit extends Component {
         const { model, errors } = this.state;
         if (renderCallback) {
             renderCallback(model);
-        } console.log('model', model);
+        } 
         const isCaseAdd = handleParameter(match) === commonConstant.ParamAdd;
         const title = handleParameter(match) === commonConstant.ParamAdd ? t(keyFields.AddTitle) : t(keyFields.EditTitle);
 

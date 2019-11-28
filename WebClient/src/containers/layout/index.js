@@ -32,20 +32,22 @@ class DefaultLayout extends Component {
     return {
       items: [
         {
-          name: t(key.common.dashBoard), url: '/dashboard', icon: 'icon-speedometer',
+          name: t(key.common.dashBoard), url: '/dashboard', icon: 'icon-home',
           badge: { variant: 'info', text: 'NEW', },
         },
        
-        { name: t(key.capacity.GridTitle), url: '/capacity', icon: 'icon-settings', },
-        { name: t(key.car.GridTitle), url: '/car', icon: 'icon-settings', },
-        { name: t(key.company.GridTitle), url: '/company', icon: 'icon-settings', },
-        { name: t(key.transportation.GridTitle), url: '/transportation', icon: 'icon-settings', },
+        { name: t(key.capacity.GridTitle), url: '/capacity', icon: 'icon-drop', },
+        { name: t(key.car.GridTitle), url: '/car', icon: 'fa fa-truck', },
+        { name: t(key.distance.GridTitle), url: '/distance', icon: 'icon-map', },
+        { name: t(key.driver.GridTitle), url: '/driver', icon: 'icon-people', },
+        { name: t(key.company.GridTitle), url: '/company', icon: 'icon-grid', },
+        { name: t(key.transportation.GridTitle), url: '/transportation', icon: 'icon-rocket', },
 
       ],
     }
   };
   componentWillReceiveProps() {
-    const { t } = this.props;
+    //const { t } = this.props;
     //this.setState({ nav: this.GetArraySidebar(t) });
   }
   render() {

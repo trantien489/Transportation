@@ -59,6 +59,13 @@ import addCompanyReducer from './company/addReducer';
 import editCompanyReducer from './company/editReducer';
 import companyGetAllSelectReducer from './company/getAllSelectReducer';
 
+//DISTANCE
+import getAllDistanceReducer from './distance/getAllReducer';
+import getByIdDistanceReducer from './distance/getByIdReducer';
+import changeStatusDistanceReducer from './distance/changeStatusReducer';
+import deleteDistanceReducer from './distance/deleteReducer';
+import addDistanceReducer from './distance/addReducer';
+import editDistanceReducer from './distance/editReducer';
 
 export default combineReducers({
     router: routerReducer,
@@ -119,4 +126,12 @@ export default combineReducers({
     addCompanyReducer: addCompanyReducer,
     editCompanyReducer: editCompanyReducer,
     companyGetAllSelectReducer: companyGetAllSelectReducer,    
+
+    //DISTANCE
+    getAllDistanceReducer: getAllDistanceReducer,
+    getByIdDistanceReducer: getByIdDistanceReducer,
+    changeStatusDistanceReducer: changeStatusDistanceReducer,
+    deleteDistanceReducer: deleteDistanceReducer,
+    addDistanceReducer: addDistanceReducer,
+    editDistanceReducer: editDistanceReducer,
 });

@@ -60,6 +60,25 @@ const CompanyUpdate = Loadable({
   loading: Loading,
 });
 
+//DISTANCE
+const Distance = Loadable({
+  loader: () => import('./pages/Distance/Index'),
+  loading: Loading,
+});
+const DistanceUpdate = Loadable({
+  loader: () => import('./pages/Distance/Update'),
+  loading: Loading,
+});
+
+//DRIVER
+const Driver = Loadable({
+  loader: () => import('./pages/Driver/Index'),
+  loading: Loading,
+});
+const DriverUpdate = Loadable({
+  loader: () => import('./pages/Driver/Update'),
+  loading: Loading,
+});
 
 const routes = [
   { path: '/dashboard', exact: true, name: 'Home', component: DefaultLayout },
@@ -79,6 +98,12 @@ const routes = [
 
   { path: '/company/:id', name: 'Update', component: CompanyUpdate },
   { path: '/company', name: 'Company', component: Company },  
+
+  { path: '/distance/:id', name: 'Update', component: DistanceUpdate },
+  { path: '/distance', name: 'Distance', component: Distance },
+  
+  { path: '/driver/:id', name: 'Update', component: DriverUpdate },
+  { path: '/driver', name: 'Driver', component: Driver },
  
 ];
 export default routes;

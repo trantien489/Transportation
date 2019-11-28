@@ -6,6 +6,7 @@ import { getAllTransportationEpic, changeStatusTransportationEpic, deleteTranspo
 import { getAllCarEpic, changeStatusCarEpic, deleteCarEpic, addCarEpic, editCarEpic, getByIdCarEpic, carGetAllSelectEpic  } from '../epics/carEpic';
 import { getAllDriverEpic, changeStatusDriverEpic, deleteDriverEpic, addDriverEpic, editDriverEpic, getByIdDriverEpic, driverGetAllSelectEpic  } from '../epics/driverEpic';
 import { getAllCompanyEpic, changeStatusCompanyEpic, deleteCompanyEpic, addCompanyEpic, editCompanyEpic, getByIdCompanyEpic, companyGetAllSelectEpic  } from '../epics/companyEpic';
+import { getAllDistanceEpic, changeStatusDistanceEpic, deleteDistanceEpic, addDistanceEpic, editDistanceEpic, getByIdDistanceEpic } from '../epics/distanceEpic';
 
 const rootEpic = combineEpics(
     loginEpic, 
@@ -22,5 +23,6 @@ const rootEpic = combineEpics(
 
     getAllCompanyEpic, changeStatusCompanyEpic, deleteCompanyEpic, addCompanyEpic, editCompanyEpic, getByIdCompanyEpic, companyGetAllSelectEpic,
 
+    getAllDistanceEpic, changeStatusDistanceEpic, deleteDistanceEpic, addDistanceEpic, editDistanceEpic, getByIdDistanceEpic,
 );
 export default rootEpic;

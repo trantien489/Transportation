@@ -64,7 +64,7 @@ const changeStatusConfigEpic = action$ => action$.pipe(
 const deleteConfigEpic = action$ => action$.pipe(
     ofType(CONFIG.DELETE),
     mergeMap((action) => {
-        return ajax.put(API_DELETE + action.payload, API_SERVICES.HEADERS()).pipe(
+        return ajax.put(API_DELETE + action.payload, null, API_SERVICES.HEADERS()).pipe(
             map(response => deleteConfigSuccessAction(response)),
             catchError(error => of(deleteConfigFailureAction({
                 message: error.xhr.response, status: error.xhr.status

@@ -13,7 +13,6 @@ import { DriverType } from '../../../contants/staticData';
 import { driverGetAllSelectAction } from '../../../actions/driver';
 import { companyGetAllSelectAction } from '../../../actions/company';
 import { generateMoneyTransportationAction } from '../../../actions/transportation';
-import { toastr } from 'react-redux-toastr';
 import { handleErrorBasic } from '../../../utilities/handler';
 import { addAction, isExistAction, removeAction } from '../../../utilities/currrentActionHelper';
 import { COMPANY } from "../../../actionTypes/company";
@@ -165,7 +164,7 @@ class TransportationUpdate extends Component {
 
         if(generateMoneyTransportationReducer.responseData && generateMoneyTransportationReducer.responseData.Data >= 0){
             let money = generateMoneyTransportationReducer.responseData.Data;
-            model.Money = money == 0 ? 0 : toCurrency(money);
+            model.Money = money === 0 ? 0 : toCurrency(money);
             delete generateMoneyTransportationReducer.responseData;
         }
     }
