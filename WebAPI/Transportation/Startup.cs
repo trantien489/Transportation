@@ -181,7 +181,7 @@ namespace Transportation
 
             #region CORS
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-            app.UseCors(x => x.WithOrigins(jwtAppSettingOptions[nameof(JwtIssuerOptions.UrlClientAdmin)]).AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(x => x.WithOrigins(jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)]).AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             #endregion
 
             app.UseHttpsRedirection();
