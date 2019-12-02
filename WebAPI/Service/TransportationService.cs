@@ -71,7 +71,6 @@ namespace Service
         #region Override Methods
         public override void GetAllEntry(Transportation entity)
         {
-            _repo.EntryReference(entity, e => e.Company);
             _repo.EntryReference(entity, e => e.Car);
             _repo.EntryReference(entity, e => e.DriverPrimary);
             _repo.EntryReference(entity, e => e.DriverSecondary);
@@ -83,7 +82,7 @@ namespace Service
 
         #region Private method
         public bool DistanceCondition(Distance entity, int distance) {
-            var arr = entity.Decripstion.Split('-');
+            var arr = entity.Description.Split('-');
             var min = Convert.ToInt32(arr[0]);
             var max = Convert.ToInt32(arr[1]);
 

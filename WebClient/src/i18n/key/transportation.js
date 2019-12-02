@@ -19,5 +19,6 @@ const transportation = {
     DriverSecondaryName : 'transportation:DriverSecondaryName',
     CompanyCode: 'transportation:CompanyCode',
     CompanyName : 'transportation:CompanyName',
+    MoneyCurrency: 'transportation:MoneyCurrency'
 }
 export default transportation;

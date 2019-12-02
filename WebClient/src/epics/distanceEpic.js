@@ -15,15 +15,21 @@ import {
     addDistanceSuccessAction,
     addDistanceFailureAction,
     editDistanceSuccessAction,
-    editDistanceFailureAction
+    editDistanceFailureAction,
+    distanceGetAllSelectSuccessAction,
+    distanceGetAllSelectFailureAction,
 } from '../actions/distance';
 import API_SERVICES from '../services';
+import {status} from '../contants/staticData';
+
 const API_GETALL = API_SERVICES.HOST + API_SERVICES.VERSION + '/Distance/GetAll';
 const API_GETBYID = API_SERVICES.HOST + API_SERVICES.VERSION + '/Distance/GetById';
 const API_CHANGE_STATUS = API_SERVICES.HOST + API_SERVICES.VERSION + '/Distance/ChangeStatus/';
 const API_DELETE = API_SERVICES.HOST + API_SERVICES.VERSION + '/Distance/Delete/';
 const API_ADD = API_SERVICES.HOST + API_SERVICES.VERSION + '/Distance/Create/';
 const API_EDIT = API_SERVICES.HOST + API_SERVICES.VERSION + '/Distance/Update';
+const API_GETALL_SELECT = API_SERVICES.HOST + API_SERVICES.VERSION + '/Distance/GetAll?Status=' + status.Active ;
+
 // GETALL
 const getAllDistanceEpic = action$ => action$.pipe(
     ofType(DISTANCE.GETALL),
@@ -96,4 +102,17 @@ const editDistanceEpic = action$ => action$.pipe(
         )
     })
 );
-export { getAllDistanceEpic, getByIdDistanceEpic, changeStatusDistanceEpic, deleteDistanceEpic, addDistanceEpic, editDistanceEpic };
+
+// GETALL_SELECT
+const distanceGetAllSelectEpic = action$ => action$.pipe(
+    ofType(DISTANCE.GETALL_SELECT),
+    mergeMap(() => {
+        return ajax.getJSON(API_GETALL_SELECT, API_SERVICES.HEADERS()).pipe(
+            map(response => distanceGetAllSelectSuccessAction(response)),
+            catchError(error => of(distanceGetAllSelectFailureAction({
+                message: error.xhr.response, status: error.xhr.status
+            })))
+        )
+    })
+);
+export { getAllDistanceEpic, getByIdDistanceEpic, changeStatusDistanceEpic, deleteDistanceEpic, addDistanceEpic, editDistanceEpic, distanceGetAllSelectEpic };

@@ -10,7 +10,7 @@ namespace Infrastructure.EF.Entities
             Price = new HashSet<Price>();
         }
 
-        public string Decripstion { get; set; }
+        public string Description { get; set; }
 
         public virtual ICollection<Price> Price { get; set; }
     }

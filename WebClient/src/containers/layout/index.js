@@ -35,11 +35,16 @@ class DefaultLayout extends Component {
           name: t(key.common.dashBoard), url: '/dashboard', icon: 'icon-home',
           badge: { variant: 'info', text: 'NEW', },
         },
-       
+        { title: true, name: 'QUẢN LÝ ĐƠN GIÁ'},
         { name: t(key.capacity.GridTitle), url: '/capacity', icon: 'icon-drop', },
-        { name: t(key.car.GridTitle), url: '/car', icon: 'fa fa-truck', },
         { name: t(key.distance.GridTitle), url: '/distance', icon: 'icon-map', },
+        { name: t(key.price.GridTitle), url: '/price', icon: 'cui-dollar', },
+
+        { title: true, name: 'QUẢN LÝ XE'},
+        { name: t(key.car.GridTitle), url: '/car', icon: 'fa fa-truck', },
         { name: t(key.driver.GridTitle), url: '/driver', icon: 'icon-people', },
+
+        { title: true, name: 'QUẢN LÝ VẬN CHUYỂN'},
         { name: t(key.company.GridTitle), url: '/company', icon: 'icon-grid', },
         { name: t(key.transportation.GridTitle), url: '/transportation', icon: 'icon-rocket', },
 

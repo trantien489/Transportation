@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace Domain.ViewModels
 {
@@ -11,6 +12,7 @@ namespace Domain.ViewModels
         public long DistanceId { get; set; }
         [Required]
         public long CapacityId { get; set; }
+
         [Required]
         public decimal Money { get; set; }
     }
@@ -21,6 +23,14 @@ namespace Domain.ViewModels
     public class PriceGetAllViewModel : PriceUpdateViewModel
     {
         public int Status { get; set; }
+        [JsonProperty(Order = 1)]
+        public string DistanceDescription { get; set; }
+
+        [JsonProperty(Order = 2)]
+        public string CapcityType { get; set; }
+
+        [JsonProperty(Order = 3)]
+        public string MoneyCurrency { get; set; }
     }
     public class PriceGetByIdViewModel : PriceUpdateViewModel
     {

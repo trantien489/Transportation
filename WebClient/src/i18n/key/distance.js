@@ -5,6 +5,6 @@ const distance = {
     AddTitle: 'distance:AddTitle',
     EditTitle: 'distance:EditTitle',
     // Validation fields
-    Decripstion: 'distance:Decripstion'
+    Description: 'distance:Description'
 }
 export default distance;

@@ -27,33 +27,9 @@ class Transportation extends Component {
     }
     requestAction = (nextProps) => {
         //Khi có action phát đi thì hàm này sẽ handle
-        let { getAllModel } = nextProps;
-        const { currentAction } = this.state;
-        let result = false;
-        if (getAllModel.isLoading && !isExistAction(currentAction, TRANSPORTATION.GETALL)) {
-            addAction(currentAction, TRANSPORTATION.GETALL)
-            result = true;
-        }
-
-        return result;
     }
     responseAction = (nextProps) => {
         //Khi api trả dữ liệu về thì hàm này sẽ handle
-        let { getAllModel, t } = nextProps;
-        const { currentAction } = this.state;
-
-        //Get All Transportation
-        if (!getAllModel.isLoading && isExistAction(currentAction, TRANSPORTATION.GETALL)) {
-            if (!getAllModel.responseData ||
-                handleErrorBasic(getAllModel.responseData.status, 'Tải danh sách Vận chuyển', t)) return;
-            
-            let records = getAllModel.responseData.Data.Records;
-            records.forEach(item => {
-                item.Money = toCurrency(item.Money)
-            });
-           
-            this.setState({ currentAction: removeAction(currentAction, TRANSPORTATION.GETALL) });
-        }
     }
     componentWillReceiveProps(nextProps) {
         //request action
@@ -63,7 +39,7 @@ class Transportation extends Component {
     }
     render() {
         const { t, changeStatusModel, deleteModel, getAllModel } = this.props;
-        let disableColumns = ['DriverSecondaryName', ];//['Id','Status'];
+        let disableColumns = ['DriverSecondaryName', 'Money'];//['Id','Status'];
         if (!getAllModel || !changeStatusModel || !deleteModel) return;
         const isLoadingOver = changeStatusModel.isLoading || deleteModel.isLoading;
         if (getAllModel.isLoading) {

@@ -57,12 +57,6 @@ namespace Infrastructure.EF.Context
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Transportation_Car");
 
-                entity.HasOne(d => d.Company)
-                    .WithMany(p => p.Transportation)
-                    .HasForeignKey(d => d.CompanyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Transportation_Company");
-
                 entity.HasOne(d => d.DriverPrimary)
                     .WithMany(p => p.TransportationDriverPrimary)
                     .HasForeignKey(d => d.DriverPrimaryId)

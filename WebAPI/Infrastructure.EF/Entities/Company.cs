@@ -8,7 +8,6 @@ namespace Infrastructure.EF.Entities
     {
         public Company()
         {
-            Transportation = new HashSet<Transportation>();
         }
 
         public string Name { get; set; }
@@ -16,7 +15,5 @@ namespace Infrastructure.EF.Entities
         public string Address { get; set; }
         public int Distance { get; set; }
         public string Note { get; set; }
-
-        public virtual ICollection<Transportation> Transportation { get; set; }
     }
 }

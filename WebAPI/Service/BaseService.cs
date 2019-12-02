@@ -26,11 +26,11 @@ namespace Service
             var data = new Pagination();
             if (Status.HasValue)
             {
-                data = await _repository.GetAllPagination(pageNumber, pageSize, x => x.Status == Status.Value, x => x.Id);
+                data = await _repository.GetAllPagination(pageNumber, pageSize, x => x.Status == Status.Value);
             }
             else
             {
-                data = await _repository.GetAllPagination(pageNumber, pageSize, x => x.Status != CommonConstants.Status.Deleted, x => x.Id);
+                data = await _repository.GetAllPagination(pageNumber, pageSize, x => x.Status != CommonConstants.Status.Deleted);
             }
 
             foreach (var entity in data.Records)
@@ -61,16 +61,40 @@ namespace Service
         }
         public virtual async Task<ResponseResult> Create(TCreateViewModel model)
         {
+            var repoResult = new ResponseResult();
             var entityCreated = _mapper.Map<TCreateViewModel, TEntity>(model);
-            var repoResult = await _repository.Insert(entityCreated);
-            repoResult.Data = _mapper.Map<TEntity, TGetByIdViewModel>(repoResult.Data);
+            var beforeInsert = BeforeInsert(entityCreated);
+            if (string.IsNullOrEmpty(beforeInsert))
+            {
+                repoResult = await _repository.Insert(entityCreated);
+                repoResult.Data = _mapper.Map<TEntity, TGetByIdViewModel>(repoResult.Data);
+            }
+            else
+            {
+                repoResult.Message = beforeInsert;
+                repoResult.Success = false;
+            }
             return repoResult;
         }
         public virtual async Task<ResponseResult> Update(TUpdateViewModel model)
         {
+            var repoResult = new ResponseResult();
             var entity = await _repository.GetById(((dynamic)model).Id);
+
             entity = _mapper.Map(model, entity);
-            return await _repository.Update(entity);
+            var beforeUpdate = BeforeUpdate(entity);
+            if (string.IsNullOrEmpty(beforeUpdate))
+            {
+                repoResult = await _repository.Update(entity);
+                repoResult.Data = _mapper.Map<TEntity, TGetByIdViewModel>(repoResult.Data);
+            }
+            else
+            {
+                repoResult.Message = beforeUpdate;
+                repoResult.Success = false;
+            }
+
+            return repoResult;
         }
         public async Task<ResponseResult> ChangeStatus(long id)
         {
@@ -110,6 +134,15 @@ namespace Service
         public virtual void GetByIdEntry(TEntity entity)
         {
             // override this function in child class if needed
+        }
+        public virtual string BeforeInsert(TEntity entity)
+        {
+            return string.Empty;
+        }
+
+        public virtual string BeforeUpdate(TEntity entity)
+        {
+            return string.Empty;
         }
     }
 }

@@ -27,7 +27,7 @@ class TransportationUpdate extends Component {
             //Detail fields
             new InputField("TransportDate", ControlType.DateTime, formatDateTimeToString(new Date().setHours(0,0,0,0)), true),
             new InputField("CarId", ControlType.ReactSelect, 0, true),
-            new InputField("CompanyId", ControlType.ReactSelect, 0, true),
+            new InputField("CompanyIds", ControlType.ReactSelectMultiple, [] , true),
             new InputField("DocumentNumber", ControlType.Text, '', true),
             new InputField("Report", ControlType.Text, '', false),
             new InputField("Money", ControlType.Money, '', true),
@@ -126,7 +126,7 @@ class TransportationUpdate extends Component {
             if (!companyGetAllSelectReducer.responseData ||
                 handleErrorBasic(companyGetAllSelectReducer.responseData.status, 'Tải danh sách Xe', t)) return;
 
-            let CompanyIdField = fields.find(obj => obj.Name === "CompanyId");
+            let CompanyIdField = fields.find(obj => obj.Name === "CompanyIds");
             CompanyIdField.SelectConfig.options = companyGetAllSelectReducer.responseData.Data.Records.map(item => {
                 return {
                     value: item.Id,

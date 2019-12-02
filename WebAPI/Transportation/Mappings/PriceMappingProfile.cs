@@ -13,7 +13,11 @@ namespace Transportation.Mappings
             // Update
             CreateMap<PriceUpdateViewModel, Price>();
             //GetAll
-            CreateMap<Price, PriceGetAllViewModel>();
+            CreateMap<Price, PriceGetAllViewModel>()
+                .ForMember(des => des.DistanceDescription, map => map.MapFrom(src => src.Distance.Description))
+                .ForMember(des => des.CapcityType, map => map.MapFrom(src => src.Capacity.Type))
+                .ForMember(des => des.MoneyCurrency, map => map.MapFrom(src => src.Money.ToString("N0")));
+
             //GetById
             CreateMap<Price, PriceGetByIdViewModel>();
         }

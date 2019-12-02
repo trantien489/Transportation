@@ -1,6 +1,8 @@
-﻿using Domain.Services;
+﻿using System.Threading.Tasks;
+using Domain.Services;
 using Domain.ViewModels;
 using Infrastructure.EF.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Transportation.Controllers
@@ -14,6 +16,22 @@ namespace Transportation.Controllers
         {
             _priceService = priceService;
             _logger = logger;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Filter(long distanceId, long capacityId)
+        {
+            ObjectResult result;
+            if (distanceId <= 0 || capacityId <= 0)
+            {
+                result = new BadRequestObjectResult("Wrong Id");
+            }
+            else
+            {
+                var response = await _priceService.Filter(distanceId, capacityId);
+                result = new ObjectResult(response);
+            }
+            return result;
         }
     }
 }

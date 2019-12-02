@@ -5,6 +5,6 @@ const distance = {
     AddTitle: 'Tạo khoảng cách mới',
     EditTitle: 'Chỉnh sửa khoảng cách',
     // Validation fields
-    Decripstion: 'Khoảng cách',
+    Description: 'Khoảng cách (km)',
 }
 export default distance;

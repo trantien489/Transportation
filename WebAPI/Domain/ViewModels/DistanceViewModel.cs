@@ -8,7 +8,7 @@ namespace Domain.ViewModels
     public class DistanceCreateViewModel
     {
         [Required]
-        public string Decripstion { get; set; }
+        public string Description { get; set; }
 
     }
     public class DistanceUpdateViewModel : DistanceCreateViewModel

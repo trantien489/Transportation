@@ -80,6 +80,17 @@ const DriverUpdate = Loadable({
   loading: Loading,
 });
 
+//PRICE
+const Price = Loadable({
+  loader: () => import('./pages/Price/Index'),
+  loading: Loading,
+});
+const PriceUpdate = Loadable({
+  loader: () => import('./pages/Price/Update'),
+  loading: Loading,
+});
+
+
 const routes = [
   { path: '/dashboard', exact: true, name: 'Home', component: DefaultLayout },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
@@ -104,6 +115,9 @@ const routes = [
   
   { path: '/driver/:id', name: 'Update', component: DriverUpdate },
   { path: '/driver', name: 'Driver', component: Driver },
+
+  { path: '/price/:id', name: 'Update', component: PriceUpdate },
+  { path: '/price', name: 'Price', component: Price },  
  
 ];
 export default routes;

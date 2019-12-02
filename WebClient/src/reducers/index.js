@@ -66,6 +66,18 @@ import changeStatusDistanceReducer from './distance/changeStatusReducer';
 import deleteDistanceReducer from './distance/deleteReducer';
 import addDistanceReducer from './distance/addReducer';
 import editDistanceReducer from './distance/editReducer';
+import distanceGetAllSelectReducer from './distance/getAllSelectReducer';
+
+
+//PRICE
+import getAllPriceReducer from './price/getAllReducer';
+import getByIdPriceReducer from './price/getByIdReducer';
+import changeStatusPriceReducer from './price/changeStatusReducer';
+import deletePriceReducer from './price/deleteReducer';
+import addPriceReducer from './price/addReducer';
+import editPriceReducer from './price/editReducer';
+import priceFilterReducer from './price/filterReducer';
+
 
 export default combineReducers({
     router: routerReducer,
@@ -134,4 +146,14 @@ export default combineReducers({
     deleteDistanceReducer: deleteDistanceReducer,
     addDistanceReducer: addDistanceReducer,
     editDistanceReducer: editDistanceReducer,
+    distanceGetAllSelectReducer: distanceGetAllSelectReducer,
+
+    //PRICE
+    getAllPriceReducer: getAllPriceReducer,
+    getByIdPriceReducer: getByIdPriceReducer,
+    changeStatusPriceReducer: changeStatusPriceReducer,
+    deletePriceReducer: deletePriceReducer,
+    addPriceReducer: addPriceReducer,
+    editPriceReducer: editPriceReducer,    
+    priceFilterReducer: priceFilterReducer,
 });

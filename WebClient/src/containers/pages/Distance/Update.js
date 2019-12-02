@@ -12,7 +12,7 @@ class DistanceUpdate extends Component {
         super(props);
         let fields = [
             //Detail fields
-            new InputField("Decripstion", ControlType.Text, '', true)
+            new InputField("Description", ControlType.Text, '', true)
         ]
         this.state = {
             fields: fields

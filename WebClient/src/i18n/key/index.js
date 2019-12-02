@@ -7,6 +7,8 @@ import car from './car';
 import company from './company';
 import distance from './distance';
 import driver from './driver';
+import price from './price';
+
 
 
 const common = {
@@ -100,4 +102,5 @@ export default {
         company,
         distance,
         driver,
+        price,
 };

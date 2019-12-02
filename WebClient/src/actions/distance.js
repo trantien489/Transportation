@@ -24,3 +24,8 @@ export const addDistanceFailureAction = createAction(DISTANCE.ADD_FAILURE);
 export const editDistanceAction = createAction(DISTANCE.EDIT);
 export const editDistanceSuccessAction = createAction(DISTANCE.EDIT_SUCCESS);
 export const editDistanceFailureAction = createAction(DISTANCE.EDIT_FAILURE);
+
+//GETALL_SELECT
+export const distanceGetAllSelectAction = createAction(DISTANCE.GETALL_SELECT);
+export const distanceGetAllSelectSuccessAction = createAction(DISTANCE.GETALL_SELECT_SUCCESS);
+export const distanceGetAllSelectFailureAction = createAction(DISTANCE.GETALL_SELECT_FAILURE);
