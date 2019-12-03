@@ -1,8 +1,8 @@
 ﻿using Domain.Services;
 using Domain.ViewModels;
-using Infrastructure.EF.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Threading.Tasks;
 
 namespace Transportation.Controllers
@@ -18,19 +18,28 @@ namespace Transportation.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GenerateMoney(long companyId,long carId)
+        [HttpPost]
+        public async Task<IActionResult> GenerateMoney([FromBody]GenerateMoneyViewModel model)
         {
             ObjectResult result;
-            if (carId <= 0 || companyId <= 0 )
+            if (model.CarId <= 0 || model.CompanyIds.Count == 0 )
             {
                 result = new BadRequestObjectResult("Wrong Id");
             }
             else
             {
-                var response = await _transportationService.GenerateMoney(companyId, carId);
+                var response = await _transportationService.GenerateMoney(model.CompanyIds, model.CarId);
                 result = new ObjectResult(response);
             }
+            return result;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Filter(DateTime fromDate, DateTime toDate)
+        {
+            var response = await _transportationService.Filter(fromDate, toDate);
+            ObjectResult result = new ObjectResult(response);
+
             return result;
         }
     }

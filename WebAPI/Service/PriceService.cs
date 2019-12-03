@@ -1,14 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Domain.Constants;
 using Domain.Models;
 using Domain.Repositories.Generic;
 using Domain.Services;
 using Domain.ViewModels;
 using Infrastructure.EF.Entities;
-using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Service
 {
@@ -22,7 +21,6 @@ namespace Service
             _mapper = mapper;
         }
 
-        [HttpGet]
         public async Task<ResponseResult> Filter(long distanceId, long capacityId)
         {
             var result = new ResponseResult();

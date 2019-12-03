@@ -15,7 +15,7 @@ export function formatDateTimeToString(valueDateTime, formatString) {
 
 export function gridViewFormatDateTimeToString(valueDateTime, formatString) {
     if (!valueDateTime) return null;
-    var stringDateTime = moment(valueDateTime).format('D/M/YYYY');
+    var stringDateTime = moment(valueDateTime).format('DD/MM/YYYY');
     if (formatString != null) stringDateTime = moment(valueDateTime).format(formatString);
     return stringDateTime;
 }

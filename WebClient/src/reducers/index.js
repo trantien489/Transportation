@@ -30,7 +30,7 @@ import deleteTransportationReducer from './transportation/deleteReducer';
 import addTransportationReducer from './transportation/addReducer';
 import editTransportationReducer from './transportation/editReducer';
 import generateMoneyTransportationReducer from './transportation/generateMoneyAllReducer';
-
+import transportationFilterReducer from './transportation/filterReducer';
 
 //CAR
 import getAllCarReducer from './car/getAllReducer';
@@ -110,7 +110,7 @@ export default combineReducers({
     addTransportationReducer: addTransportationReducer,
     editTransportationReducer: editTransportationReducer,
     generateMoneyTransportationReducer : generateMoneyTransportationReducer,
-
+    transportationFilterReducer:transportationFilterReducer,
 
     //CAR
     getAllCarReducer: getAllCarReducer,

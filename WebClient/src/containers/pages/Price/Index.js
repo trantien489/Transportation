@@ -2,14 +2,13 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import key from '../../../i18n/key';
-import { Col, Row, FormGroup, Label, Card, CardBody, Form, Button } from "reactstrap";
+import { Col, Row, FormGroup, Label, Card, CardBody, Button } from "reactstrap";
 import LoadingOverlay from 'react-loading-overlay';
 import { ErrorAlert } from '../../../components/alerts/errorAlert';
 import { hasRecordsActionReducer, applyCheckAuthorized } from '../../../utilities/validate';
 import { getAllPriceAction, changeStatusPriceAction, deletePriceAction, filterPriceAction } from '../../../actions/price';
 import { GridView } from '../../../components/gridView/gridView';
 import { PRICE } from "../../../actionTypes/price";
-import { toCurrency } from "../../../utilities/format";
 import { handleErrorBasic } from '../../../utilities/handler';
 import { addAction, isExistAction, removeAction } from '../../../utilities/currrentActionHelper';
 import Select from 'react-select';
@@ -121,11 +120,11 @@ class Price extends Component {
     }
     handleChangeFields(event, field) {
 
-        if (field == 'DistanceId') {
+        if (field === 'DistanceId') {
             this.setState({
                 distanceId: event.value
             });
-        } else if (field == 'CapacityId') {
+        } else if (field === 'CapacityId') {
             this.setState({
                 capacityId: event.value
             });
@@ -136,7 +135,6 @@ class Price extends Component {
     }
 
     render() {
-        console.log(this.state);
         const { currentAction } = this.state;
         const { t, changeStatusModel, deleteModel, getAllModel, capacityGetAllSelectReducer, distanceGetAllSelectReducer } = this.props;
         let disableColumns = ['DistanceId', 'CapacityId', 'Money'];//['Id','Status'];
@@ -187,7 +185,7 @@ class Price extends Component {
                             <Col md="4">
                                 <FormGroup>
                                     <p>&nbsp;</p>
-                                    <Button type="submit" size="sm" color="primary" onClick={this.filter}>
+                                    <Button size="sm" color="primary" onClick={this.filter}>
                                         <i className="fa fa-filter"></i> Lọc
                                 </Button>
                                 </FormGroup>

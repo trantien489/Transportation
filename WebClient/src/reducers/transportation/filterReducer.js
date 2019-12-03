@@ -6,15 +6,15 @@ const initialState = {
   responseData: {},
 };
 const actions = {
-  [TRANSPORTATION.GENERATEMONEY]: () => ({
+  [TRANSPORTATION.FILTER]: () => ({
     isLoading: true,
   }),
-  [TRANSPORTATION.GENERATEMONEY_SUCCESS]: (state, { payload: responseData }) => ({
+  [TRANSPORTATION.FILTER_SUCCESS]: (state, { payload: responseData }) => ({
     ...state,
     isLoading: false,
-    responseData: responseData.response ? responseData.response : responseData,
+    responseData,
   }),
-  [TRANSPORTATION.GENERATEMONEY_FAILURE]: (state, { payload: responseData }) => ({
+  [TRANSPORTATION.FILTER_FAILURE]: (state, { payload: responseData }) => ({
     ...state,
     isLoading: false,
     isError: true,

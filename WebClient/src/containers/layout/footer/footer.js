@@ -10,8 +10,8 @@ class DefaultFooter extends Component {
     const { children, ...attributes } = this.props;
     return (
       <React.Fragment>
-        <span><a href="https://admin-onlineshop.azurewebsites.net">CMS OnlineShop</a> &copy; 2019</span>
-        <span className="ml-auto">Powered by <a href="https://coreui.io/react">CoreUI and CMS OnlineShop</a></span>
+        <span>Chấn Đông &copy; 2019</span>
+        <span className="ml-auto">Designed by <a href="https://www.facebook.com/trantien489">Tien Tran</a></span>
       </React.Fragment>
     );
   }

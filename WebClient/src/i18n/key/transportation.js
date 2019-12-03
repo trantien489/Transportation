@@ -8,7 +8,7 @@ const transportation = {
     CarId: 'transportation:CarId',
     DriverPrimaryId : 'transportation:DriverPrimaryId',
     DriverSecondaryId : 'transportation:DriverSecondaryId',
-    CompanyId : 'transportation:CompanyId',
+    CompanyIds : 'transportation:CompanyIds',
     DocumentNumber : 'transportation:DocumentNumber',
     Money : 'transportation:Money',
     TransportDate : 'transportation:TransportDate',
@@ -19,6 +19,7 @@ const transportation = {
     DriverSecondaryName : 'transportation:DriverSecondaryName',
     CompanyCode: 'transportation:CompanyCode',
     CompanyName : 'transportation:CompanyName',
-    MoneyCurrency: 'transportation:MoneyCurrency'
+    MoneyCurrency: 'transportation:MoneyCurrency',
+    Companies : 'transportation:Companies',
 }
 export default transportation;

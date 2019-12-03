@@ -8,7 +8,7 @@ const transportation = {
     CarId: 'Xe',
     DriverPrimaryId : 'Tài xế',
     DriverSecondaryId : 'Lơ xe',
-    CompanyId : 'Công ty',
+    CompanyIds : 'Công ty',
     DocumentNumber : 'Chứng từ',
     Money : 'Tiền vận chuyển',
     TransportDate : 'Ngày vận chuyển',
@@ -20,5 +20,6 @@ const transportation = {
     CompanyCode: 'Mã KH',
     CompanyName : 'CTY Khách Hàng',
     MoneyCurrency: 'Tiền vận chuyển',
+    Companies : 'Công ty',
 }
 export default transportation;

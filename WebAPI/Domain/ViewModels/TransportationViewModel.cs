@@ -49,7 +49,17 @@ namespace Domain.ViewModels
         public string MoneyCurrency { get; set; }
         public string Note { get; set; }
         public string DriverPrimaryName { get; set; }
-        public string DriverSecondaryName { get; set; }
+        //public string DriverSecondaryName { get; set; }
         public int Status { get; set; }
+    }
+
+    public class GenerateMoneyViewModel
+    {
+        public GenerateMoneyViewModel()
+        {
+            CompanyIds = new List<int>();
+        }
+        public List<int> CompanyIds { get; set; }
+        public long CarId { get; set; }
     }
 }

@@ -9,7 +9,7 @@ import key from '../../../i18n/key';
 import { translate } from 'react-i18next';
 import { AppAsideToggler, AppHeaderDropdown, AppNavbarBrand, AppSidebarToggler } from '@coreui/react';
 //import logo from '../../../assets/common/logo.svg';
-import logo from '../../../assets/images/logo/logo_hori.png';
+import logo from '../../../assets/images/logo/ChanDongLogo.png';
 import sygnet from '../../../assets/common/sygnet.svg';
 import { setLocalStorage } from '../../../utilities/storage';
 import { getLanguageDefault } from '../../../utilities/languageDefault';
@@ -45,7 +45,7 @@ class DefaultHeader extends Component {
       <React.Fragment>
         <AppSidebarToggler className="d-lg-none" display="md" mobile />
         <AppNavbarBrand
-          full={{ src: logo, width: 89, height: 25, alt: 'CoreUI Logo' }}
+          full={{ src: logo, width: 65, height: 65, alt: 'CoreUI Logo' }}
           minimized={{ src: sygnet, width: 30, height: 30, alt: 'CoreUI Logo' }}
         />
         <AppSidebarToggler className="d-md-down-none" display="lg" />

@@ -28,3 +28,8 @@ export const editTransportationFailureAction = createAction(TRANSPORTATION.EDIT_
 export const generateMoneyTransportationAction = createAction(TRANSPORTATION.GENERATEMONEY);
 export const generateMoneyTransportationSuccessAction = createAction(TRANSPORTATION.GENERATEMONEY_SUCCESS);
 export const generateMoneyTransportationFailureAction = createAction(TRANSPORTATION.GENERATEMONEY_FAILURE);
+
+//FILTER
+export const transportationFilterAction = createAction(TRANSPORTATION.FILTER);
+export const transportationFilterSuccessAction = createAction(TRANSPORTATION.FILTER_SUCCESS);
+export const transportationFilterFailureAction = createAction(TRANSPORTATION.FILTER_FAILURE);

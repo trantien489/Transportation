@@ -37,7 +37,12 @@ namespace Service
             {
                 GetAllEntry(entity);
             }
-            data.Records = data.Records.Select(r => _mapper.Map<TEntity, TGetAllViewModel>(r));
+
+            if (string.IsNullOrEmpty(CustomGetAllResult(data)))
+            {
+                data.Records = data.Records.Select(r => _mapper.Map<TEntity, TGetAllViewModel>(r));
+            }
+
             result.Data = data;
             result.Success = true;
             return result;
@@ -141,6 +146,11 @@ namespace Service
         }
 
         public virtual string BeforeUpdate(TEntity entity)
+        {
+            return string.Empty;
+        }
+
+        public virtual string CustomGetAllResult(Pagination pagination)
         {
             return string.Empty;
         }

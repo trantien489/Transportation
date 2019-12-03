@@ -95,15 +95,15 @@ export class AddOrEdit extends Component {
     handleChangeFields(event, field) {
         const { t, fields, handleChangeFieldsCallBack } = this.props;
         const { model, errors } = this.state;
+        
         let previousModel = cloneObject(model);
 
         let fieldInfo = fields.find(item => item.Name === field);
-        if (!event || !fieldInfo) { return }
-        else if ((fieldInfo.Type === ControlType.ReactSelect || fieldInfo.Type === ControlType.ReactSelectAsync) && event.value >= 0) {
+        if ((fieldInfo.Type === ControlType.ReactSelect || fieldInfo.Type === ControlType.ReactSelectAsync) && event.value >= 0) {
             model[field] = event.value;
         }
         else if (fieldInfo.Type === ControlType.ReactSelectMultiple) {
-            model[field] = event.map(item => item.value);
+            model[field] = !event ? []: event.map(item => item.value);
         }
         else if (  fieldInfo.Type === ControlType.DateTime || fieldInfo.Type === ControlType.DateTimeUTC ) {
             model[field] = formatDateTimeToString(event);
@@ -279,6 +279,7 @@ export class AddOrEdit extends Component {
         if (renderCallback) {
             renderCallback(model);
         } 
+        
         const isCaseAdd = handleParameter(match) === commonConstant.ParamAdd;
         const title = handleParameter(match) === commonConstant.ParamAdd ? t(keyFields.AddTitle) : t(keyFields.EditTitle);
 
@@ -372,7 +373,7 @@ export class AddOrEdit extends Component {
                                                     item.Type === ControlType.ReactSelectMultiple && item.SelectConfig && item.SelectConfig.options &&
                                                     <Select
                                                         isMulti
-                                                        defaultValue={item.SelectConfig.options.filter(i => model[item.Name].indexOf(i.value) > -1)}
+                                                        value={item.SelectConfig.options.filter(i => model[item.Name].indexOf(i.value) > -1)}
                                                         styles={reactSelectCustomStyles(errors[item.Name] ? false : true)}
                                                         options={item.SelectConfig.options}
                                                         className="basic-multi-select"

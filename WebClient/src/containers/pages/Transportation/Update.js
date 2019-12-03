@@ -152,9 +152,12 @@ class TransportationUpdate extends Component {
     }
 
     handleChangeFieldsCallBack = (previousModel, nextModel) => {
-       if(nextModel.CompanyId !== 0 && nextModel.CarId !== 0 ){
-            if(nextModel.CompanyId !== previousModel.CompanyId || nextModel.CarId !== previousModel.CarId){
-                this.props.generateMoneyTransportationAction(`?companyid=${nextModel.CompanyId}&carid=${nextModel.CarId}`);
+       if(nextModel.CompanyIds.length > 0 && nextModel.CarId !== 0 ){
+            if(JSON.stringify(nextModel.CompanyIds) !== JSON.stringify(previousModel.CompanyIds) || nextModel.CarId !== previousModel.CarId){
+                this.props.generateMoneyTransportationAction({
+                    CompanyIds : nextModel.CompanyIds,
+                    CarId : nextModel.CarId
+                });
             }
        }
     }

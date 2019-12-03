@@ -17,7 +17,9 @@ import {
     editTransportationSuccessAction,
     editTransportationFailureAction,
     generateMoneyTransportationSuccessAction,
-    generateMoneyTransportationFailureAction
+    generateMoneyTransportationFailureAction,
+    transportationFilterSuccessAction,
+    transportationFilterFailureAction,
 } from '../actions/transportation';
 import API_SERVICES from '../services';
 const API_GETALL = API_SERVICES.HOST + API_SERVICES.VERSION + '/Transportation/GetAll';
@@ -27,6 +29,7 @@ const API_DELETE = API_SERVICES.HOST + API_SERVICES.VERSION + '/Transportation/D
 const API_ADD = API_SERVICES.HOST + API_SERVICES.VERSION + '/Transportation/Create/';
 const API_EDIT = API_SERVICES.HOST + API_SERVICES.VERSION + '/Transportation/Update';
 const API_GENERATEMONEY = API_SERVICES.HOST + API_SERVICES.VERSION + '/transportation/generatemoney';
+const API_FILTER = API_SERVICES.HOST + API_SERVICES.VERSION + '/transportation/filter';
 
 
 // GETALL
@@ -106,7 +109,7 @@ const editTransportationEpic = action$ => action$.pipe(
 const generateMoneyTransportationEpic = action$ => action$.pipe(
     ofType(TRANSPORTATION.GENERATEMONEY),
     mergeMap((action) => {
-        return ajax.getJSON(API_GENERATEMONEY + action.payload, API_SERVICES.HEADERS()).pipe(
+        return ajax.post(API_GENERATEMONEY, action.payload, API_SERVICES.HEADERS()).pipe(
             map(response => generateMoneyTransportationSuccessAction(response)),
             catchError(error => of(generateMoneyTransportationFailureAction({
                 message: error.xhr.response, status: error.xhr.status
@@ -114,5 +117,18 @@ const generateMoneyTransportationEpic = action$ => action$.pipe(
         )
     })
 );
+
+// FILTER
+const transportationFilterEpic = action$ => action$.pipe(
+    ofType(TRANSPORTATION.FILTER),
+    mergeMap((action) => {
+        return ajax.getJSON(API_FILTER + action.payload, API_SERVICES.HEADERS()).pipe(
+            map(response => transportationFilterSuccessAction(response)),
+            catchError(error => of(transportationFilterFailureAction({
+                message: error.xhr.response, status: error.xhr.status
+            })))
+        )
+    })
+);
 export { getAllTransportationEpic, getByIdTransportationEpic, changeStatusTransportationEpic,
-     deleteTransportationEpic, addTransportationEpic, editTransportationEpic, generateMoneyTransportationEpic };
+     deleteTransportationEpic, addTransportationEpic, editTransportationEpic, generateMoneyTransportationEpic, transportationFilterEpic };

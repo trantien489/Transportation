@@ -22,7 +22,7 @@ namespace Transportation.Mappings
                 //.ForMember(des => des.CompanyName, map => map.MapFrom(src => src.Company.Name))
                 .ForMember(des => des.CarNumber, map => map.MapFrom(src => src.Car.CarNumber))
                 .ForMember(des => des.DriverPrimaryName, map => map.MapFrom(src => src.DriverPrimary.Name))
-                .ForMember(des => des.DriverSecondaryName, map => map.MapFrom(src => src.DriverSecondary.Name))
+                //.ForMember(des => des.DriverSecondaryName, map => map.MapFrom(src => src.DriverSecondary.Name))
                 .ForMember(des => des.MoneyCurrency, map => map.MapFrom(src => src.Money.ToString("N0")))
                 ;
             //GetById

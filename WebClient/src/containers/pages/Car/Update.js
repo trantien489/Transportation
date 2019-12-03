@@ -22,7 +22,7 @@ class CarUpdate extends Component {
             new InputField("Length", ControlType.Number, '', true),
             new InputField("Width", ControlType.Number, '', true),
             new InputField("Height", ControlType.Number, '', true),
-            new InputField("Note", ControlType.Text, null, false),
+            new InputField("Note", ControlType.Text, '', false),
 
         ]
         this.state = {
