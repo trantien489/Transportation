@@ -17,7 +17,7 @@ namespace Domain.ViewModels
         public string Address { get; set; }
 
         [Required]
-        public int Distance { get; set; }
+        public double Distance { get; set; }
 
 
         public string Note { get; set; }

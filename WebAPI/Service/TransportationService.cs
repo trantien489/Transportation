@@ -192,7 +192,7 @@ namespace Service
         #endregion
 
         #region Private method
-        private bool DistanceCondition(Distance entity, int distance)
+        private bool DistanceCondition(Distance entity, double distance)
         {
             var arr = entity.Description.Split('-');
             var min = Convert.ToInt32(arr[0]);

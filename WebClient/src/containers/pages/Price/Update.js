@@ -19,8 +19,8 @@ class PriceUpdate extends Component {
         super(props);
         let fields = [
             //Detail fields
-            new InputField("CapacityId", ControlType.ReactSelect, 0, true),
             new InputField("DistanceId", ControlType.ReactSelect, 0, true),
+            new InputField("CapacityId", ControlType.ReactSelect, 0, true),
             new InputField("Money", ControlType.Money, '', true),
         ]
         this.state = {

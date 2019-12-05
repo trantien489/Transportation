@@ -8,7 +8,7 @@ import { isEmptyOrSpace, validateEmail } from '../../utilities/validate';
 import { ControlType } from '../../contants/ControlType';
 import { handleParameter, handleErrorBasic } from '../../utilities/handler';
 import { commonConstant } from '../../contants/common';
-import { reactSelectCustomStyles, reactSelectFormatOptions, reactSelectInputChange, reactSelectGetCurrentValue } from '../../utilities/reactSelect';
+import { reactSelectCustomStyles, reactSelectFormatOptions, reactSelectInputChange, reactSelectGetCurrentValue, reactSelectCustomFilter } from '../../utilities/reactSelect';
 import { toastr } from 'react-redux-toastr';
 import { AppSwitch } from '@coreui/react';
 import Select from 'react-select';
@@ -95,7 +95,7 @@ export class AddOrEdit extends Component {
     handleChangeFields(event, field) {
         const { t, fields, handleChangeFieldsCallBack } = this.props;
         const { model, errors } = this.state;
-        
+
         let previousModel = cloneObject(model);
 
         let fieldInfo = fields.find(item => item.Name === field);
@@ -103,16 +103,16 @@ export class AddOrEdit extends Component {
             model[field] = event.value;
         }
         else if (fieldInfo.Type === ControlType.ReactSelectMultiple) {
-            model[field] = !event ? []: event.map(item => item.value);
+            model[field] = !event ? [] : event.map(item => item.value);
         }
-        else if (  fieldInfo.Type === ControlType.DateTime || fieldInfo.Type === ControlType.DateTimeUTC ) {
+        else if (fieldInfo.Type === ControlType.DateTime || fieldInfo.Type === ControlType.DateTimeUTC) {
             model[field] = formatDateTimeToString(event);
         }
         else if (event.target && fieldInfo.Type === ControlType.CheckBox) {
             model[field] = event.target.checked;
         }
         else if (event.target && fieldInfo.Type === ControlType.Number) {
-            model[field] = isNaN(parseInt(event.target.value)) ? 0 : parseInt(event.target.value);
+            model[field] = isNaN(parseFloat(event.target.value)) ? 0 : parseFloat(event.target.value);
         }
         else if (event.target && fieldInfo.Type === ControlType.Money) {
             let value = event.target ? event.target.value : '';
@@ -215,7 +215,7 @@ export class AddOrEdit extends Component {
             case (commonConstant.EDIT):
                 if (!editModel || !editModel.responseData ||
                     handleErrorBasic(editModel.responseData.status, t(keyFields.EditTitle), t)) return;
-                
+
                 const resultEdit = editModel.responseData;
                 if (editModel.responseData.Success) {
 
@@ -278,8 +278,8 @@ export class AddOrEdit extends Component {
         const { model, errors } = this.state;
         if (renderCallback) {
             renderCallback(model);
-        } 
-        
+        }
+
         const isCaseAdd = handleParameter(match) === commonConstant.ParamAdd;
         const title = handleParameter(match) === commonConstant.ParamAdd ? t(keyFields.AddTitle) : t(keyFields.EditTitle);
 
@@ -380,6 +380,7 @@ export class AddOrEdit extends Component {
                                                         classNamePrefix="select"
                                                         onChange={(event) => this.handleChangeFields(event, item.Name)}
                                                         placeholder={t(key.common.pleaseSelect) + '...'}
+                                                        filterOption={reactSelectCustomFilter}
                                                     />
                                                 }
                                                 {

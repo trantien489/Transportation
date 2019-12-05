@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Domain.Constants;
+﻿using Domain.Constants;
 using Domain.Models;
 using Domain.Resources;
 using Domain.Services;
@@ -7,22 +6,31 @@ using Domain.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace Transportation.Controllers
 {
     [Route("api/[controller]/[action]")]
     public class AuthController : Controller
     {
+        private string rootPath;
+        private readonly ICompanyService _companyService;
+
+
         private readonly ILogger _logger;
         private readonly IAuthService _authService;
         public IConfiguration Configuration { get; }
 
-        public AuthController(IAuthService authService, ILogger<AuthController> logger, IConfiguration configuration)
+        public AuthController(IAuthService authService, ILogger<AuthController> logger, IConfiguration configuration, IHostingEnvironment env, ICompanyService companyService)
         {
             _authService = authService;
             _logger = logger;
             Configuration = configuration;
+
+            rootPath = env.ContentRootPath;
+            _companyService = companyService;
         }
         [HttpPost]
         public async Task<IActionResult> Login([FromBody]CredentialsViewModel model)

@@ -7,6 +7,6 @@ namespace Domain.Services
 {
     public interface IPriceService : IBaseService<Price, PriceCreateViewModel, PriceUpdateViewModel, PriceGetByIdViewModel, PriceGetAllViewModel>
     {
-        Task<ResponseResult> Filter(long distanceId, long capacityId);
+        Task<ResponseResult> Filter(long distanceId);
     }
 }

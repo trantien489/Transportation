@@ -21,27 +21,26 @@ namespace Transportation.Controllers
             _logger = logger;
         }
 
-        [AllowAnonymous]
-        [HttpPost]
-        public async Task<ActionResult> Create([FromBody]UserCreateViewModel model)
-        {
-            int a = 0;
-            ObjectResult result;
-            if (!ModelState.IsValid)
-            {
-                result = new BadRequestObjectResult(ModelState);
-            }
-            else
-            {
-                var response = await _userService.Create(model);
-                result = new ObjectResult(response);
-                if (!response.Success)
-                {
-                    _logger.LogWarning(CommonConstants.LoggingEvents.CreateItem, Resource.ErrorCreate, _nameController);
-                }
-            }
-            return result;
-        }
+        //[AllowAnonymous]
+        //[HttpPost]
+        //public async Task<ActionResult> Create([FromBody]UserCreateViewModel model)
+        //{
+        //    ObjectResult result;
+        //    if (!ModelState.IsValid)
+        //    {
+        //        result = new BadRequestObjectResult(ModelState);
+        //    }
+        //    else
+        //    {
+        //        var response = await _userService.Create(model);
+        //        result = new ObjectResult(response);
+        //        if (!response.Success)
+        //        {
+        //            _logger.LogWarning(CommonConstants.LoggingEvents.CreateItem, Resource.ErrorCreate, _nameController);
+        //        }
+        //    }
+        //    return result;
+        //}
 
     }
 }

@@ -21,14 +21,14 @@ namespace Service
             _mapper = mapper;
         }
 
-        public async Task<ResponseResult> Filter(long distanceId, long capacityId)
+        public async Task<ResponseResult> Filter(long distanceId)
         {
             var result = new ResponseResult();
             var pagination = new Pagination();
 
             try
             {
-                var prices = await _repo.Where(p => p.DistanceId == distanceId && p.CapacityId == capacityId && p.Status != CommonConstants.Status.Deleted);
+                var prices = await _repo.Where(p => p.DistanceId == distanceId && p.Status != CommonConstants.Status.Deleted);
                 var data =  prices.ToList();
 
                 data.ForEach(p => {

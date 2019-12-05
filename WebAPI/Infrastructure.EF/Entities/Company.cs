@@ -13,7 +13,7 @@ namespace Infrastructure.EF.Entities
         public string Name { get; set; }
         public string Code { get; set; }
         public string Address { get; set; }
-        public int Distance { get; set; }
+        public double Distance { get; set; }
         public string Note { get; set; }
     }
 }

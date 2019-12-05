@@ -44,3 +44,15 @@ export function reactSelectGetCurrentValue(options, value) {
         return null;
     }
 }
+
+export function reactSelectCustomFilter(option, searchText) {
+    if(searchText !==''){
+        if (option.data.label.toLowerCase().includes(searchText.toLowerCase()) ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    return true;
+    
+}

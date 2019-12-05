@@ -19,16 +19,16 @@ namespace Transportation.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Filter(long distanceId, long capacityId)
+        public async Task<IActionResult> Filter(long distanceId)
         {
             ObjectResult result;
-            if (distanceId <= 0 || capacityId <= 0)
+            if (distanceId <= 0)
             {
                 result = new BadRequestObjectResult("Wrong Id");
             }
             else
             {
-                var response = await _priceService.Filter(distanceId, capacityId);
+                var response = await _priceService.Filter(distanceId);
                 result = new ObjectResult(response);
             }
             return result;

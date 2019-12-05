@@ -13,7 +13,6 @@ import { handleErrorBasic } from '../../../utilities/handler';
 import { addAction, isExistAction, removeAction } from '../../../utilities/currrentActionHelper';
 import Select from 'react-select';
 import { capacityGetAllSelectAction } from '../../../actions/capacity';
-import { CAPACITY } from "../../../actionTypes/capacity";
 import { distanceGetAllSelectAction } from '../../../actions/distance';
 import { DISTANCE } from "../../../actionTypes/distance";
 import { reactSelectCustomStyles, reactSelectGetCurrentValue } from '../../../utilities/reactSelect';
@@ -25,8 +24,6 @@ class Price extends Component {
         this.state = {
             distanceOptions: [],
             distanceId: 0,
-            capacityOptions: [],
-            capacityId: 0,
             currentAction: [],
 
         };
@@ -34,19 +31,14 @@ class Price extends Component {
     componentDidMount() {
         //Sau khi render hàm này sẽ chạy
         //this.props.getAllAction();
-        this.props.capacityGetAllSelectAction();
         this.props.distanceGetAllSelectAction();
     }
     requestAction = (nextProps) => {
         //Khi có action phát đi thì hàm này sẽ handle
-        let { capacityGetAllSelectReducer, distanceGetAllSelectReducer, getAllModel } = nextProps;
+        let { distanceGetAllSelectReducer, getAllModel } = nextProps;
         const { currentAction } = this.state;
         let result = false;
 
-        if (capacityGetAllSelectReducer.isLoading && !isExistAction(currentAction, CAPACITY.GETALL_SELECT)) {
-            addAction(currentAction, CAPACITY.GETALL_SELECT)
-            result = true;
-        }
         if (distanceGetAllSelectReducer.isLoading && !isExistAction(currentAction, DISTANCE.GETALL_SELECT)) {
             addAction(currentAction, DISTANCE.GETALL_SELECT)
             result = true;
@@ -59,30 +51,8 @@ class Price extends Component {
     }
     responseAction = (nextProps) => {
         //Khi api trả dữ liệu về thì hàm này sẽ handle
-        const { capacityGetAllSelectReducer, t, distanceGetAllSelectReducer, getAllModel } = nextProps;
+        const { t, distanceGetAllSelectReducer, getAllModel } = nextProps;
         const { currentAction } = this.state;
-
-        //Capacity Get All Select => Dropdown List
-        if (!capacityGetAllSelectReducer.isLoading && isExistAction(currentAction, CAPACITY.GETALL_SELECT)) {
-            if (!capacityGetAllSelectReducer.responseData ||
-                handleErrorBasic(capacityGetAllSelectReducer.responseData.status, 'Tải danh thể tích xe', t)) return;
-
-            let capacityOptions = capacityGetAllSelectReducer.responseData.Data.Records.map(item => {
-                return {
-                    value: item.Id,
-                    label: item.Type
-                }
-            });
-            this.setState({
-                capacityOptions: capacityOptions,
-                capacityId: capacityOptions[0].value,
-                currentAction: removeAction(currentAction, CAPACITY.GETALL_SELECT)
-            });
-
-            if (this.state.distanceId > 0) {
-                this.props.filterPriceAction(`?distanceId=${this.state.distanceId}&capacityId=${capacityOptions[0].value}`);
-            }
-        }
 
         //Distance Get All Select => Dropdown List
         if (!distanceGetAllSelectReducer.isLoading && isExistAction(currentAction, DISTANCE.GETALL_SELECT)) {
@@ -100,10 +70,7 @@ class Price extends Component {
                 distanceId: distanceOptions[0].value,
                 currentAction: removeAction(currentAction, DISTANCE.GETALL_SELECT)
             });
-
-            if (this.state.capacityId > 0) {
-                this.props.filterPriceAction(`?distanceId=${distanceOptions[0].value}&capacityId=${this.state.capacityId}`);
-            }
+            this.props.filterPriceAction(`?distanceId=${distanceOptions[0].value}`);
         }
 
         if (!getAllModel.isLoading && isExistAction(currentAction, PRICE.FILTER)) {
@@ -124,24 +91,20 @@ class Price extends Component {
             this.setState({
                 distanceId: event.value
             });
-        } else if (field === 'CapacityId') {
-            this.setState({
-                capacityId: event.value
-            });
-        }
+        } 
     }
     filter = () => {
-        this.props.filterPriceAction(`?distanceId=${this.state.distanceId}&capacityId=${this.state.capacityId}`);
+        this.props.filterPriceAction(`?distanceId=${this.state.distanceId}`);
     }
 
     render() {
         const { currentAction } = this.state;
-        const { t, changeStatusModel, deleteModel, getAllModel, capacityGetAllSelectReducer, distanceGetAllSelectReducer } = this.props;
+        const { t, changeStatusModel, deleteModel, getAllModel,  distanceGetAllSelectReducer } = this.props;
         let disableColumns = ['DistanceId', 'CapacityId', 'Money'];//['Id','Status'];
 
         const isLoadingOver = currentAction.length > 0 || changeStatusModel.isLoading || deleteModel.isLoading;
 
-        let loading = capacityGetAllSelectReducer.isLoading || distanceGetAllSelectReducer.isLoading;
+        let loading =  distanceGetAllSelectReducer.isLoading;
 
         if (loading) {
             return <LoadingOverlay active spinner text={t(key.common.loadingSpinner)} />
@@ -164,20 +127,6 @@ class Price extends Component {
                                         options={this.state.distanceOptions}
                                         value={reactSelectGetCurrentValue(this.state.distanceOptions, this.state.distanceId)}
                                         onChange={(event) => this.handleChangeFields(event, 'DistanceId')}
-                                        placeholder={t(key.common.pleaseSelect) + '...'}
-                                    />
-                                </FormGroup>
-                            </Col>
-                            <Col md="4">
-                                <FormGroup>
-                                    <Label>{t(key.price.CapacityId)}</Label>
-                                    <Select
-                                        className="basic-single"
-                                        classNamePrefix="select"
-                                        styles={reactSelectCustomStyles(true)}
-                                        options={this.state.capacityOptions}
-                                        value={reactSelectGetCurrentValue(this.state.capacityOptions, this.state.capacityId)}
-                                        onChange={(event) => this.handleChangeFields(event, 'CapacityId')}
                                         placeholder={t(key.common.pleaseSelect) + '...'}
                                     />
                                 </FormGroup>
