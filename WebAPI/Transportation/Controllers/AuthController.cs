@@ -15,22 +15,17 @@ namespace Transportation.Controllers
     [Route("api/[controller]/[action]")]
     public class AuthController : Controller
     {
-        private string rootPath;
-        private readonly ICompanyService _companyService;
 
 
         private readonly ILogger _logger;
         private readonly IAuthService _authService;
         public IConfiguration Configuration { get; }
 
-        public AuthController(IAuthService authService, ILogger<AuthController> logger, IConfiguration configuration, IHostingEnvironment env, ICompanyService companyService)
+        public AuthController(IAuthService authService, ILogger<AuthController> logger, IConfiguration configuration)
         {
             _authService = authService;
             _logger = logger;
             Configuration = configuration;
-
-            rootPath = env.ContentRootPath;
-            _companyService = companyService;
         }
         [HttpPost]
         public async Task<IActionResult> Login([FromBody]CredentialsViewModel model)

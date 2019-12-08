@@ -96,7 +96,7 @@ namespace Service
 
 
                 var query = await _repo.Where(tr => fromDate.Date <= tr.TransportDate.Date && tr.TransportDate.Date <= toDate.Date && tr.Status != CommonConstants.Status.Deleted);
-                var transportations = query.ToList();
+                var transportations = query.OrderBy(tr=>tr.DocumentNumber).ToList();
 
 
                 var transportationGetAllViewModels = new List<TransportationGetAllViewModel>();

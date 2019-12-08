@@ -8,6 +8,7 @@ import { getAllDriverEpic, changeStatusDriverEpic, deleteDriverEpic, addDriverEp
 import { getAllCompanyEpic, changeStatusCompanyEpic, deleteCompanyEpic, addCompanyEpic, editCompanyEpic, getByIdCompanyEpic, companyGetAllSelectEpic  } from '../epics/companyEpic';
 import { getAllDistanceEpic, changeStatusDistanceEpic, deleteDistanceEpic, addDistanceEpic, editDistanceEpic, getByIdDistanceEpic, distanceGetAllSelectEpic } from '../epics/distanceEpic';
 import { getAllPriceEpic, changeStatusPriceEpic, deletePriceEpic, addPriceEpic, editPriceEpic, getByIdPriceEpic, priceFilterEpic } from '../epics/priceEpic';
+import { reportBangkeEpic, reportCheckBangkeEpic } from '../epics/reportEpic';
 
 const rootEpic = combineEpics(
     loginEpic, 
@@ -27,6 +28,8 @@ const rootEpic = combineEpics(
     getAllDistanceEpic, changeStatusDistanceEpic, deleteDistanceEpic, addDistanceEpic, editDistanceEpic, getByIdDistanceEpic, distanceGetAllSelectEpic,
 
     getAllPriceEpic, changeStatusPriceEpic, deletePriceEpic, addPriceEpic, editPriceEpic, getByIdPriceEpic,priceFilterEpic,
+    
+    reportBangkeEpic, reportCheckBangkeEpic,
 
 );
 export default rootEpic;

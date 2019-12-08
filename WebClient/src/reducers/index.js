@@ -78,6 +78,10 @@ import addPriceReducer from './price/addReducer';
 import editPriceReducer from './price/editReducer';
 import priceFilterReducer from './price/filterReducer';
 
+//REPORT
+import reportBangkeReducer from './report/bangkeReducer';
+import reportCheckBangkeReducer from './report/checkBangkeReducer';
+
 
 export default combineReducers({
     router: routerReducer,
@@ -109,8 +113,8 @@ export default combineReducers({
     deleteTransportationReducer: deleteTransportationReducer,
     addTransportationReducer: addTransportationReducer,
     editTransportationReducer: editTransportationReducer,
-    generateMoneyTransportationReducer : generateMoneyTransportationReducer,
-    transportationFilterReducer:transportationFilterReducer,
+    generateMoneyTransportationReducer: generateMoneyTransportationReducer,
+    transportationFilterReducer: transportationFilterReducer,
 
     //CAR
     getAllCarReducer: getAllCarReducer,
@@ -129,7 +133,7 @@ export default combineReducers({
     addDriverReducer: addDriverReducer,
     editDriverReducer: editDriverReducer,
     driverGetAllSelectReducer: driverGetAllSelectReducer,
- 
+
     //COMPANY
     getAllCompanyReducer: getAllCompanyReducer,
     getByIdCompanyReducer: getByIdCompanyReducer,
@@ -137,7 +141,7 @@ export default combineReducers({
     deleteCompanyReducer: deleteCompanyReducer,
     addCompanyReducer: addCompanyReducer,
     editCompanyReducer: editCompanyReducer,
-    companyGetAllSelectReducer: companyGetAllSelectReducer,    
+    companyGetAllSelectReducer: companyGetAllSelectReducer,
 
     //DISTANCE
     getAllDistanceReducer: getAllDistanceReducer,
@@ -154,6 +158,10 @@ export default combineReducers({
     changeStatusPriceReducer: changeStatusPriceReducer,
     deletePriceReducer: deletePriceReducer,
     addPriceReducer: addPriceReducer,
-    editPriceReducer: editPriceReducer,    
+    editPriceReducer: editPriceReducer,
     priceFilterReducer: priceFilterReducer,
+
+    //REPORT
+    reportBangkeReducer: reportBangkeReducer,
+    reportCheckBangkeReducer: reportCheckBangkeReducer,
 });

@@ -120,7 +120,7 @@ namespace Domain.Constants
         {
 
             public static string formatName = "yyyyMMdd_HHmmss";
-            public static string fileNameExtention = ".xlsx";
+            public static string fileNameExtention = "xlsx";
             public static string openxmlformats = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         }
         public struct Validate

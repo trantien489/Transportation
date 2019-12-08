@@ -38,7 +38,7 @@ class DefaultLayout extends Component {
         { title: true, name: 'QUẢN LÝ ĐƠN GIÁ'},
         { name: t(key.capacity.GridTitle), url: '/capacity', icon: 'icon-drop', },
         { name: t(key.distance.GridTitle), url: '/distance', icon: 'icon-map', },
-        { name: t(key.price.GridTitle), url: '/price', icon: 'cui-dollar', },
+        { name: 'Bảng giá vận chuyển', url: '/price', icon: 'cui-dollar', },
 
         { title: true, name: 'QUẢN LÝ XE'},
         { name: t(key.car.GridTitle), url: '/car', icon: 'fa fa-truck', },
@@ -47,6 +47,11 @@ class DefaultLayout extends Component {
         { title: true, name: 'QUẢN LÝ VẬN CHUYỂN'},
         { name: t(key.company.GridTitle), url: '/company', icon: 'icon-grid', },
         { name: t(key.transportation.GridTitle), url: '/transportation', icon: 'icon-rocket', },
+
+
+        { title: true, name: 'XUẤT BÁO CÁO'},
+        { name: 'Bảng kê', url: '/report', icon: 'icon-docs', },
+
 
       ],
     }

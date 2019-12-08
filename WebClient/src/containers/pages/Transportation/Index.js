@@ -13,6 +13,7 @@ import {  formatDateTimeToString } from "../../../utilities/format";
 import DateTimePicker from 'react-datetime-picker';
 import { toastr } from 'react-redux-toastr';
 import transportation from "../../../i18n/key/transportation";
+import LoadingOverlay from 'react-loading-overlay';
 
 
 class Transportation extends Component {
@@ -102,6 +103,8 @@ class Transportation extends Component {
         } else {
             return (
                 <Card>
+                    <LoadingOverlay active={isLoadingOver} spinner text={t(key.common.loadingSpinner)} className="overlayFullScreen" />
+
                     <CardBody>
                         <Row>
                             <Col md="4">
@@ -140,7 +143,7 @@ class Transportation extends Component {
                         hasRecordsActionReducer(getAllModel)
                         &&
                         <GridView
-                            isLoadingOver={isLoadingOver}
+                            isLoadingOver={false}
                             records={getAllModel.responseData.Data.Records}
                             keyFields={key.transportation}
                             tableName="TRANSPORTATION"

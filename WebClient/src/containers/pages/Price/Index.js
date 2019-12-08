@@ -91,7 +91,7 @@ class Price extends Component {
             this.setState({
                 distanceId: event.value
             });
-        } 
+        }
     }
     filter = () => {
         this.props.filterPriceAction(`?distanceId=${this.state.distanceId}`);
@@ -99,22 +99,22 @@ class Price extends Component {
 
     render() {
         const { currentAction } = this.state;
-        const { t, changeStatusModel, deleteModel, getAllModel,  distanceGetAllSelectReducer } = this.props;
+        const { t, changeStatusModel, deleteModel, getAllModel } = this.props;
         let disableColumns = ['DistanceId', 'CapacityId', 'Money'];//['Id','Status'];
 
         const isLoadingOver = currentAction.length > 0 || changeStatusModel.isLoading || deleteModel.isLoading;
 
-        let loading =  distanceGetAllSelectReducer.isLoading;
+        //let loading = distanceGetAllSelectReducer.isLoading;
 
-        if (loading) {
-            return <LoadingOverlay active spinner text={t(key.common.loadingSpinner)} />
-        } else if (getAllModel.isError) {
+        if (getAllModel.isError) {
             return <ErrorAlert responseData={getAllModel.responseData}
                 msgErrorGetAPI={t(key.common.errorGetAllAPI)} t={this.props.t}
                 msgRedirectToLogin={t(key.common.redirectToLogin)} />
         } else {
             return (
                 <Card>
+                    <LoadingOverlay active={isLoadingOver} spinner text={t(key.common.processingSpinner)} className="overlayFullScreen" />
+
                     <CardBody>
                         <Row>
                             <Col md="4">
@@ -145,7 +145,7 @@ class Price extends Component {
                         hasRecordsActionReducer(getAllModel)
                         &&
                         <GridView
-                            isLoadingOver={isLoadingOver}
+                            isLoadingOver={false}
                             records={getAllModel.responseData.Data.Records}
                             keyFields={key.price}
                             tableName="PRICE"

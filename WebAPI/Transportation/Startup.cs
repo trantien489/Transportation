@@ -136,7 +136,7 @@ namespace Transportation
             {
                 options.AddPolicy("AllowAnyOrigin",
                     build => build
-                    .AllowAnyOrigin()
+                    .WithOrigins(jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)])
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
@@ -181,7 +181,7 @@ namespace Transportation
 
             #region CORS
             var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-            app.UseCors(x => x.WithOrigins(jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)]).AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseCors(x => x.WithOrigins(jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)]).AllowAnyMethod().AllowAnyHeader());
             #endregion
 
             app.UseHttpsRedirection();
@@ -205,6 +205,8 @@ namespace Transportation
             services.AddTransient<IDriverService, DriverService>();
             services.AddTransient<IPriceService, PriceService>();
             services.AddTransient<ITransportationService, TransportationService>();
+            services.AddTransient<IReportService, ReportService>();
+
         }
         private static void RegisterMapper(IServiceCollection services)
         {
