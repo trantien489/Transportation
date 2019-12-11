@@ -11,7 +11,7 @@ class DefaultFooter extends Component {
     return (
       <React.Fragment>
         <span>Chấn Đông &copy; 2019</span>
-        <span className="ml-auto">Designed by <a href="https://www.facebook.com/trantien489">Tien Tran</a></span>
+        <span className="ml-auto">Thiết kế <a href="https://www.facebook.com/trantien489">Tien Tran</a></span>
       </React.Fragment>
     );
   }

@@ -10,6 +10,7 @@ using Domain.Repositories.Generic;
 using Domain.Services;
 using Infrastructure.EF.Context;
 using Infrastructure.EF.Entities;
+using Infrastructure.EF.SQL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -47,6 +48,9 @@ namespace Transportation
             services.AddDbContext<ApplicationDbContext>(options =>
                                         options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
                                         b => b.MigrationsAssembly("Infrastructure.EF")));
+
+            //Initial connection string SQL.
+            DbConnectionSQL.Instance(Configuration);
 
             #region Swagger
             services.AddSwaggerGen(c =>
@@ -128,6 +132,7 @@ namespace Transportation
             {
                 options.AddPolicy("ApiUser", policy => policy.RequireClaim(Constants.Strings.JwtClaimIdentifiers.Rol, Constants.Strings.JwtClaims.ApiAccess));
                 options.AddPolicy(CommonConstants.Authorize.PolicyAdmin, policy => policy.RequireRole(CommonConstants.Authorize.Admin));
+                options.AddPolicy(CommonConstants.Authorize.Staff, policy => policy.RequireRole(CommonConstants.Authorize.Admin, CommonConstants.Authorize.Staff));
             });
             #endregion
 

@@ -1,5 +1,6 @@
 ﻿using Domain.Services;
 using Domain.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -34,6 +35,8 @@ namespace Transportation.Controllers
             return result;
         }
 
+
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Filter(DateTime fromDate, DateTime toDate)
         {

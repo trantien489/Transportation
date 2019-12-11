@@ -41,7 +41,7 @@ namespace Domain.ViewModels
     public class TransportationGetAllViewModel
     {
         public long Id { get; set; }
-        public DateTime TransportDate { get; set; }
+        public string TransportDate { get; set; }
         public string CarNumber { get; set; }
         public string DocumentNumber { get; set; }
         public string Companies { get; set; }

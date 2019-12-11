@@ -2,6 +2,7 @@
 using Domain.Services;
 using Domain.ViewModels;
 using Infrastructure.EF.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -18,6 +19,7 @@ namespace Transportation.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> Filter(long distanceId)
         {

@@ -28,6 +28,8 @@ namespace Transportation.Controllers
         {
             return input.Substring(0, input.Length - 10).ToLower();
         }
+
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAll(int? pageSize = CommonConstants.ConfigNumber.pageSizeDefault, int? pageNumber = 1, int? Status = null)
         {

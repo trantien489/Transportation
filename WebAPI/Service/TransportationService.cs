@@ -5,9 +5,12 @@ using Domain.Repositories.Generic;
 using Domain.Services;
 using Domain.ViewModels;
 using Infrastructure.EF.Entities;
+using Infrastructure.EF.SQL;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -95,34 +98,54 @@ namespace Service
                 }
 
 
-                var query = await _repo.Where(tr => fromDate.Date <= tr.TransportDate.Date && tr.TransportDate.Date <= toDate.Date && tr.Status != CommonConstants.Status.Deleted);
-                var transportations = query.OrderBy(tr=>tr.DocumentNumber).ToList();
+                //var query = await _repo.Where(tr => fromDate.Date <= tr.TransportDate.Date && tr.TransportDate.Date <= toDate.Date && tr.Status != CommonConstants.Status.Deleted);
+                //var transportations = query.OrderBy(tr=>tr.DocumentNumber).ToList();
 
 
-                var transportationGetAllViewModels = new List<TransportationGetAllViewModel>();
+                //var transportationGetAllViewModels = new List<TransportationGetAllViewModel>();
 
-                foreach (var transportation in transportations)
-                {
-                    _repo.EntryReference(transportation, e => e.Car);
-                    _repo.EntryReference(transportation, e => e.DriverPrimary);
-                    _repo.EntryReference(transportation, e => e.DriverSecondary);
+                //foreach (var transportation in transportations)
+                //{
+                //    _repo.EntryReference(transportation, e => e.Car);
+                //    _repo.EntryReference(transportation, e => e.DriverPrimary);
+                //    _repo.EntryReference(transportation, e => e.DriverSecondary);
 
-                    var newRecord = _mapper.Map<Transportation, TransportationGetAllViewModel>(transportation);
-                    var companiesString = new List<string>();
-                    var companyIds = JsonConvert.DeserializeObject<List<int>>(transportation.CompanyIds);
-                    foreach (var companyId in companyIds)
-                    {
-                        var company = await _companyRepo.GetById(companyId);
-                        if (company != null)
-                        {
-                            companiesString.Add($"{company.Code}|{company.Name}");
-                        }
-                    }
+                //    var newRecord = _mapper.Map<Transportation, TransportationGetAllViewModel>(transportation);
+                //    var companiesString = new List<string>();
+                //    var companyIds = JsonConvert.DeserializeObject<List<int>>(transportation.CompanyIds);
+                //    foreach (var companyId in companyIds)
+                //    {
+                //        var company = await _companyRepo.GetById(companyId);
+                //        if (company != null)
+                //        {
+                //            companiesString.Add($"{company.Code}|{company.Name}");
+                //        }
+                //    }
 
 
-                    newRecord.Companies = string.Join(" - ", companiesString);
-                    transportationGetAllViewModels.Add(newRecord);
-                }
+                //    newRecord.Companies = string.Join(" - ", companiesString);
+                //    transportationGetAllViewModels.Add(newRecord);
+                //}
+                var dbConnectionSQL = DbConnectionSQL.Instance();
+                var dbCommand = dbConnectionSQL.GetCommand(dbConnectionSQL.GetConnection(), "TransportationFilter", CommandType.StoredProcedure);
+                var parameters = new List<DbParameter>();
+
+                var fromDateParam = dbCommand.CreateParameter();
+                fromDateParam.DbType = DbType.Date;
+                fromDateParam.ParameterName = "FromDate";
+                fromDateParam.Value = fromDate.Date;
+                parameters.Add(fromDateParam);
+
+                var toDateParam = dbCommand.CreateParameter();
+                toDateParam.DbType = DbType.Date;
+                toDateParam.ParameterName = "ToDate";
+                toDateParam.Value = toDate.Date;
+                parameters.Add(toDateParam);
+
+
+
+                var dataTable = dbConnectionSQL.ExecuteTable("TransportationFilter", parameters);
+                var transportationGetAllViewModels = dbConnectionSQL.ConvertDataTableToList<TransportationGetAllViewModel>(dataTable);
                 var pagination = new Pagination();
                 pagination.Records = transportationGetAllViewModels;
                 pagination.TotalRecords = transportationGetAllViewModels.Count;

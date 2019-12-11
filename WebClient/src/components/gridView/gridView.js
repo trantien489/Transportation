@@ -10,7 +10,6 @@ import { commonConstant } from '../../contants/common';
 import { getSessionStorage, setSessionStorage } from '../../utilities/storage';
 import { hasRecordsActionReducer, isNullActionReducer, removeItemFromItems, changeStatusItemFromItems, changeIsDefaultItemFromItems } from '../../utilities/validate';
 import { toastr } from 'react-redux-toastr';
-import { gridViewFormatDateTimeToString } from '../../utilities/format';
 
 var _handleItem = null;
 var _currentAction = null;
@@ -177,24 +176,24 @@ export class GridView extends Component {
 
         //Handel Datetime
         if (records.length > 0) {
-            let tempModel = records[0];
-            let datePropertyName = [];
-            let regex = /^[0-9]{2}[/][0-9]{2}[/][0-9]{4}$/g;
-            for (var propertyName in tempModel) {
-                if (propertyName.toLowerCase().includes('date')) {
-                    datePropertyName.push(propertyName);
-                }
-            }
+            // let tempModel = records[0];
+            // let datePropertyName = [];
+            // let regex = /^[0-9]{2}[/][0-9]{2}[/][0-9]{4}$/g;
+            // for (var propertyName in tempModel) {
+            //     if (propertyName.toLowerCase().includes('date')) {
+            //         datePropertyName.push(propertyName);
+            //     }
+            // }
 
-            if (datePropertyName.length > 0) {
-                records.forEach((item) => {
-                    datePropertyName.forEach((propertyName) => {
-                        if (!regex.test(item[propertyName])) {
-                            item[propertyName] = gridViewFormatDateTimeToString(item[propertyName])
-                        }
-                    });
-                });
-            }
+            // if (datePropertyName.length > 0) {
+            //     records.forEach((item) => {
+            //         datePropertyName.forEach((propertyName) => {
+            //             if (!regex.test(item[propertyName])) {
+            //                 item[propertyName] = gridViewFormatDateTimeToString(item[propertyName])
+            //             }
+            //         });
+            //     });
+            // }
         }
 
         const propsOfTable = {
