@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Transportation.Controllers
 {
     [Route("api/[controller]/[action]")]
-    [Authorize(Policy = CommonConstants.Authorize.PolicyAdmin)]
+    [Authorize(Policy = CommonConstants.Authorize.Staff)]
     public class ReportController : Controller
     {
         private readonly IReportService _reportService;
