@@ -13,6 +13,10 @@ using Newtonsoft.Json;
 using System.IO;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using Infrastructure.EF.SQL;
+using System.Data.Common;
+using System.Data;
+using Domain.ViewModels;
 
 namespace Service
 {
@@ -44,10 +48,27 @@ namespace Service
             var result = new ResponseResult();
             try
             {
-                var query = await _transportationRepo.Where(e => e.TransportDate.Month == date.Month
-                                                                        && e.TransportDate.Year == date.Year
-                                                                        && e.Status == CommonConstants.Status.Active);
-                var transportations = query.OrderBy(e => e.DocumentNumber).ToList();
+                //var query = await _transportationRepo.Where(e => e.TransportDate.Month == date.Month
+                //                                                        && e.TransportDate.Year == date.Year
+                //                                                        && e.Status == CommonConstants.Status.Active);
+                //var transportations = query.OrderBy(e => e.DocumentNumber).ToList();
+
+                #region Call StoreProcedure
+                var dbConnectionSQL = DbConnectionSQL.Instance();
+                var dbCommand = dbConnectionSQL.GetCommand(dbConnectionSQL.GetConnection(), "Bangke", CommandType.StoredProcedure);
+                var parameters = new List<DbParameter>();
+
+                var dateParam = dbCommand.CreateParameter();
+                dateParam.DbType = DbType.Date;
+                dateParam.ParameterName = "Date";
+                dateParam.Value = date;
+                parameters.Add(dateParam);
+
+                var dataTable = dbConnectionSQL.ExecuteTable("Bangke", parameters);
+                var transportations = dbConnectionSQL.ConvertDataTableToList<ExportReportViewModel>(dataTable);
+
+                #endregion
+
 
                 var filePath = $"{_webRootPath}\\ReportTemplate\\Bangke.xlsx";
                 using (Stream stream = File.OpenRead(filePath))
@@ -79,27 +100,42 @@ namespace Service
 
                         foreach (var transportation in transportations)
                         {
-                            _transportationRepo.EntryReference(transportation, e => e.Car);
-                            _carRepo.EntryReference(transportation.Car, e => e.Capacity);
+                            #region Old Code
+                            //_transportationRepo.EntryReference(transportation, e => e.Car);
+                            //_carRepo.EntryReference(transportation.Car, e => e.Capacity);
 
-                            var companyId = JsonConvert.DeserializeObject<List<int>>(transportation.CompanyIds).Last();
-                            var company = await _companyRepo.GetById(companyId);
-                            if (company != null)
-                            {
-                                var distance = (await _distanceRepo.Where(e => DistanceCondition(e, company.Distance))).First();
+                            //var companyId = JsonConvert.DeserializeObject<List<int>>(transportation.CompanyIds).Last();
+                            //var company = await _companyRepo.GetById(companyId);
+                            //if (company != null)
+                            //{
+                            //    var distance = (await _distanceRepo.Where(e => DistanceCondition(e, company.Distance))).First();
 
 
-                                worksheet.Cells[startRow, 1].Value = transportation.TransportDate.ToString("dd'/'MM'/'yyyy");
-                                worksheet.Cells[startRow, 2].Value = transportation.Car.CarNumber;
-                                worksheet.Cells[startRow, 3].Value = company.Name;
-                                worksheet.Cells[startRow, 4].Value = company.Distance;
-                                worksheet.Cells[startRow, 5].Value = distance.Description;
-                                worksheet.Cells[startRow, 6].Value = transportation.Car.Capacity.Type;
-                                worksheet.Cells[startRow, 7].Value = transportation.Money;
-                                worksheet.Cells[startRow, 8].Value = transportation.Report;
+                            //    worksheet.Cells[startRow, 1].Value = transportation.TransportDate.ToString("dd'/'MM'/'yyyy");
+                            //    worksheet.Cells[startRow, 2].Value = transportation.Car.CarNumber;
 
-                                startRow += 1;
-                            }
+                            //    worksheet.Cells[startRow, 3].Value = company.Name;
+                            //    worksheet.Cells[startRow, 4].Value = company.Distance;
+                            //    worksheet.Cells[startRow, 5].Value = distance.Description;
+
+                            //    worksheet.Cells[startRow, 6].Value = transportation.Car.Capacity.Type;
+                            //    worksheet.Cells[startRow, 7].Value = transportation.Money;
+                            //    worksheet.Cells[startRow, 8].Value = transportation.Report;
+
+                            //    startRow += 1;
+                            //}
+                            #endregion
+
+                            worksheet.Cells[startRow, 1].Value = transportation.TransportDate;
+                            worksheet.Cells[startRow, 2].Value = transportation.CarNumber;
+                            worksheet.Cells[startRow, 3].Value = transportation.CompanyName;
+                            worksheet.Cells[startRow, 4].Value = transportation.CompanyDistance;
+                            worksheet.Cells[startRow, 5].Value = transportation.DistanceDescription;
+                            worksheet.Cells[startRow, 6].Value = transportation.CapacityType;
+                            worksheet.Cells[startRow, 7].Value = transportation.Money;
+                            worksheet.Cells[startRow, 8].Value = transportation.Report;
+
+                            startRow += 1;
                         }
 
                         BoderCell(worksheet.Cells[$"A5:H{startRow - 1}"]);
