@@ -56,7 +56,7 @@ export class AddOrEdit extends Component {
 
         let textFields = fields.filter(item => { return item.Type === ControlType.Text });
         textFields.forEach(item => {
-            model[item.Name] = model[item.Name].trim();
+            model[item.Name] = model[item.Name] ?  model[item.Name].trim() : model[item.Name];
         });
 
         this.addOrEditAction(model);

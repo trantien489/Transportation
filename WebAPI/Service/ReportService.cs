@@ -68,6 +68,10 @@ namespace Service
                 var transportations = dbConnectionSQL.ConvertDataTableToList<ExportReportViewModel>(dataTable);
 
                 #endregion
+                var title = $"BẢNG KÊ VẬN CHUYỂN THÁNG {date.Month}";
+                int days = DateTime.DaysInMonth(date.Year, date.Month);
+                var text = $"TOTAL: TỪ NGÀY 1/{date.Month} ĐẾN NGÀY {days}/{date.Month}";
+
 
 
                 var filePath = $"{_webRootPath}\\ReportTemplate\\Bangke.xlsx";
@@ -76,72 +80,23 @@ namespace Service
                     using (var excelPackage = new ExcelPackage(stream))
                     {
                         var workSheets = excelPackage.Workbook.Worksheets;
-                        var worksheet = workSheets.First();
-                        var databaseCount = transportations.Count();
-                        worksheet.InsertRow(5, databaseCount);
-                        var title = $"BẢNG KÊ VẬN CHUYỂN THÁNG {date.Month}";
-                        var sumMoney = transportations.Sum(tr => tr.Money);
-                        var vat = (sumMoney / 100) * 10;
-                        var totalMoney = sumMoney + vat;
-                        var startRow = 5;
-                        int days = DateTime.DaysInMonth(date.Year, date.Month);
-                        var text = $"TOTAL: TỪ NGÀY 1/{date.Month} ĐẾN NGÀY {days}/{date.Month}";
-
-                        worksheet.Cells[3, 1].Value = text;
-
-                        worksheet.Cells[1, 1].Value = title;
-
-                        worksheet.Cells[startRow + databaseCount, 1].Value = text;
-                        worksheet.Cells[startRow + databaseCount, 7].Value = sumMoney;
-
-
-                        worksheet.Cells[startRow + databaseCount + 1, 7].Value = vat;
-                        worksheet.Cells[startRow + databaseCount + 2, 7].Value = totalMoney;
-
-                        foreach (var transportation in transportations)
-                        {
-                            #region Old Code
-                            //_transportationRepo.EntryReference(transportation, e => e.Car);
-                            //_carRepo.EntryReference(transportation.Car, e => e.Capacity);
-
-                            //var companyId = JsonConvert.DeserializeObject<List<int>>(transportation.CompanyIds).Last();
-                            //var company = await _companyRepo.GetById(companyId);
-                            //if (company != null)
-                            //{
-                            //    var distance = (await _distanceRepo.Where(e => DistanceCondition(e, company.Distance))).First();
-
-
-                            //    worksheet.Cells[startRow, 1].Value = transportation.TransportDate.ToString("dd'/'MM'/'yyyy");
-                            //    worksheet.Cells[startRow, 2].Value = transportation.Car.CarNumber;
-
-                            //    worksheet.Cells[startRow, 3].Value = company.Name;
-                            //    worksheet.Cells[startRow, 4].Value = company.Distance;
-                            //    worksheet.Cells[startRow, 5].Value = distance.Description;
-
-                            //    worksheet.Cells[startRow, 6].Value = transportation.Car.Capacity.Type;
-                            //    worksheet.Cells[startRow, 7].Value = transportation.Money;
-                            //    worksheet.Cells[startRow, 8].Value = transportation.Report;
-
-                            //    startRow += 1;
-                            //}
-                            #endregion
-
-                            worksheet.Cells[startRow, 1].Value = transportation.TransportDate;
-                            worksheet.Cells[startRow, 2].Value = transportation.CarNumber;
-                            worksheet.Cells[startRow, 3].Value = transportation.CompanyName;
-                            worksheet.Cells[startRow, 4].Value = transportation.CompanyDistance;
-                            worksheet.Cells[startRow, 5].Value = transportation.DistanceDescription;
-                            worksheet.Cells[startRow, 6].Value = transportation.CapacityType;
-                            worksheet.Cells[startRow, 7].Value = transportation.Money;
-                            worksheet.Cells[startRow, 8].Value = transportation.Report;
-
-                            startRow += 1;
-                        }
-
-                        BoderCell(worksheet.Cells[$"A5:H{startRow - 1}"]);
-                        AlignCenter(worksheet.Cells[$"E5:F{startRow - 1}"]);
-
+                        var mainSheet = workSheets.First();
+                        FillWorkSheet(mainSheet, transportations, title, text, true);
                         //excelPackage.Save();
+
+                        #region Export reports by Car Number
+                        var transportationsGroupbyCarNumber = transportations.GroupBy(t => t.CarNumber, (key, trans) => new { CarNumber = key, Transportations = trans.ToList() });
+                        var templateSheetCarNumber = workSheets[1];
+
+                        foreach (var item in transportationsGroupbyCarNumber)
+                        {
+                            var sheetCarNumber = workSheets.Add(item.CarNumber, templateSheetCarNumber);
+                            FillWorkSheet(sheetCarNumber, item.Transportations, title, text, false);
+                        }
+                        workSheets.Delete(templateSheetCarNumber);
+                        mainSheet.Select();
+                        #endregion
+
 
                         var returnStream = new MemoryStream();
                         excelPackage.SaveAs(returnStream);
@@ -190,6 +145,70 @@ namespace Service
         }
 
         #region Private Method
+
+        private void FillWorkSheet(ExcelWorksheet worksheet, List<ExportReportViewModel> transportations, string title, string text, bool isMainSheet)
+        {
+            var databaseCount = transportations.Count();
+            worksheet.InsertRow(5, databaseCount);
+            var sumMoney = transportations.Sum(tr => tr.Money);
+            var vat = (sumMoney / 100) *  (isMainSheet ? 10 : 5);
+            var totalMoney = sumMoney + (isMainSheet ? vat :  - vat);
+            var startRow = 5;
+
+            worksheet.Cells[3, 1].Value = text;
+
+            worksheet.Cells[1, 1].Value = title;
+
+            worksheet.Cells[startRow + databaseCount, 1].Value = text;
+            worksheet.Cells[startRow + databaseCount, 7].Value = sumMoney;
+
+
+            worksheet.Cells[startRow + databaseCount + 1, 7].Value = vat;
+            worksheet.Cells[startRow + databaseCount + 2, 7].Value = totalMoney;
+
+            foreach (var transportation in transportations)
+            {
+                #region Old Code
+                //_transportationRepo.EntryReference(transportation, e => e.Car);
+                //_carRepo.EntryReference(transportation.Car, e => e.Capacity);
+
+                //var companyId = JsonConvert.DeserializeObject<List<int>>(transportation.CompanyIds).Last();
+                //var company = await _companyRepo.GetById(companyId);
+                //if (company != null)
+                //{
+                //    var distance = (await _distanceRepo.Where(e => DistanceCondition(e, company.Distance))).First();
+
+
+                //    worksheet.Cells[startRow, 1].Value = transportation.TransportDate.ToString("dd'/'MM'/'yyyy");
+                //    worksheet.Cells[startRow, 2].Value = transportation.Car.CarNumber;
+
+                //    worksheet.Cells[startRow, 3].Value = company.Name;
+                //    worksheet.Cells[startRow, 4].Value = company.Distance;
+                //    worksheet.Cells[startRow, 5].Value = distance.Description;
+
+                //    worksheet.Cells[startRow, 6].Value = transportation.Car.Capacity.Type;
+                //    worksheet.Cells[startRow, 7].Value = transportation.Money;
+                //    worksheet.Cells[startRow, 8].Value = transportation.Report;
+
+                //    startRow += 1;
+                //}
+                #endregion
+
+                worksheet.Cells[startRow, 1].Value = transportation.TransportDate;
+                worksheet.Cells[startRow, 2].Value = transportation.CarNumber;
+                worksheet.Cells[startRow, 3].Value = transportation.CompanyName;
+                worksheet.Cells[startRow, 4].Value = transportation.CompanyDistance;
+                worksheet.Cells[startRow, 5].Value = transportation.DistanceDescription;
+                worksheet.Cells[startRow, 6].Value = transportation.CapacityType;
+                worksheet.Cells[startRow, 7].Value = transportation.Money;
+                worksheet.Cells[startRow, 8].Value = transportation.Report;
+
+                startRow += 1;
+            }
+
+            BoderCell(worksheet.Cells[$"A5:H{startRow - 1}"]);
+            AlignCenter(worksheet.Cells[$"E5:F{startRow - 1}"]);
+        }
 
         private void BoderCell(ExcelRange cell)
         {
