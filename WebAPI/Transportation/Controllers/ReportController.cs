@@ -28,7 +28,12 @@ namespace Transportation.Controllers
         public async Task<IActionResult> BangKe(DateTime date, string currentDate)
         {
             var response = await _reportService.BangKe(date);
-            return File(response.Data, CommonConstants.Excel.openxmlformats, $"Bảng Kê Tháng {date.Month}/{date.Year}_{currentDate}.{CommonConstants.Excel.fileNameExtention}");
+            if (response.Success)
+            {
+                return File(response.Data, CommonConstants.Excel.openxmlformats, $"Bảng Kê Tháng {date.Month}/{date.Year}_{currentDate}.{CommonConstants.Excel.fileNameExtention}");
+            }
+            return new ObjectResult(response);
+
         }
 
         [HttpGet]

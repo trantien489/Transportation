@@ -203,10 +203,16 @@ namespace Service
                 worksheet.Cells[startRow, 7].Value = transportation.Money;
                 worksheet.Cells[startRow, 8].Value = transportation.Report;
 
+                if (!isMainSheet) 
+                {
+                    worksheet.Cells[startRow, 9].Value = transportation.DriverPrimary;
+                    worksheet.Cells[startRow, 10].Value = transportation.DriverSecondary;
+                }
+
                 startRow += 1;
             }
 
-            BoderCell(worksheet.Cells[$"A5:H{startRow - 1}"]);
+            BoderCell(worksheet.Cells[ isMainSheet ? $"A5:H{startRow - 1}" : $"A5:J{startRow - 1}"]);
             AlignCenter(worksheet.Cells[$"E5:F{startRow - 1}"]);
         }
 

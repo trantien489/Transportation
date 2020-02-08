@@ -14,5 +14,7 @@ namespace Domain.ViewModels
         public string CapacityType { get; set; }
         public decimal Money { get; set; }
         public string Report { get; set; }
+        public string DriverPrimary { get; set; }
+        public string DriverSecondary { get; set; }
     }
 }

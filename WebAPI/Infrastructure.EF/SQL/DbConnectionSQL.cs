@@ -235,7 +235,16 @@ namespace Infrastructure.EF.SQL
                 foreach (PropertyInfo pro in temp.GetProperties())
                 {
                     if (pro.Name == column.ColumnName)
-                        pro.SetValue(obj, dr[column.ColumnName], null);
+                    {
+                        if (pro.PropertyType == typeof(string) && dr[column.ColumnName] == DBNull.Value)
+                        {
+                            pro.SetValue(obj, null, null);
+                        }
+                        else
+                        {
+                            pro.SetValue(obj, dr[column.ColumnName], null);
+                        }
+                    }
                     else
                         continue;
                 }
