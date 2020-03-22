@@ -8,6 +8,7 @@ namespace Infrastructure.EF.Entities
     {
         public Company()
         {
+            PriceAdjustment = new HashSet<PriceAdjustment>();
         }
 
         public string Name { get; set; }
@@ -15,5 +16,7 @@ namespace Infrastructure.EF.Entities
         public string Address { get; set; }
         public double Distance { get; set; }
         public string Note { get; set; }
+        public virtual ICollection<PriceAdjustment> PriceAdjustment { get; set; }
+
     }
 }

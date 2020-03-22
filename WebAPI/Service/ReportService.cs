@@ -206,7 +206,9 @@ namespace Service
                 if (!isMainSheet) 
                 {
                     worksheet.Cells[startRow, 9].Value = transportation.DriverPrimary;
-                    worksheet.Cells[startRow, 10].Value = transportation.DriverSecondary;
+                    
+                    worksheet.Cells[startRow, 10].Value = string.IsNullOrEmpty(transportation.DriverThird) ? transportation.DriverSecondary : transportation.DriverSecondary + ", " + transportation.DriverThird;
+                    worksheet.Cells[startRow, 10].AutoFitColumns();
                 }
 
                 startRow += 1;

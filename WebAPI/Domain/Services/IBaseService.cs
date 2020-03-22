@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Domain.Models;
@@ -9,7 +10,7 @@ namespace Domain.Services
 {
     public interface IBaseService<TEntity, TCreateViewModel, TUpdateViewModel, TGetByIdViewModel, TGetAllViewModel> where TEntity : BaseEntity
     {
-        Task<ResponseResult> GetAll(int pageSize, int pageNumber, int? Status);
+        Task<ResponseResult> GetAll(int pageSize, int pageNumber, int? Status, Expression<Func<TEntity, dynamic>> orderBy = null);
         Task<ResponseResult> GetById(long id);
         Task<ResponseResult> Create(TCreateViewModel model);
         Task<ResponseResult> Update(TUpdateViewModel model);

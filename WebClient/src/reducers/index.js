@@ -82,6 +82,13 @@ import priceFilterReducer from './price/filterReducer';
 import reportBangkeReducer from './report/bangkeReducer';
 import reportCheckBangkeReducer from './report/checkBangkeReducer';
 
+//PRICE ADJUSTMENT
+import getAllPriceAdjustmentReducer from './priceAdjustment/getAllReducer';
+import getByIdPriceAdjustmentReducer from './priceAdjustment/getByIdReducer';
+import changeStatusPriceAdjustmentReducer from './priceAdjustment/changeStatusReducer';
+import deletePriceAdjustmentReducer from './priceAdjustment/deleteReducer';
+import addPriceAdjustmentReducer from './priceAdjustment/addReducer';
+import editPriceAdjustmentReducer from './priceAdjustment/editReducer';
 
 export default combineReducers({
     router: routerReducer,
@@ -164,4 +171,12 @@ export default combineReducers({
     //REPORT
     reportBangkeReducer: reportBangkeReducer,
     reportCheckBangkeReducer: reportCheckBangkeReducer,
+
+    //PRICE ADJUSTMENT
+    getAllPriceAdjustmentReducer: getAllPriceAdjustmentReducer,
+    getByIdPriceAdjustmentReducer: getByIdPriceAdjustmentReducer,
+    changeStatusPriceAdjustmentReducer: changeStatusPriceAdjustmentReducer,
+    deletePriceAdjustmentReducer: deletePriceAdjustmentReducer,
+    addPriceAdjustmentReducer: addPriceAdjustmentReducer,
+    editPriceAdjustmentReducer: editPriceAdjustmentReducer,
 });

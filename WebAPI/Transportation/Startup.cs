@@ -137,11 +137,13 @@ namespace Transportation
             #endregion
 
             #region CORS
+            var domains = new List<string>();
+            Configuration.GetSection("Domains").Bind(domains);
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAnyOrigin",
                     build => build
-                    .WithOrigins(jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)])
+                    .WithOrigins(domains.ToArray())
                     .AllowAnyMethod()
                     .AllowAnyHeader());
             });
@@ -185,8 +187,9 @@ namespace Transportation
             #endregion
 
             #region CORS
-            var jwtAppSettingOptions = Configuration.GetSection(nameof(JwtIssuerOptions));
-            app.UseCors(x => x.WithOrigins(jwtAppSettingOptions[nameof(JwtIssuerOptions.Audience)]).AllowAnyMethod().AllowAnyHeader());
+            var domains = new List<string>();
+            Configuration.GetSection("Domains").Bind(domains);
+            app.UseCors(x => x.WithOrigins(domains.ToArray()).AllowAnyMethod().AllowAnyHeader());
             #endregion
 
             app.UseHttpsRedirection();
@@ -211,6 +214,8 @@ namespace Transportation
             services.AddTransient<IPriceService, PriceService>();
             services.AddTransient<ITransportationService, TransportationService>();
             services.AddTransient<IReportService, ReportService>();
+            services.AddTransient<IPriceAdjustmentService, PriceAdjustmentService>();
+
 
         }
         private static void RegisterMapper(IServiceCollection services)
@@ -225,7 +230,7 @@ namespace Transportation
                 cfg.AddProfile(new DriverMappingProfile());
                 cfg.AddProfile(new PriceMappingProfile());
                 cfg.AddProfile(new TransportationMappingProfile());
-
+                cfg.AddProfile(new PriceAdjustmentMappingProfile());
             });
             var mapper = config.CreateMapper();
             services.AddSingleton(mapper);

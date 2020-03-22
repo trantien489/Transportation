@@ -23,6 +23,7 @@ namespace Domain.ViewModels
         public long? DriverSecondaryId { get; set; }
         public string Report { get; set; }
         public string Note { get; set; }
+        public long? DriverThirdId { get; set; }
     }
     public class TransportationUpdateViewModel : TransportationCreateViewModel
     {

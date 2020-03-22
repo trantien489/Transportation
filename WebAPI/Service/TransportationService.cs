@@ -47,27 +47,10 @@ namespace Service
             result.Data = 0;
             try
             {
-                var companies = new List<Company>();
-                foreach (var companyId in companyIds)
+                var generateMoney = await GetTransportationMoney(companyIds, carId);
+                if (generateMoney.Any())
                 {
-                    var company = await _companyRepo.GetById(companyId);
-                    if (company != null)
-                    {
-                        companies.Add(company);
-                    }
-                }
-
-                var longestDistance = companies.OrderByDescending(c => c.Distance).First().Distance;
-
-                var distance = await _distanceRepo.FirstOrDefault(dis => DistanceCondition(dis, longestDistance));
-                var car = await _carRepo.GetById(carId);
-                if (distance != null && car != null)
-                {
-                    var price = await _priceRepo.FirstOrDefault(pri => pri.DistanceId == distance.Id && pri.CapacityId == car.CapacityId && pri.Status == CommonConstants.Status.Active);
-                    if (price != null)
-                    {
-                        result.Data = price.Money;
-                    }
+                    result.Data = generateMoney.OrderBy(p => p.Money).Last().Money;
                 }
 
                 ResponseResultHelper.MakeSuccess(result);
@@ -201,13 +184,13 @@ namespace Service
 
         public override string BeforeInsert(Transportation entity)
         {
-            SortCompanyByDistance(entity);
+            SortCompanyByPrice(entity);
             return string.Empty;
         }
 
         public override string BeforeUpdate(Transportation entity)
         {
-            SortCompanyByDistance(entity);
+            SortCompanyByPrice(entity);
             return string.Empty;
         }
 
@@ -223,22 +206,61 @@ namespace Service
 
             return min <= distance && distance <= max && entity.Status == CommonConstants.Status.Active;
         }
-        private void SortCompanyByDistance(Transportation entity)
+        private void SortCompanyByPrice(Transportation entity)
         {
             var companyIds = JsonConvert.DeserializeObject<List<int>>(entity.CompanyIds);
-            var companies = new List<Company>();
+            var generateMoney = GetTransportationMoney(companyIds, entity.CarId).Result;
+            if (generateMoney.Any())
+            {
+               entity.CompanyIds = JsonConvert.SerializeObject(generateMoney.OrderBy(c => c.Money).Select(c => c.CompanyId));
+            }
+        }
+
+        private async Task<List<TransportationMoney>> GetTransportationMoney(List<int> companyIds, long carId)
+        {
+            var result = new List<TransportationMoney>();
+            var car = await _carRepo.GetById(carId);
+
             foreach (var companyId in companyIds)
             {
-                var company = _companyRepo.GetById(companyId).Result;
+                var company = await _companyRepo.GetById(companyId);
                 if (company != null)
                 {
-                    companies.Add(company);
+                    _companyRepo.EntryCollection(company, c => c.PriceAdjustment);
+                    var distance = await _distanceRepo.FirstOrDefault(dis => DistanceCondition(dis, company.Distance));
+                    if (distance != null)
+                    {
+                        var price = await _priceRepo.FirstOrDefault(pri => pri.DistanceId == distance.Id && pri.CapacityId == car.CapacityId && pri.Status == CommonConstants.Status.Active);
+                        if (price != null)
+                        {
+                            var money = price.Money;
+                            if (company.PriceAdjustment.Any())
+                            {
+                                var priceAdjustment = company.PriceAdjustment.FirstOrDefault(p => p.CapacityId == price.CapacityId && p.Status == CommonConstants.Status.Active);
+                                if (priceAdjustment != null)
+                                {
+                                    money = money + priceAdjustment.UpPrice - priceAdjustment.DownPrice;
+                                }
+                            }
+                            result.Add(new TransportationMoney
+                            {
+                                CompanyId = companyId,
+                                Money = money
+                            });
+                        }
+                    }
+
                 }
             }
-
-            entity.CompanyIds = JsonConvert.SerializeObject(companies.OrderBy(c => c.Distance).Select(c => c.Id));
+            return await Task.FromResult(result);
         }
 
         #endregion
+    }
+
+    public class TransportationMoney
+    {
+        public long CompanyId { get; set; }
+        public decimal Money { get; set; }
     }
 }

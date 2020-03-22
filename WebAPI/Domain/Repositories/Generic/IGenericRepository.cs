@@ -11,7 +11,7 @@ namespace Domain.Repositories.Generic
     public interface IGenericRepository<T> where T : BaseEntity
     {
         Task<Pagination> GetAllPagination(int pageNumber, int pageSize, Expression<Func<T, bool>> where = null,
-            Expression<Func<T, dynamic>> orderDesc = null, Expression<Func<T, dynamic>> orderAsc = null);
+            Expression<Func<T, dynamic>> orderBy = null, Expression < Func<T, dynamic>> orderDesc = null );
         Task<T> GetById(long id);
         Task<ResponseResult> Insert(T entity);
         Task<ResponseResult> Update(T entity);

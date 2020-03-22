@@ -36,16 +36,16 @@ namespace Repository.Generic
         /// <param name="orderAsc"></param>
         /// <returns></returns>
         public async Task<Pagination> GetAllPagination(int pageNumber, int pageSize, Expression<Func<T, bool>> where = null,
-            Expression<Func<T, dynamic>> orderDesc = null, Expression<Func<T, dynamic>> orderAsc = null)
+            Expression<Func<T, dynamic>> orderBy = null, Expression < Func<T, dynamic>> orderDesc = null )
         {
             IQueryable<T> query = _entities;
             if (where != null)
             {
                 query = query.Where(where);
             }
-            if (orderAsc != null)
+            if (orderBy != null)
             {
-                query = query.OrderBy(orderAsc);
+                query = query.OrderBy(orderBy);
             }
             if (orderDesc != null)
             {

@@ -39,6 +39,8 @@ class DefaultLayout extends Component {
         { name: t(key.capacity.GridTitle), url: '/capacity', icon: 'icon-drop', },
         { name: t(key.distance.GridTitle), url: '/distance', icon: 'icon-map', },
         { name: 'Bảng giá vận chuyển', url: '/price', icon: 'cui-dollar', },
+        { name: 'Điều chỉnh giá', url: '/priceadjustment', icon: 'cui-settings', },
+
 
         { title: true, name: 'QUẢN LÝ XE'},
         { name: t(key.car.GridTitle), url: '/car', icon: 'fa fa-truck', },

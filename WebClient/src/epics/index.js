@@ -10,6 +10,9 @@ import { getAllDistanceEpic, changeStatusDistanceEpic, deleteDistanceEpic, addDi
 import { getAllPriceEpic, changeStatusPriceEpic, deletePriceEpic, addPriceEpic, editPriceEpic, getByIdPriceEpic, priceFilterEpic } from '../epics/priceEpic';
 import { reportBangkeEpic, reportCheckBangkeEpic } from '../epics/reportEpic';
 
+import { getAllPriceAdjustmentEpic, changeStatusPriceAdjustmentEpic, deletePriceAdjustmentEpic, addPriceAdjustmentEpic, editPriceAdjustmentEpic, getByIdPriceAdjustmentEpic } from '../epics/priceAdjustmentEpic';
+
+
 const rootEpic = combineEpics(
     loginEpic, 
     
@@ -30,6 +33,8 @@ const rootEpic = combineEpics(
     getAllPriceEpic, changeStatusPriceEpic, deletePriceEpic, addPriceEpic, editPriceEpic, getByIdPriceEpic,priceFilterEpic,
     
     reportBangkeEpic, reportCheckBangkeEpic,
+
+    getAllPriceAdjustmentEpic, changeStatusPriceAdjustmentEpic, deletePriceAdjustmentEpic, addPriceAdjustmentEpic, editPriceAdjustmentEpic, getByIdPriceAdjustmentEpic
 
 );
 export default rootEpic;

@@ -16,5 +16,6 @@ namespace Domain.ViewModels
         public string Report { get; set; }
         public string DriverPrimary { get; set; }
         public string DriverSecondary { get; set; }
+        public string DriverThird { get; set; }
     }
 }

@@ -34,6 +34,7 @@ class TransportationUpdate extends Component {
             new InputField("Note", ControlType.Text, '', false),
             new InputField("DriverPrimaryId", ControlType.ReactSelect, 0, true),
             new InputField("DriverSecondaryId", ControlType.ReactSelect, null, false),
+            new InputField("DriverThirdId", ControlType.ReactSelect, null, false)
         ]
         this.state = {
             fields: fields,
@@ -99,7 +100,7 @@ class TransportationUpdate extends Component {
 
             let DriverPrimaryIdField = fields.find(obj => obj.Name === "DriverPrimaryId");
             let DriverSecondaryIdField = fields.find(obj => obj.Name === "DriverSecondaryId");
-
+            let DriverThirdId = fields.find(obj => obj.Name === "DriverThirdId");
 
             DriverPrimaryIdField.SelectConfig.options = data.filter((item) => {
                 return item.DriverTypeId === DriverType.Primary
@@ -109,7 +110,7 @@ class TransportationUpdate extends Component {
                     label: item.Name
                 }
             });
-            DriverSecondaryIdField.SelectConfig.options = data.filter((item) => {
+            DriverSecondaryIdField.SelectConfig.options = DriverThirdId.SelectConfig.options = data.filter((item) => {
                 return item.DriverTypeId === DriverType.Secondary
             }).map(item => {
                 return {

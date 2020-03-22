@@ -9,6 +9,7 @@ namespace Infrastructure.EF.Entities
         {
             TransportationDriverPrimary = new HashSet<Transportation>();
             TransportationDriverSecondary = new HashSet<Transportation>();
+            TransportationDriverThird = new HashSet<Transportation>();
         }
 
         public string Name { get; set; }
@@ -21,5 +22,6 @@ namespace Infrastructure.EF.Entities
         public virtual DriverType DriverType { get; set; }
         public virtual ICollection<Transportation> TransportationDriverPrimary { get; set; }
         public virtual ICollection<Transportation> TransportationDriverSecondary { get; set; }
+        public virtual ICollection<Transportation> TransportationDriverThird { get; set; }
     }
 }

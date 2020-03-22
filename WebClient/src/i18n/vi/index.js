@@ -8,6 +8,8 @@ import company from './company';
 import distance from './distance';
 import driver from './driver';
 import price from './price';
+import priceAdjustment from './priceAdjustment';
+
 
 
 
@@ -103,4 +105,5 @@ export default {
         distance,
         driver,
         price,
+        priceAdjustment,
         };

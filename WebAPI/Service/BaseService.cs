@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using Domain.Constants;
@@ -20,17 +22,17 @@ namespace Service
             _repository = repository;
             _mapper = mapper;
         }
-        public virtual async Task<ResponseResult> GetAll(int pageSize, int pageNumber, int? Status)
+        public virtual async Task<ResponseResult> GetAll(int pageSize, int pageNumber, int? Status, Expression<Func<TEntity, dynamic>> orderBy = null )
         {
             var result = new ResponseResult();
             var data = new Pagination();
             if (Status.HasValue)
             {
-                data = await _repository.GetAllPagination(pageNumber, pageSize, x => x.Status == Status.Value);
+                data = await _repository.GetAllPagination(pageNumber, pageSize, x => x.Status == Status.Value, orderBy);
             }
             else
             {
-                data = await _repository.GetAllPagination(pageNumber, pageSize, x => x.Status != CommonConstants.Status.Deleted);
+                data = await _repository.GetAllPagination(pageNumber, pageSize, x => x.Status != CommonConstants.Status.Deleted, orderBy);
             }
 
             foreach (var entity in data.Records)

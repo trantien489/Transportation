@@ -8,8 +8,7 @@ import company from './company';
 import distance from './distance';
 import driver from './driver';
 import price from './price';
-
-
+import priceAdjustment from './priceAdjustment';
 
 const common = {
         languageName: 'common:languageName',
@@ -103,4 +102,5 @@ export default {
         distance,
         driver,
         price,
+        priceAdjustment,
 };

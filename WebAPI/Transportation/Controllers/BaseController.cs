@@ -6,6 +6,8 @@ using Domain.Resources;
 using Domain.Services;
 using Infrastructure.EF.Entities;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
+using System;
 
 namespace Transportation.Controllers
 {
@@ -31,7 +33,7 @@ namespace Transportation.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> GetAll(int? pageSize = CommonConstants.ConfigNumber.pageSizeDefault, int? pageNumber = 1, int? Status = null)
+        public virtual async Task<IActionResult> GetAll(int? pageSize = CommonConstants.ConfigNumber.pageSizeDefault, int? pageNumber = 1, int? Status = null)
         {
             var response = await _service.GetAll(pageSize.Value, pageNumber.Value, Status);
             return new ObjectResult(response);

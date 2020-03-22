@@ -97,6 +97,17 @@ const Report = Loadable({
   loading: Loading,
 });
 
+
+//PRICEADJUSTMENT
+const PriceAdjustment = Loadable({
+  loader: () => import('./pages/PriceAdjustment/Index'),
+  loading: Loading,
+});
+const PriceAdjustmentUpdate = Loadable({
+  loader: () => import('./pages/PriceAdjustment/Update'),
+  loading: Loading,
+});
+
 const routes = [
   { path: '/dashboard', exact: true, name: 'Home', component: DefaultLayout },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
@@ -127,6 +138,8 @@ const routes = [
 
   { path: '/report', name: 'Report', component: Report },  
 
+  { path: '/priceadjustment/:id', name: 'Update', component: PriceAdjustmentUpdate },
+  { path: '/priceadjustment', name: 'PriceAdjustment', component: PriceAdjustment },   
  
 ];
 export default routes;

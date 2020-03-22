@@ -143,6 +143,7 @@ export class GridView extends Component {
         let { records, t, isLoadingOver, keyFields, disableColumns, tableName } = this.props;
         const directLink = tableName ? tableName.toLowerCase() : '';
         if (!records || records.length === 0) {
+           
             return (
                 <div className="animated fadeIn">
                     <Card>

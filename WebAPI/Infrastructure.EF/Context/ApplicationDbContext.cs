@@ -18,6 +18,7 @@ namespace Infrastructure.EF.Context
         public virtual DbSet<Driver> Driver { get; set; }
         public virtual DbSet<DriverType> DriverType { get; set; }
         public virtual DbSet<Price> Price { get; set; }
+        public virtual DbSet<PriceAdjustment> PriceAdjustment { get; set; }
         public virtual DbSet<Transportation> Transportation { get; set; }
         #endregion --DBSET--
 
@@ -67,6 +68,11 @@ namespace Infrastructure.EF.Context
                     .WithMany(p => p.TransportationDriverSecondary)
                     .HasForeignKey(d => d.DriverSecondaryId)
                     .HasConstraintName("FK_Transportation_Driver1");
+
+                entity.HasOne(d => d.DriverThird)
+                    .WithMany(p => p.TransportationDriverThird)
+                    .HasForeignKey(d => d.DriverThirdId)
+                    .HasConstraintName("FK_Transportation_Driver2");
             });
 
             base.OnModelCreating(modelBuilder);

@@ -7,7 +7,7 @@ const transportation = {
     // Validation fields
     CarId: 'Xe',
     DriverPrimaryId : 'Tài xế',
-    DriverSecondaryId : 'Lơ xe',
+    DriverSecondaryId : 'Lơ xe 1',
     CompanyIds : 'Công ty',
     DocumentNumber : 'Chứng từ',
     Money : 'Tiền vận chuyển',
@@ -21,5 +21,6 @@ const transportation = {
     CompanyName : 'CTY Khách Hàng',
     MoneyCurrency: 'Tiền vận chuyển',
     Companies : 'Công ty',
+    DriverThirdId: 'Lơ xe 2',
 }
 export default transportation;

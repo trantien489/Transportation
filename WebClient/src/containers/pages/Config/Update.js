@@ -55,7 +55,6 @@ class ConfigUpdate extends Component {
        
     }
     componentWillReceiveProps(nextProps) {
-        console.log('componentWillReceiveProps');
         //request action
         if (this.requestAction(nextProps)) return;
         //response action
@@ -64,7 +63,6 @@ class ConfigUpdate extends Component {
 
 
     render() {
-        console.log('render');
         const { t, addModel, editModel, getByIdModel, configTypeGetAllModel } = this.props;
         return (
             <div className="animated fadeIn">
