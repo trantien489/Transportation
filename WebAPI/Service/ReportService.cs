@@ -201,7 +201,19 @@ namespace Service
                 worksheet.Cells[startRow, 5].Value = transportation.DistanceDescription;
                 worksheet.Cells[startRow, 6].Value = transportation.CapacityType;
                 worksheet.Cells[startRow, 7].Value = transportation.Money;
-                worksheet.Cells[startRow, 8].Value = transportation.Report;
+
+                if (!string.IsNullOrEmpty(transportation.Report) && !string.IsNullOrEmpty(transportation.Note))
+                {
+                    worksheet.Cells[startRow, 8].Value = $"{transportation.Report}, {transportation.Note}";
+                }
+                else if (!string.IsNullOrEmpty(transportation.Report))
+                {
+                    worksheet.Cells[startRow, 8].Value = transportation.Report;
+                }
+                else if (!string.IsNullOrEmpty(transportation.Note))
+                {
+                    worksheet.Cells[startRow, 8].Value = transportation.Note;
+                }
 
                 if (!isMainSheet) 
                 {
