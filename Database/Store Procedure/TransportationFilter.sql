@@ -6,9 +6,10 @@ begin
 			Companies nvarchar(max),Report nvarchar(max), MoneyCurrency varchar(max), Note nvarchar(max), DriverPrimaryName nvarchar(100), Status int);
 
 	declare pointer cursor for			
-		select T.Id, T.TransportDate, C.CarNumber, T.DocumentNumber, T.CompanyIds, T.Report, T.Money, T.Note ,D.Name, T.Status from Transportation T 
-		join Car C on T.CarId = C.Id
-		left join Driver D on T.DriverPrimaryId = D.Id
+		select T.Id, T.TransportDate, C.CarNumber, T.DocumentNumber, T.CompanyIds, T.Report, T.Money, T.Note ,D.Name, T.Status 
+		from Transportation T  WITH(NOLOCK)
+		join Car C WITH(NOLOCK) on T.CarId = C.Id
+		left join Driver D WITH(NOLOCK) on T.DriverPrimaryId = D.Id
 		where T.Status != 2 and @FromDate <= T.TransportDate and T.TransportDate <= @ToDate
 		order by T.DocumentNumber asc;
 	open pointer
@@ -28,7 +29,7 @@ begin
 		fetch next from CompanyPointer into @CompanyId;
 		while @@FETCH_STATUS=0
 		begin
-			select @Companies += (code + '|' + name)+ '   ' from Company where Id = @CompanyId;
+			select @Companies += (code + '|' + name)+ '   ' from Company WITH(NOLOCK) where Id = @CompanyId;
 			fetch next from CompanyPointer into @CompanyId;
 		end
 		close CompanyPointer
