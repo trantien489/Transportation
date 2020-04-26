@@ -45,5 +45,12 @@ namespace Transportation.Controllers
 
             return result;
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateTransportationMoney(DateTime fromDate, DateTime toDate)
+        {
+            var response = await _transportationService.UpdateTransportationMoney(fromDate, toDate);
+            return new ObjectResult(response);
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace Domain.Services
     {
         Task<ResponseResult> GenerateMoney(List<int> companyIds, long carId);
         Task<ResponseResult> Filter(DateTime fromDate, DateTime toDate);
+        Task<ResponseResult> UpdateTransportationMoney(DateTime fromDate, DateTime toDate);
     }
 }

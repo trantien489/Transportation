@@ -143,6 +143,51 @@ namespace Service
             return result;
         }
 
+        public async Task<ResponseResult> UpdateTransportationMoney(DateTime fromDate, DateTime toDate)
+        {
+            var result = new ResponseResult();
+            var trackings = new List<UpdateTransportationMoney>();
+            try
+            {
+                if (fromDate.Date > toDate.Date)
+                {
+                    ResponseResultHelper.MakeFailure(result, "Từ ngày phải bé hơn Đến ngày");
+                    return result;
+                }
+
+                if (toDate.Month != fromDate.Month)
+                {
+                    ResponseResultHelper.MakeFailure(result, "Pham vi phải trong vòng 1 tháng");
+                    return result;
+                }
+
+                var transportations = _repo.AsQueryable().Where(t =>t.Status == CommonConstants.Status.Active && fromDate.Date <= t.TransportDate.Date && t.TransportDate.Date <= toDate.Date).ToList();
+
+                foreach (var transportation in transportations)
+                {
+                    var obj = new UpdateTransportationMoney();
+                    obj.TransportationId = transportation.Id;
+                    obj.OldMoney = transportation.Money;
+
+                    var companyIds = JsonConvert.DeserializeObject<List<int>>(transportation.CompanyIds);
+                    var newMoney = await GenerateMoney(companyIds, transportation.CarId);
+
+                    transportation.Money = newMoney.Data;
+                    obj.NewMoney = newMoney.Data;
+                    trackings.Add(obj);
+                }
+
+                var saveChange = await _repo.SaveChanges(result);
+                result.Data = trackings;
+                ResponseResultHelper.MakeSuccess(result, "Cập nhập giá thành công");
+            }
+            catch (Exception ex)
+            {
+                ResponseResultHelper.MakeException(result, ex);
+            }
+            return result;
+        }
+
         #region Override Methods
         public override void GetAllEntry(Transportation entity)
         {
@@ -262,5 +307,12 @@ namespace Service
     {
         public long CompanyId { get; set; }
         public decimal Money { get; set; }
+    }
+
+    public class UpdateTransportationMoney
+    {
+        public long TransportationId { get; set; }
+        public decimal OldMoney { get; set; }
+        public decimal NewMoney { get; set; }
     }
 }
