@@ -38,7 +38,8 @@ class DefaultLayout extends Component {
         { title: true, name: 'QUẢN LÝ ĐƠN GIÁ'},
         { name: t(key.capacity.GridTitle), url: '/capacity', icon: 'icon-drop', },
         { name: t(key.distance.GridTitle), url: '/distance', icon: 'icon-map', },
-        { name: 'Bảng giá vận chuyển', url: '/price', icon: 'cui-dollar', },
+        { name: 'Bảng giá', url: '/price', icon: 'cui-dollar', },
+        { name: 'Bảng giá V2', url: '/pricev2', icon: 'cui-dollar', badge: { variant: 'info', text: 'Mới', },},
         { name: 'Điều chỉnh giá', url: '/priceadjustment', icon: 'cui-settings', },
 
 

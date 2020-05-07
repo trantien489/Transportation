@@ -35,7 +35,7 @@ class Company extends Component {
         if (!getAllModel || !changeStatusModel || !deleteModel) return;
         const isLoadingOver = changeStatusModel.isLoading || deleteModel.isLoading;
         if (getAllModel.isLoading) {
-            return <LoadingOverlay active spinner text={t(key.common.loadingSpinner)} />
+            return <LoadingOverlay active spinner text={t(key.common.loadingSpinner)} className="overlayFullScreen"/>
         } else if (getAllModel.isError) {
             return <ErrorAlert responseData={getAllModel.responseData}
                 msgErrorGetAPI={t(key.common.errorGetAllAPI)} t={this.props.t}

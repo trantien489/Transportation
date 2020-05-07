@@ -18,8 +18,14 @@ import {
     editPriceFailureAction,
     filterPriceSuccessAction,
     filterPriceFailureAction,
+    priceGetAllSelectSuccessAction,
+    priceGetAllSelectFailureAction,
+    priceUpdateMultipleSelectSuccessAction,
+    priceUpdateMultipleSelectFailureAction
 } from '../actions/price';
 import API_SERVICES from '../services';
+import {status} from '../contants/staticData';
+
 const API_GETALL = API_SERVICES.HOST + API_SERVICES.VERSION + '/Price/GetAll';
 const API_GETBYID = API_SERVICES.HOST + API_SERVICES.VERSION + '/Price/GetById';
 const API_CHANGE_STATUS = API_SERVICES.HOST + API_SERVICES.VERSION + '/Price/ChangeStatus/';
@@ -27,6 +33,8 @@ const API_DELETE = API_SERVICES.HOST + API_SERVICES.VERSION + '/Price/Delete/';
 const API_ADD = API_SERVICES.HOST + API_SERVICES.VERSION + '/Price/Create/';
 const API_EDIT = API_SERVICES.HOST + API_SERVICES.VERSION + '/Price/Update';
 const API_FILTER = API_SERVICES.HOST + API_SERVICES.VERSION + '/Price/Filter';
+const API_GETALL_SELECT = API_SERVICES.HOST + API_SERVICES.VERSION + '/Price/GetAll?Status=' + status.Active ;
+const API_UPDATE_MULTIPLE = API_SERVICES.HOST + API_SERVICES.VERSION + '/Price/UpdateMultiple';
 
 // GETALL
 const getAllPriceEpic = action$ => action$.pipe(
@@ -113,4 +121,31 @@ const priceFilterEpic = action$ => action$.pipe(
         )
     })
 );
-export { getAllPriceEpic, getByIdPriceEpic, changeStatusPriceEpic, deletePriceEpic, addPriceEpic, editPriceEpic, priceFilterEpic };
+
+// GETALL_SELECT
+const priceGetAllSelectEpic = action$ => action$.pipe(
+    ofType(PRICE.GETALL_SELECT),
+    mergeMap(() => {
+        return ajax.getJSON(API_GETALL_SELECT, API_SERVICES.HEADERS()).pipe(
+            map(response => priceGetAllSelectSuccessAction(response)),
+            catchError(error => of(priceGetAllSelectFailureAction({
+                message: error.xhr.response, status: error.xhr.status
+            })))
+        )
+    })
+);
+
+// UPDATE_MULTIPLE
+const priceUpdateMultipleEpic = action$ => action$.pipe(
+    ofType(PRICE.UPDATE_MULTIPLE),
+    mergeMap((action) => {
+        return ajax.post(API_UPDATE_MULTIPLE, action.payload, API_SERVICES.HEADERS()).pipe(
+            map(response => priceUpdateMultipleSelectSuccessAction(response)),
+            catchError(error => of(priceUpdateMultipleSelectFailureAction({
+                message: error.xhr.response, status: error.xhr.status
+            })))
+        )
+    })
+);
+
+export { getAllPriceEpic, getByIdPriceEpic, changeStatusPriceEpic, deletePriceEpic, addPriceEpic, editPriceEpic, priceFilterEpic, priceGetAllSelectEpic, priceUpdateMultipleEpic };

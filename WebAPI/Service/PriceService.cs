@@ -5,8 +5,11 @@ using Domain.Repositories.Generic;
 using Domain.Services;
 using Domain.ViewModels;
 using Infrastructure.EF.Entities;
+using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Service
@@ -15,10 +18,12 @@ namespace Service
     {
         private readonly IGenericRepository<Price> _repo;
         private readonly IMapper _mapper;
-        public PriceService(IGenericRepository<Price> repo, IMapper mapper) : base(repo, mapper)
+        IHttpContextAccessor contextAccessor;
+        public PriceService(IGenericRepository<Price> repo, IMapper mapper, IHttpContextAccessor _contextAccessor) : base(repo, mapper)
         {
             _repo = repo;
             _mapper = mapper;
+            contextAccessor= _contextAccessor;
         }
 
         public async Task<ResponseResult> Filter(long distanceId)
@@ -39,6 +44,32 @@ namespace Service
                 pagination.Records = data.Select(p => _mapper.Map<Price, PriceGetAllViewModel>(p));
                 result.Data = pagination;
                 ResponseResultHelper.MakeSuccess(result);
+            }
+            catch (Exception ex)
+            {
+                ResponseResultHelper.MakeException(result, ex);
+            }
+
+            return await Task.FromResult(result);
+        }
+
+        public async Task<ResponseResult> UpdateMultiple(List<UpdatePrice> prices)
+        {
+            var result = new ResponseResult();
+            try
+            {
+                foreach (var item in prices)
+                {
+                    var price = await _repo.GetById(item.PriceId);
+                    price.Money = item.Money;
+                    price.UpdatedDate = DateTime.UtcNow;
+                    price.UpdatedBy = contextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+                }
+                var saveChange = await _repo.SaveChanges(result);
+                if (saveChange)
+                {
+                    ResponseResultHelper.MakeSuccess(result, "Lưu bảng giá thành công");
+                }
             }
             catch (Exception ex)
             {

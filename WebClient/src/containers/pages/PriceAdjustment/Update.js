@@ -104,7 +104,7 @@ class PriceAdjustmentUpdate extends Component {
 
         if (loading) {
             loadingText = loadingDataWhenFirstIn ? t(key.common.loadingSpinner) : t(key.common.processingSpinner);
-            loadingClass = loadingDataWhenFirstIn ? '' : 'overlayFullScreen';
+            //loadingClass = loadingDataWhenFirstIn ? '' : 'overlayFullScreen';
         }
 
         return (

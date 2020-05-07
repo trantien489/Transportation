@@ -28,7 +28,7 @@ const API_CHANGE_STATUS = API_SERVICES.HOST + API_SERVICES.VERSION + '/Capacity/
 const API_DELETE = API_SERVICES.HOST + API_SERVICES.VERSION + '/Capacity/Delete/';
 const API_ADD = API_SERVICES.HOST + API_SERVICES.VERSION + '/Capacity/Create/';
 const API_EDIT = API_SERVICES.HOST + API_SERVICES.VERSION + '/Capacity/Update';
-const API_GETALL_SELECT = API_SERVICES.HOST + API_SERVICES.VERSION + '/Capacity/GetAll?Status' + status.Active;
+const API_GETALL_SELECT = API_SERVICES.HOST + API_SERVICES.VERSION + '/Capacity/GetAll?Status=' + status.Active;
 
 // GETALL
 const getAllCapacityEpic = action$ => action$.pipe(

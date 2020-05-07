@@ -143,7 +143,7 @@ export class GridView extends Component {
         let { records, t, isLoadingOver, keyFields, disableColumns, tableName } = this.props;
         const directLink = tableName ? tableName.toLowerCase() : '';
         if (!records || records.length === 0) {
-           
+
             return (
                 <div className="animated fadeIn">
                     <Card>
@@ -285,62 +285,63 @@ export class GridView extends Component {
         }
         return (
             <div className="animated fadeIn">
-                <LoadingOverlay active={isLoadingOver} spinner text={t(key.common.processingSpinner)} className="overlayFullScreen" />
-                <Card>
-                    <CardHeader>
-                        <Row>
-                            <Col xs="6">
-                                <Link to={'/' + directLink + '/add'}>
-                                    <Button size="sm" className="btn-dropbox btn-brand icon mr-1 mb-1">
-                                        <i className="fa fa-plus"></i>
-                                    </Button>
-                                </Link>
-                                <strong>{t(keyFields.GridTitleList)}</strong>
-                            </Col>
-                            <Col xs="6" className={'text-right'} title="Enables or disables records filtering of columns in the table.">
-                                {t(key.common.filterTitle)}
-                                <AppSwitch className={'float-right mx-1'} variant={'pill'} color={'primary'}
-                                    onChange={this.handleSwitchFilter} checked={this.state.isEnableFilter} />
-                            </Col>
-                        </Row>
-                    </CardHeader>
-                    <CardBody>
-                        {
-                            records.length > 0 ?
-                                <ReactTable {...propsOfTable} /> :
-                                <div className="animated fadeIn"><Row><Col xs="12" lg="12">{t(key.common.noDataFound)}</Col></Row></div>
-                        }
-                        <ConfirmModal isOpenModal={this.state.isShowStatusConfirmModal}
-                            toggleModal={() => this.handleToggleModal(commonConstant.CHANGE_STATUS, false)}
-                            selectedYes={() => this.handleToggleModal(commonConstant.CHANGE_STATUS, true)}
-                            className="warning" sizeModal="md" backdropModal="static"
-                            headerTitle={t(key.common.infoTitleConfirmModal)}
-                            bodyContent={t(key.common.switchStatusConfirmModal)}
-                            textBtnYes={t(key.common.btnOk)}
-                            textBtnNo={t(key.common.btnCancel)}
-                        />
-                        <ConfirmModal isOpenModal={this.state.isShowDeleteConfirmModal}
-                            toggleModal={() => this.handleToggleModal(commonConstant.DELETE, false)}
-                            selectedYes={() => this.handleToggleModal(commonConstant.DELETE, true)}
-                            className="danger" sizeModal="md" backdropModal="static"
-                            headerTitle={t(key.common.infoTitleConfirmModal)}
-                            bodyContent={t(key.common.deleteConfirmModal)}
-                            textBtnYes={t(key.common.btnOk)}
-                            textBtnNo={t(key.common.btnCancel)}
-                        />
-                        <ConfirmModal isOpenModal={this.state.isShowIsDefaultConfirmModal}
-                            toggleModal={() => this.handleToggleModal(commonConstant.CHANGE_ISDEFAULT, false)}
-                            selectedYes={() => this.handleToggleModal(commonConstant.CHANGE_ISDEFAULT, true)}
-                            className="warning" sizeModal="md" backdropModal="static"
-                            headerTitle={t(key.common.infoTitleConfirmModal)}
-                            bodyContent={t(key.common.switchStatusConfirmModal)}
-                            textBtnYes={t(key.common.btnOk)}
-                            textBtnNo={t(key.common.btnCancel)}
-                        />
-                        {/* Option className modal: primary, info, danger, warning,success, 
+                <LoadingOverlay active={isLoadingOver} spinner text={t(key.common.processingSpinner)} >
+                    <Card>
+                        <CardHeader>
+                            <Row>
+                                <Col xs="6">
+                                    <Link to={'/' + directLink + '/add'}>
+                                        <Button size="sm" className="btn-dropbox btn-brand icon mr-1 mb-1">
+                                            <i className="fa fa-plus"></i>
+                                        </Button>
+                                    </Link>
+                                    <strong>{t(keyFields.GridTitleList)}</strong>
+                                </Col>
+                                <Col xs="6" className={'text-right'} title="Enables or disables records filtering of columns in the table.">
+                                    {t(key.common.filterTitle)}
+                                    <AppSwitch className={'float-right mx-1'} variant={'pill'} color={'primary'}
+                                        onChange={this.handleSwitchFilter} checked={this.state.isEnableFilter} />
+                                </Col>
+                            </Row>
+                        </CardHeader>
+                        <CardBody>
+                            {
+                                records.length > 0 ?
+                                    <ReactTable {...propsOfTable} /> :
+                                    <div className="animated fadeIn"><Row><Col xs="12" lg="12">{t(key.common.noDataFound)}</Col></Row></div>
+                            }
+                            <ConfirmModal isOpenModal={this.state.isShowStatusConfirmModal}
+                                toggleModal={() => this.handleToggleModal(commonConstant.CHANGE_STATUS, false)}
+                                selectedYes={() => this.handleToggleModal(commonConstant.CHANGE_STATUS, true)}
+                                className="warning" sizeModal="md" backdropModal="static"
+                                headerTitle={t(key.common.infoTitleConfirmModal)}
+                                bodyContent={t(key.common.switchStatusConfirmModal)}
+                                textBtnYes={t(key.common.btnOk)}
+                                textBtnNo={t(key.common.btnCancel)}
+                            />
+                            <ConfirmModal isOpenModal={this.state.isShowDeleteConfirmModal}
+                                toggleModal={() => this.handleToggleModal(commonConstant.DELETE, false)}
+                                selectedYes={() => this.handleToggleModal(commonConstant.DELETE, true)}
+                                className="danger" sizeModal="md" backdropModal="static"
+                                headerTitle={t(key.common.infoTitleConfirmModal)}
+                                bodyContent={t(key.common.deleteConfirmModal)}
+                                textBtnYes={t(key.common.btnOk)}
+                                textBtnNo={t(key.common.btnCancel)}
+                            />
+                            <ConfirmModal isOpenModal={this.state.isShowIsDefaultConfirmModal}
+                                toggleModal={() => this.handleToggleModal(commonConstant.CHANGE_ISDEFAULT, false)}
+                                selectedYes={() => this.handleToggleModal(commonConstant.CHANGE_ISDEFAULT, true)}
+                                className="warning" sizeModal="md" backdropModal="static"
+                                headerTitle={t(key.common.infoTitleConfirmModal)}
+                                bodyContent={t(key.common.switchStatusConfirmModal)}
+                                textBtnYes={t(key.common.btnOk)}
+                                textBtnNo={t(key.common.btnCancel)}
+                            />
+                            {/* Option className modal: primary, info, danger, warning,success, 
                   Size modal: sm, md, lg */}
-                    </CardBody>
-                </Card>
+                        </CardBody>
+                    </Card>
+                </LoadingOverlay>
             </div >
         );
     }

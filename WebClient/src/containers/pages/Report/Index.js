@@ -54,13 +54,13 @@ class Report extends Component {
         if (!checkBangkeModel.isLoading && isExistAction(currentAction, REPORT.CHECK_BANGKE)) {
 
             let result = checkBangkeModel.responseData;
-          
+
             this.setState({
                 currentAction: removeAction(currentAction, REPORT.CHECK_BANGKE)
             });
 
             if (!result.Success) {
-                toastr.error('Xuất Bảng Kê',result.Message);
+                toastr.error('Xuất Bảng Kê', result.Message);
                 return;
             }
 
@@ -68,7 +68,7 @@ class Report extends Component {
                 queryString: `?date=${formatDateTimeToString(date)}`,
                 monthReport: date.getMonth() + 1,
                 yearReport: date.getFullYear(),
-    
+
                 day: currentDateTime.getDate(),
                 month: currentDateTime.getMonth() + 1,
                 year: currentDateTime.getFullYear(),
@@ -81,9 +81,9 @@ class Report extends Component {
             this.setState({
                 currentAction: removeAction(currentAction, REPORT.BANGKE)
             });
-            if(bangkeModel.isError){
-            }else{
-                toastr.success('Xuất Bảng Kê','Download thành công');
+            if (bangkeModel.isError) {
+            } else {
+                toastr.success('Xuất Bảng Kê', 'Download thành công');
             }
         }
     }
@@ -118,35 +118,35 @@ class Report extends Component {
                 msgRedirectToLogin={t(key.common.redirectToLogin)} />
         } else {
             return (
-                <Card>
-                    <LoadingOverlay active={loading} spinner text={t(key.common.processingSpinner)} className="overlayFullScreen" />
-
-                    <CardBody>
-                        <Row>
-                            <Col md="4">
-                                <FormGroup>
-                                    <Label>Xuất bảng kê cho tháng</Label>
-                                    <DateTimePicker
-                                        value={this.state.date}
-                                        onChange={(event) => this.handleChangeFields(event, 'Date')}
-                                        className='form-control'
-                                        format="M/y"
-                                    />
-                                </FormGroup>
-                            </Col>
-                            <Col md="4">
-                                <FormGroup>
-                                    <p>&nbsp;</p>
-                                    <Button size="sm" color="success" onClick={this.exportBangke}>
-                                        <i className="fa fa-file-excel-o"></i> Xuất Excel
+                <LoadingOverlay active={loading} spinner text={t(key.common.processingSpinner)} className="" >
+                    <Card>
+                        <CardBody>
+                            <Row>
+                                <Col md="4">
+                                    <FormGroup>
+                                        <Label>Xuất bảng kê cho tháng</Label>
+                                        <DateTimePicker
+                                            value={this.state.date}
+                                            onChange={(event) => this.handleChangeFields(event, 'Date')}
+                                            className='form-control'
+                                            format="M/y"
+                                        />
+                                    </FormGroup>
+                                </Col>
+                                <Col md="4">
+                                    <FormGroup>
+                                        <p>&nbsp;</p>
+                                        <Button size="sm" color="success" onClick={this.exportBangke}>
+                                            <i className="fa fa-file-excel-o"></i> Xuất Excel
                                 </Button>
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                    </CardBody>
+                                    </FormGroup>
+                                </Col>
+                            </Row>
+                        </CardBody>
 
 
-                </Card>
+                    </Card>
+                </LoadingOverlay>
             )
 
         }

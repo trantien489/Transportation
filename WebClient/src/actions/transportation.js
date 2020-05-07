@@ -33,3 +33,8 @@ export const generateMoneyTransportationFailureAction = createAction(TRANSPORTAT
 export const transportationFilterAction = createAction(TRANSPORTATION.FILTER);
 export const transportationFilterSuccessAction = createAction(TRANSPORTATION.FILTER_SUCCESS);
 export const transportationFilterFailureAction = createAction(TRANSPORTATION.FILTER_FAILURE);
+
+//UPDATE_MONEY
+export const transportationUpdateMoneyAction = createAction(TRANSPORTATION.UPDATE_MONEY);
+export const transportationUpdateMoneySuccessAction = createAction(TRANSPORTATION.UPDATE_MONEY_SUCCESS);
+export const transportationUpdateMoneyFailureAction = createAction(TRANSPORTATION.UPDATE_MONEY_FAILURE);

@@ -108,6 +108,12 @@ const PriceAdjustmentUpdate = Loadable({
   loading: Loading,
 });
 
+//PRICEV2
+const Pricev2 = Loadable({
+  loader: () => import('./pages/Pricev2/Index'),
+  loading: Loading,
+});
+
 const routes = [
   { path: '/dashboard', exact: true, name: 'Home', component: DefaultLayout },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
@@ -140,6 +146,8 @@ const routes = [
 
   { path: '/priceadjustment/:id', name: 'Update', component: PriceAdjustmentUpdate },
   { path: '/priceadjustment', name: 'PriceAdjustment', component: PriceAdjustment },   
+
+  { path: '/pricev2', name: 'Pricev2', component: Pricev2 },  
  
 ];
 export default routes;

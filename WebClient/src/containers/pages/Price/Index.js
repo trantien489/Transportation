@@ -112,49 +112,49 @@ class Price extends Component {
                 msgRedirectToLogin={t(key.common.redirectToLogin)} />
         } else {
             return (
-                <Card>
-                    <LoadingOverlay active={isLoadingOver} spinner text={t(key.common.processingSpinner)} className="overlayFullScreen" />
-
-                    <CardBody>
-                        <Row>
-                            <Col md="4">
-                                <FormGroup>
-                                    <Label>{t(key.price.DistanceId)}</Label>
-                                    <Select
-                                        className="basic-single"
-                                        classNamePrefix="select"
-                                        styles={reactSelectCustomStyles(true)}
-                                        options={this.state.distanceOptions}
-                                        value={reactSelectGetCurrentValue(this.state.distanceOptions, this.state.distanceId)}
-                                        onChange={(event) => this.handleChangeFields(event, 'DistanceId')}
-                                        placeholder={t(key.common.pleaseSelect) + '...'}
-                                    />
-                                </FormGroup>
-                            </Col>
-                            <Col md="4">
-                                <FormGroup>
-                                    <p>&nbsp;</p>
-                                    <Button size="sm" color="primary" onClick={this.filter}>
-                                        <i className="fa fa-filter"></i> Lọc
+                <LoadingOverlay active={isLoadingOver} spinner text={t(key.common.processingSpinner)} className="overlayFullScreen" >
+                    <Card>
+                        <CardBody>
+                            <Row>
+                                <Col md="4">
+                                    <FormGroup>
+                                        <Label>{t(key.price.DistanceId)}</Label>
+                                        <Select
+                                            className="basic-single"
+                                            classNamePrefix="select"
+                                            styles={reactSelectCustomStyles(true)}
+                                            options={this.state.distanceOptions}
+                                            value={reactSelectGetCurrentValue(this.state.distanceOptions, this.state.distanceId)}
+                                            onChange={(event) => this.handleChangeFields(event, 'DistanceId')}
+                                            placeholder={t(key.common.pleaseSelect) + '...'}
+                                        />
+                                    </FormGroup>
+                                </Col>
+                                <Col md="4">
+                                    <FormGroup>
+                                        <p>&nbsp;</p>
+                                        <Button size="sm" color="primary" onClick={this.filter}>
+                                            <i className="fa fa-filter"></i> Lọc
                                 </Button>
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                    </CardBody>
-                    {
-                        hasRecordsActionReducer(getAllModel)
-                        &&
-                        <GridView
-                            isLoadingOver={false}
-                            records={getAllModel.responseData.Data.Records}
-                            keyFields={key.price}
-                            tableName="PRICE"
-                            disableColumns={disableColumns}
-                            {...this.props}
-                        />
-                    }
+                                    </FormGroup>
+                                </Col>
+                            </Row>
+                        </CardBody>
+                        {
+                            hasRecordsActionReducer(getAllModel)
+                            &&
+                            <GridView
+                                isLoadingOver={false}
+                                records={getAllModel.responseData.Data.Records}
+                                keyFields={key.price}
+                                tableName="PRICE"
+                                disableColumns={disableColumns}
+                                {...this.props}
+                            />
+                        }
 
-                </Card>
+                    </Card>
+                </LoadingOverlay>
             )
 
         }

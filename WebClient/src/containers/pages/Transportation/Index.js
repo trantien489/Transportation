@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { translate } from 'react-i18next';
 import key from '../../../i18n/key';
-import { Col, Row, FormGroup, Label, Card, CardBody,  Button } from "reactstrap";
+import { Col, Row, FormGroup, Label, Card, CardBody, Button } from "reactstrap";
 import { ErrorAlert } from '../../../components/alerts/errorAlert';
 import { hasRecordsActionReducer, applyCheckAuthorized } from '../../../utilities/validate';
 import { getAllTransportationAction, changeStatusTransportationAction, deleteTransportationAction, transportationFilterAction } from '../../../actions/transportation';
 import { GridView } from '../../../components/gridView/gridView';
 import { addAction, isExistAction, removeAction } from '../../../utilities/currrentActionHelper';
 import { TRANSPORTATION } from "../../../actionTypes/transportation";
-import {  formatDateTimeToString } from "../../../utilities/format";
+import { formatDateTimeToString } from "../../../utilities/format";
 import DateTimePicker from 'react-datetime-picker';
 import { toastr } from 'react-redux-toastr';
 import transportation from "../../../i18n/key/transportation";
@@ -53,7 +53,7 @@ class Transportation extends Component {
 
             let result = getAllModel.responseData;
             if (!result.Success) {
-                toastr.error(t(transportation.GridTitle),result.Message);
+                toastr.error(t(transportation.GridTitle), result.Message);
             }
 
 
@@ -102,57 +102,57 @@ class Transportation extends Component {
                 msgRedirectToLogin={t(key.common.redirectToLogin)} />
         } else {
             return (
-                <Card>
-                    <LoadingOverlay active={isLoadingOver} spinner text={t(key.common.loadingSpinner)} className="overlayFullScreen" />
-
-                    <CardBody>
-                        <Row>
-                            <Col md="4">
-                                <FormGroup>
-                                    <Label>Từ ngày</Label>
-                                    <DateTimePicker
-                                        value={this.state.fromDate}
-                                        onChange={(event) => this.handleChangeFields(event, 'fromDate')}
-                                        className='form-control'
-                                        format="d/M/y"
-                                    />
-                                </FormGroup>
-                            </Col>
-                            <Col md="4">
-                                <FormGroup>
-                                    <Label>Đến ngày</Label>
-                                    <DateTimePicker
-                                        value={this.state.toDate}
-                                        onChange={(event) => this.handleChangeFields(event, 'toDate')}
-                                        className='form-control'
-                                        format="d/M/y"
-                                    />
-                                </FormGroup>
-                            </Col>
-                            <Col md="4">
-                                <FormGroup>
-                                    <p>&nbsp;</p>
-                                    <Button size="sm" color="primary" onClick={this.filter}>
-                                        <i className="fa fa-filter"></i> Lọc
+                <LoadingOverlay active={isLoadingOver} spinner text={t(key.common.loadingSpinner)} className="overlayFullScreen" >
+                    <Card>
+                        <CardBody>
+                            <Row>
+                                <Col md="4">
+                                    <FormGroup>
+                                        <Label>Từ ngày</Label>
+                                        <DateTimePicker
+                                            value={this.state.fromDate}
+                                            onChange={(event) => this.handleChangeFields(event, 'fromDate')}
+                                            className='form-control'
+                                            format="d/M/y"
+                                        />
+                                    </FormGroup>
+                                </Col>
+                                <Col md="4">
+                                    <FormGroup>
+                                        <Label>Đến ngày</Label>
+                                        <DateTimePicker
+                                            value={this.state.toDate}
+                                            onChange={(event) => this.handleChangeFields(event, 'toDate')}
+                                            className='form-control'
+                                            format="d/M/y"
+                                        />
+                                    </FormGroup>
+                                </Col>
+                                <Col md="4">
+                                    <FormGroup>
+                                        <p>&nbsp;</p>
+                                        <Button size="sm" color="primary" onClick={this.filter}>
+                                            <i className="fa fa-filter"></i> Lọc
                                 </Button>
-                                </FormGroup>
-                            </Col>
-                        </Row>
-                    </CardBody>
-                    {
-                        hasRecordsActionReducer(getAllModel)
-                        &&
-                        <GridView
-                            isLoadingOver={false}
-                            records={getAllModel.responseData.Data.Records}
-                            keyFields={key.transportation}
-                            tableName="TRANSPORTATION"
-                            disableColumns={disableColumns}
-                            {...this.props}
-                        />
-                    }
+                                    </FormGroup>
+                                </Col>
+                            </Row>
+                        </CardBody>
+                        {
+                            hasRecordsActionReducer(getAllModel)
+                            &&
+                            <GridView
+                                isLoadingOver={false}
+                                records={getAllModel.responseData.Data.Records}
+                                keyFields={key.transportation}
+                                tableName="TRANSPORTATION"
+                                disableColumns={disableColumns}
+                                {...this.props}
+                            />
+                        }
 
-                </Card>
+                    </Card>
+                </LoadingOverlay>
             )
         }
     }

@@ -40,4 +40,11 @@ namespace Domain.ViewModels
         public string UpdatedBy { get; set; }
         public int Status { get; set; }
     }
+    public class UpdatePrice
+    {
+        [Required]
+        public long PriceId { get; set; }
+        [Required]
+        public decimal Money { get; set; }
+    }
 }

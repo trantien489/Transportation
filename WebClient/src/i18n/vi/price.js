@@ -11,5 +11,10 @@ const price = {
     DistanceDescription: 'Khoảng cách (km)',
     CapcityType: 'Thể tích xe',
     MoneyCurrency: 'Tiền vận chuyển',
+    Distance: 'Khoảng cách',
+    '14(m3)': '14 (m3)',
+    '23(m3)': '23 (m3)',
+    '29(m3)': '29 (m3)',
+    '39(m3)': '39 (m3)',
 }
 export default price;

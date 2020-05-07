@@ -31,6 +31,8 @@ import addTransportationReducer from './transportation/addReducer';
 import editTransportationReducer from './transportation/editReducer';
 import generateMoneyTransportationReducer from './transportation/generateMoneyAllReducer';
 import transportationFilterReducer from './transportation/filterReducer';
+import transportationUpdateMoneyReducer from './transportation/updateMoneyReducer';
+
 
 //CAR
 import getAllCarReducer from './car/getAllReducer';
@@ -77,6 +79,8 @@ import deletePriceReducer from './price/deleteReducer';
 import addPriceReducer from './price/addReducer';
 import editPriceReducer from './price/editReducer';
 import priceFilterReducer from './price/filterReducer';
+import priceGetAllSelectReducer from './price/getAllSelectReducer';
+import priceUpdateMultipletReducer from './price/updateMultipleReducer';
 
 //REPORT
 import reportBangkeReducer from './report/bangkeReducer';
@@ -89,6 +93,7 @@ import changeStatusPriceAdjustmentReducer from './priceAdjustment/changeStatusRe
 import deletePriceAdjustmentReducer from './priceAdjustment/deleteReducer';
 import addPriceAdjustmentReducer from './priceAdjustment/addReducer';
 import editPriceAdjustmentReducer from './priceAdjustment/editReducer';
+
 
 export default combineReducers({
     router: routerReducer,
@@ -122,6 +127,7 @@ export default combineReducers({
     editTransportationReducer: editTransportationReducer,
     generateMoneyTransportationReducer: generateMoneyTransportationReducer,
     transportationFilterReducer: transportationFilterReducer,
+    transportationUpdateMoneyReducer: transportationUpdateMoneyReducer,
 
     //CAR
     getAllCarReducer: getAllCarReducer,
@@ -167,6 +173,8 @@ export default combineReducers({
     addPriceReducer: addPriceReducer,
     editPriceReducer: editPriceReducer,
     priceFilterReducer: priceFilterReducer,
+    priceGetAllSelectReducer: priceGetAllSelectReducer,
+    priceUpdateMultipletReducer: priceUpdateMultipletReducer,
 
     //REPORT
     reportBangkeReducer: reportBangkeReducer,

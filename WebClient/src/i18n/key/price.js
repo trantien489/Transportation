@@ -11,5 +11,10 @@ const price = {
     DistanceDescription: 'price:DistanceDescription',
     CapcityType: 'price:CapcityType',
     MoneyCurrency:'price:MoneyCurrency',
+    Distance: 'price:Distance',
+    '14(m3)': 'price:14(m3)',
+    '23(m3)': 'price:23(m3)',
+    '29(m3)': 'price:29(m3)',
+    '39(m3)': 'price:39(m3)',
 }
 export default price;

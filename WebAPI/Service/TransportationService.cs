@@ -6,12 +6,14 @@ using Domain.Services;
 using Domain.ViewModels;
 using Infrastructure.EF.Entities;
 using Infrastructure.EF.SQL;
+using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace Service
@@ -23,6 +25,7 @@ namespace Service
         private readonly IGenericRepository<Company> _companyRepo;
         private readonly IGenericRepository<Car> _carRepo;
         private readonly IGenericRepository<Price> _priceRepo;
+        IHttpContextAccessor contextAccessor;
 
         private readonly IMapper _mapper;
         public TransportationService(IGenericRepository<Transportation> repo,
@@ -30,7 +33,7 @@ namespace Service
             IGenericRepository<Company> companyRepo,
             IGenericRepository<Car> carRepo,
             IGenericRepository<Price> priceRepo,
-
+            IHttpContextAccessor _contextAccessor,
             IMapper mapper) : base(repo, mapper)
         {
             _repo = repo;
@@ -39,6 +42,7 @@ namespace Service
             _companyRepo = companyRepo;
             _carRepo = carRepo;
             _priceRepo = priceRepo;
+            contextAccessor = _contextAccessor;
         }
 
         public async Task<ResponseResult> GenerateMoney(List<int> companyIds, long carId)
@@ -161,8 +165,14 @@ namespace Service
                     return result;
                 }
 
-                var transportations = _repo.AsQueryable().Where(t =>t.Status == CommonConstants.Status.Active && fromDate.Date <= t.TransportDate.Date && t.TransportDate.Date <= toDate.Date).ToList();
+                var transportations = _repo.AsQueryable().Where(t => t.Status == CommonConstants.Status.Active && fromDate.Date <= t.TransportDate.Date && t.TransportDate.Date <= toDate.Date).ToList();
 
+                if (!transportations.Any())
+                { 
+                    ResponseResultHelper.MakeFailure(result, "Không tìm thấy dữ liệu");
+                    return result;
+                }
+                var datetime = DateTime.UtcNow;
                 foreach (var transportation in transportations)
                 {
                     var obj = new UpdateTransportationMoney();
@@ -173,13 +183,19 @@ namespace Service
                     var newMoney = await GenerateMoney(companyIds, transportation.CarId);
 
                     transportation.Money = newMoney.Data;
+                    transportation.UpdatedDate = datetime;
+                    transportation.UpdatedBy = contextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value;
+
                     obj.NewMoney = newMoney.Data;
                     trackings.Add(obj);
                 }
 
                 var saveChange = await _repo.SaveChanges(result);
-                result.Data = trackings;
-                ResponseResultHelper.MakeSuccess(result, "Cập nhập giá thành công");
+                if (saveChange)
+                {
+                    result.Data = trackings;
+                    ResponseResultHelper.MakeSuccess(result, "Cập nhập giá thành công");
+                }
             }
             catch (Exception ex)
             {

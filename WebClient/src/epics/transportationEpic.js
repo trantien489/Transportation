@@ -20,6 +20,8 @@ import {
     generateMoneyTransportationFailureAction,
     transportationFilterSuccessAction,
     transportationFilterFailureAction,
+    transportationUpdateMoneySuccessAction,
+    transportationUpdateMoneyFailureAction
 } from '../actions/transportation';
 import API_SERVICES from '../services';
 const API_GETALL = API_SERVICES.HOST + API_SERVICES.VERSION + '/Transportation/GetAll';
@@ -30,7 +32,7 @@ const API_ADD = API_SERVICES.HOST + API_SERVICES.VERSION + '/Transportation/Crea
 const API_EDIT = API_SERVICES.HOST + API_SERVICES.VERSION + '/Transportation/Update';
 const API_GENERATEMONEY = API_SERVICES.HOST + API_SERVICES.VERSION + '/transportation/generatemoney';
 const API_FILTER = API_SERVICES.HOST + API_SERVICES.VERSION + '/transportation/filter';
-
+const API_UPDATE_MONEY = API_SERVICES.HOST + API_SERVICES.VERSION + '/transportation/UpdateTransportationMoney';
 
 // GETALL
 const getAllTransportationEpic = action$ => action$.pipe(
@@ -130,5 +132,19 @@ const transportationFilterEpic = action$ => action$.pipe(
         )
     })
 );
+
+// UPDATE_MONEY
+const transportationUpdateMoneyEpic = action$ => action$.pipe(
+    ofType(TRANSPORTATION.UPDATE_MONEY),
+    mergeMap((action) => {
+        return ajax.getJSON(API_UPDATE_MONEY + action.payload, API_SERVICES.HEADERS()).pipe(
+            map(response => transportationUpdateMoneySuccessAction(response)),
+            catchError(error => of(transportationUpdateMoneyFailureAction({
+                message: error.xhr.response, status: error.xhr.status
+            })))
+        )
+    })
+);
+
 export { getAllTransportationEpic, getByIdTransportationEpic, changeStatusTransportationEpic,
-     deleteTransportationEpic, addTransportationEpic, editTransportationEpic, generateMoneyTransportationEpic, transportationFilterEpic };
+     deleteTransportationEpic, addTransportationEpic, editTransportationEpic, generateMoneyTransportationEpic, transportationFilterEpic, transportationUpdateMoneyEpic };

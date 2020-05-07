@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Domain.Services;
 using Domain.ViewModels;
 using Infrastructure.EF.Entities;
@@ -31,6 +32,22 @@ namespace Transportation.Controllers
             else
             {
                 var response = await _priceService.Filter(distanceId);
+                result = new ObjectResult(response);
+            }
+            return result;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateMultiple([FromBody] List<UpdatePrice> prices)
+        {
+            ObjectResult result;
+            if (!ModelState.IsValid)
+            {
+                result = new BadRequestObjectResult(ModelState);
+            }
+            else
+            {
+                var response = await _priceService.UpdateMultiple(prices);
                 result = new ObjectResult(response);
             }
             return result;

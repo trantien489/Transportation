@@ -28,3 +28,11 @@ export const editPriceFailureAction = createAction(PRICE.EDIT_FAILURE);
 export const filterPriceAction = createAction(PRICE.FILTER);
 export const filterPriceSuccessAction = createAction(PRICE.FILTER_SUCCESS);
 export const filterPriceFailureAction = createAction(PRICE.FILTER_FAILURE);
+//GETALL_SELECT
+export const priceGetAllSelectAction = createAction(PRICE.GETALL_SELECT);
+export const priceGetAllSelectSuccessAction = createAction(PRICE.GETALL_SELECT_SUCCESS);
+export const priceGetAllSelectFailureAction = createAction(PRICE.GETALL_SELECT_FAILURE);
+//UPDATE_MULTIPLE
+export const priceUpdateMultipleSelectAction = createAction(PRICE.UPDATE_MULTIPLE);
+export const priceUpdateMultipleSelectSuccessAction = createAction(PRICE.UPDATE_MULTIPLE_SUCCESS);
+export const priceUpdateMultipleSelectFailureAction = createAction(PRICE.UPDATE_MULTIPLE_FAILURE);
