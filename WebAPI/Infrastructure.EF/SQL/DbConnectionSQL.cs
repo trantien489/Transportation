@@ -215,6 +215,35 @@ namespace Infrastructure.EF.SQL
             return result;
         }
 
+        public DataTable ExecuteRawSql(string sqlQuery)
+        {
+            DataTable dt = new DataTable();
+            using (SqlConnection connection = GetConnection())
+            {
+                try
+                {
+                    DataSet ds = new DataSet();
+                    SqlCommand cmd = GetCommand(connection, sqlQuery, CommandType.Text);
+                   
+                    var sqlDa = new SqlDataAdapter(cmd);
+                    sqlDa.Fill(ds);
+                    dt = ds.Tables[0];
+                }
+                catch (Exception ex)
+                {
+                    throw new InvalidOperationException(ex.Message);
+                }
+                finally
+                {
+                    if (connection.State != ConnectionState.Closed)
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+            return dt;
+        }
+
         public List<T> ConvertDataTableToList<T>(DataTable dt)
         {
             List<T> data = new List<T>();

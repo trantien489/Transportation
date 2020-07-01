@@ -36,7 +36,7 @@ const Transportation = Loadable({
   loading: Loading,
 });
 const TransportationUpdate = Loadable({
-  loader: () => import('./pages/Transportation/Update'),
+  loader: () => import('./pages/Transportation/UpdateV2'),
   loading: Loading,
 });
 

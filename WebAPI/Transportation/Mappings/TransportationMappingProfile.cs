@@ -11,11 +11,13 @@ namespace Transportation.Mappings
         {
             //Insert
             CreateMap<TransportationCreateViewModel, Infrastructure.EF.Entities.Transportation>()
-                .ForMember(des => des.CompanyIds, map => map.MapFrom(src => JsonConvert.SerializeObject(src.CompanyIds)));
+                .ForMember(des => des.CompanyIds, map => map.MapFrom(src => JsonConvert.SerializeObject(src.CompanyIds)))
+                .ForMember(des => des.DriverJson, map => map.MapFrom(src => JsonConvert.SerializeObject(src.DriverJson)));
             
             // Update
             CreateMap<TransportationUpdateViewModel, Infrastructure.EF.Entities.Transportation>()
-                .ForMember(des => des.CompanyIds, map => map.MapFrom(src => JsonConvert.SerializeObject(src.CompanyIds)));
+                .ForMember(des => des.CompanyIds, map => map.MapFrom(src => JsonConvert.SerializeObject(src.CompanyIds)))
+                .ForMember(des => des.DriverJson, map => map.MapFrom(src => JsonConvert.SerializeObject(src.DriverJson)));
 
             //GetAll
             //CreateMap<Infrastructure.EF.Entities.Transportation, TransportationGetAllViewModel>()
@@ -27,7 +29,11 @@ namespace Transportation.Mappings
                 ;
             //GetById
             CreateMap<Infrastructure.EF.Entities.Transportation, TransportationGetByIdViewModel>()
-                 .ForMember(des => des.CompanyIds, map => map.MapFrom(src => JsonConvert.DeserializeObject<List<int>>(src.CompanyIds)));
+                 .ForMember(des => des.CompanyIds, map => map.MapFrom(src => JsonConvert.DeserializeObject<List<int>>(src.CompanyIds)))
+                 .ForMember(des => des.DriverJson, map => map.MapFrom(src => JsonConvert.DeserializeObject<List<DriverJson>>(src.DriverJson)));
+
+            CreateMap<ExportReportViewModel, TransportationIncludeDriverSalary>();
+
         }
     }
 }

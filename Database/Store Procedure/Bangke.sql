@@ -2,12 +2,12 @@ create procedure Bangke
 @Date Date
 as
 begin
-	declare @BangkeTemp table (TransportDate varchar(20), CarNumber varchar(20), CompanyName nvarchar(max), CompanyDistance float, 
+	declare @BangkeTemp table (TransportationId bigint, TransportDate varchar(20), CarNumber varchar(20), CompanyName nvarchar(max), CompanyDistance float, 
 	DistanceDescription varchar(15), CapacityType varchar(20), Money money, Report nvarchar(200), Note nvarchar(200),
-	DriverPrimary nvarchar(100), DriverSecondary nvarchar(100), DriverThird nvarchar(100) );
+	DriverPrimary nvarchar(100), DriverSecondary nvarchar(100), DriverThird nvarchar(100), DriverJson nvarchar(max) );
 
 	declare pointer cursor for			
-		select T.TransportDate, C.CarNumber, T.CompanyIds, CP.Type, T.Money, T.Report, T.Note, D1.Name, D2.Name, D3.Name 
+		select T.Id, T.TransportDate, C.CarNumber, T.CompanyIds, CP.Type, T.Money, T.Report, T.Note, D1.Name, D2.Name, D3.Name , T.DriverJson
 		from Transportation T WITH(NOLOCK)
 		join Car C WITH(NOLOCK) on T.CarId = C.Id
 		join Capacity CP WITH(NOLOCK) on C.CapacityId = CP.Id
@@ -18,8 +18,8 @@ begin
 		order by T.DocumentNumber asc;
 	open pointer
 	declare 
-		@TransportDate date, @CarNumber varchar(15),@CompanyIds varchar(max), @CapacityType varchar(20),  @Money money, @Report nvarchar(200), @Note nvarchar(200), @DriverPrimary nvarchar(100), @DriverSecondary nvarchar(100), @DriverThird nvarchar(100);
-		fetch next from pointer into @TransportDate, @CarNumber, @CompanyIds, @CapacityType, @Money, @Report, @Note, @DriverPrimary, @DriverSecondary,@DriverThird;
+		@TransportationId bigint, @TransportDate date, @CarNumber varchar(15),@CompanyIds varchar(max), @CapacityType varchar(20),  @Money money, @Report nvarchar(200), @Note nvarchar(200), @DriverPrimary nvarchar(100), @DriverSecondary nvarchar(100), @DriverThird nvarchar(100), @DriverJson nvarchar(max);
+		fetch next from pointer into @TransportationId,@TransportDate, @CarNumber, @CompanyIds, @CapacityType, @Money, @Report, @Note, @DriverPrimary, @DriverSecondary,@DriverThird,@DriverJson;
 	while @@FETCH_STATUS=0
 	begin
 		declare @CompanyId bigint, @CompanyName nvarchar(max), @CompanyDistance float, @DistanceDescription varchar(15);
@@ -30,9 +30,9 @@ begin
 
 
 		
-		insert into @BangkeTemp values(CONVERT(VARCHAR(10), @TransportDate, 103), @CarNumber, @CompanyName, @CompanyDistance, @DistanceDescription, @CapacityType, @Money, @Report, @Note, @DriverPrimary, @DriverSecondary,@DriverThird);
+		insert into @BangkeTemp values(@TransportationId,CONVERT(VARCHAR(10), @TransportDate, 103), @CarNumber, @CompanyName, @CompanyDistance, @DistanceDescription, @CapacityType, @Money, @Report, @Note, @DriverPrimary, @DriverSecondary,@DriverThird,@DriverJson);
 		
-		fetch next from pointer into @TransportDate, @CarNumber, @CompanyIds, @CapacityType, @Money, @Report, @Note, @DriverPrimary, @DriverSecondary,@DriverThird;
+		fetch next from pointer into @TransportationId,@TransportDate, @CarNumber, @CompanyIds, @CapacityType, @Money, @Report, @Note, @DriverPrimary, @DriverSecondary,@DriverThird,@DriverJson;
 	end
 	Close pointer
 	Deallocate pointer

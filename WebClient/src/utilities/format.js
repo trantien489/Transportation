@@ -41,6 +41,12 @@ export function cloneObject(obj) {
     }
     return copy;
 }
+
+export function deepCloneObject(obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+    return JSON.parse(JSON.stringify(obj));
+}
+
 export function convertUTCDateToLocalDate(stringDate){
     let utcDate = new Date(stringDate + 'z');
     let localTime= moment.utc(utcDate).local();

@@ -9,8 +9,7 @@ namespace Domain.ViewModels
     {
         [Required]
         public long CarId { get; set; }
-        [Required]
-        public long DriverPrimaryId { get; set; }
+        public long? DriverPrimaryId { get; set; }
         [Required]
         public List<int> CompanyIds { get; set; }
         [Required]
@@ -24,6 +23,8 @@ namespace Domain.ViewModels
         public string Report { get; set; }
         public string Note { get; set; }
         public long? DriverThirdId { get; set; }
+        [Required]
+        public List<DriverJson> DriverJson { get; set; }
     }
     public class TransportationUpdateViewModel : TransportationCreateViewModel
     {
@@ -62,5 +63,13 @@ namespace Domain.ViewModels
         }
         public List<int> CompanyIds { get; set; }
         public long CarId { get; set; }
+    }
+
+    public class DriverJson
+    { 
+        public long Id { get; set; }
+        public string Name { get; set; }
+        public bool IsDriverPrimary { get; set; }
+        public long? Money { get; set; }
     }
 }

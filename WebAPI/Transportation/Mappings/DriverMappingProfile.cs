@@ -17,6 +17,9 @@ namespace Transportation.Mappings
                 .ForMember(des => des.DriverTypeName, map => map.MapFrom(src => src.DriverType.Type));
             //GetById
             CreateMap<Driver, DriverGetByIdViewModel>();
+
+            CreateMap<DriverInfo, ExportDriverSalaryBySheet>();
+            CreateMap<DriverInfo, ExportDriverSalaryViewModel>();
         }
     }
 }

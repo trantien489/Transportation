@@ -246,15 +246,16 @@ namespace Service
         public override string BeforeInsert(Transportation entity)
         {
             SortCompanyByPrice(entity);
+            SetDriverPrimaryId(entity);
             return string.Empty;
         }
 
         public override string BeforeUpdate(Transportation entity)
         {
             SortCompanyByPrice(entity);
+            SetDriverPrimaryId(entity);
             return string.Empty;
         }
-
 
         #endregion
 
@@ -276,7 +277,18 @@ namespace Service
                entity.CompanyIds = JsonConvert.SerializeObject(generateMoney.OrderBy(c => c.Money).Select(c => c.CompanyId));
             }
         }
-
+        private void SetDriverPrimaryId(Transportation entity)
+        {
+            var driverJson = JsonConvert.DeserializeObject<List<DriverJson>>(entity.DriverJson);
+            if (driverJson.Any())
+            {
+                var driver = driverJson.FirstOrDefault(d => d.IsDriverPrimary);
+                if (driver != null)
+                {
+                    entity.DriverPrimaryId = driver.Id;
+                }
+            }
+        }
         private async Task<List<TransportationMoney>> GetTransportationMoney(List<int> companyIds, long carId)
         {
             var result = new List<TransportationMoney>();
