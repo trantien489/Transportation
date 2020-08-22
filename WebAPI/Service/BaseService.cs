@@ -75,6 +75,7 @@ namespace Service
             {
                 repoResult = await _repository.Insert(entityCreated);
                 repoResult.Data = _mapper.Map<TEntity, TGetByIdViewModel>(repoResult.Data);
+                AfterInsert(entityCreated);
             }
             else
             {
@@ -155,6 +156,10 @@ namespace Service
         public virtual string CustomGetAllResult(Pagination pagination)
         {
             return string.Empty;
+        }
+
+        public virtual void AfterInsert(TEntity entity)
+        {
         }
     }
 }

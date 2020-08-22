@@ -81,7 +81,7 @@ namespace Repository.Generic
                 entity.CreatedDate = DateTime.UtcNow;
                 entity.CreatedBy = GlobalUserName;
                 entity.Status = CommonConstants.Status.Active;
-                _entities.Add(entity);
+                _entities.Add(entity); 
                 result.Data = await SaveChanges(result) ? entity : null;
             }
             return result;

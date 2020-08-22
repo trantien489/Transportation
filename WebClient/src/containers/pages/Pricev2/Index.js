@@ -317,7 +317,7 @@ class Price extends Component {
         if (records.length > 0) {
             let columns = Object.keys(records[0]).map((keyName, id) => {
                 var column = {
-                    Header: t(keyFields[keyName]),
+                    Header: keyName.includes('m3') ? keyName : t(keyFields[keyName]),
                     //Header: keyName,
                     headerClassName: 'header-table text-left',
                     accessor: keyName,

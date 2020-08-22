@@ -178,6 +178,7 @@ namespace Service
                     var obj = new UpdateTransportationMoney();
                     obj.TransportationId = transportation.Id;
                     obj.OldMoney = transportation.Money;
+                    obj.TransportationDate = transportation.TransportDate;
 
                     var companyIds = JsonConvert.DeserializeObject<List<int>>(transportation.CompanyIds);
                     var newMoney = await GenerateMoney(companyIds, transportation.CarId);
@@ -342,5 +343,6 @@ namespace Service
         public long TransportationId { get; set; }
         public decimal OldMoney { get; set; }
         public decimal NewMoney { get; set; }
+        public DateTime TransportationDate { get; set; }
     }
 }
